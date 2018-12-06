@@ -1,10 +1,11 @@
-package com.example.lovro.myapplication;
+package com.example.lovro.myapplication.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import com.example.lovro.myapplication.domain.Story;
 
-public class createStoryActivity extends AppCompatActivity {
+public class CreateStoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

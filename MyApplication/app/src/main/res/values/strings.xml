@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Ime_aplikacije</string>
     <string name="action_settings">Settings</string>
+    <string name="terms"><u>Terms of service</u></string>
 </resources>
+
+
+
