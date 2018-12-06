@@ -1,4 +1,4 @@
-package com.example.lovro.myapplication;
+package com.example.lovro.myapplication.activities;
 
 import android.app.Notification;
 import android.os.Bundle;

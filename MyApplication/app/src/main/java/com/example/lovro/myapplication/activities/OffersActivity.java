@@ -1,7 +1,8 @@
-package com.example.lovro.myapplication;
+package com.example.lovro.myapplication.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import com.example.lovro.myapplication.domain.Offer;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,20 +1,18 @@
-package com.example.lovro.myapplication;
+package com.example.lovro.myapplication.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-public class createOfferActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    private boolean postOffer(Offer offer){
-        return true;
-    }
 
-    private boolean checkFields(){
+    private boolean register(String email, String pass, String repeatedpass){
         return true;
     }
 }
