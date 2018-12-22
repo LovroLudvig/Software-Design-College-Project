@@ -5,7 +5,7 @@
     android:id="@+id/relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/theme6"
+    android:background="@drawable/theme1"
     android:fadingEdge="horizontal|vertical"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
@@ -14,54 +14,64 @@
 
 
     <ImageView
-        android:id="@+id/app_logo"
-        android:layout_width="140sp"
-        android:layout_height="140sp"
+        android:id="@+id/app_logo2"
+        android:layout_width="120sp"
+        android:layout_height="120sp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp"
-        app:srcCompat="@drawable/app_logo" />
+        android:layout_marginTop="165dp"
+        app:srcCompat="@drawable/app_logo_text" />
+
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="175sp"
+        android:layout_height="175sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp"
+        android:adjustViewBounds="false"
+        app:srcCompat="@drawable/app_logo1" />
 
     <Button
         android:id="@+id/google_login"
         style="@android:style/Widget.Material.Light.Button"
-        android:layout_width="240sp"
-        android:layout_height="wrap_content"
+        android:layout_width="270sp"
+        android:layout_height="33dp"
         android:layout_below="@id/imageView3"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="277dp"
-        android:background="@drawable/rounded_corners"
+        android:background="@drawable/round_button"
         android:fontFamily="@font/doppio_one"
         android:shadowColor="@android:color/darker_gray"
         android:text="        Sign up with Google"
-        android:textIsSelectable="false"
-        android:foreground="?attr/selectableItemBackgroundBorderless"/>
+        android:textColor="#4677A5"
+        android:textIsSelectable="false" />
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="28dp"
-        android:layout_height="24dp"
+        android:layout_width="22sp"
+        android:layout_height="20sp"
         android:layout_alignStart="@+id/google_login"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="295dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="285dp"
+        android:elevation="2sp"
         android:visibility="visible"
-        app:srcCompat="@drawable/google_logo"
-        android:elevation="2sp"/>
+        app:srcCompat="@drawable/google_logo_transparent" />
 
     <Button
         android:id="@+id/email_login"
         style="@android:style/Widget.Material.Light.Button"
-        android:layout_width="240sp"
-        android:layout_height="wrap_content"
+        android:layout_width="270sp"
+        android:layout_height="33dp"
         android:layout_below="@+id/google_login"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
-        android:background="@drawable/rounded_corners"
+        android:background="@drawable/round_button2"
         android:fontFamily="@font/doppio_one"
-        android:foreground="?attr/selectableItemBackgroundBorderless"
-        android:text="Sign up with E-mail" />
+        android:text="Sign up with E-mail"
+        android:textColor="#ffffff" />
 
     <TextView
         android:id="@+id/textView2"
@@ -70,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="447dp"
+        android:layout_marginTop="399dp"
         android:fontFamily="@font/doppio_one"
         android:text="Already have an account?"
         android:textColor="@color/White"
@@ -79,15 +89,15 @@
     <TextView
         android:id="@+id/sign_in"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView2"
+        android:layout_height="31dp"
+        android:layout_below="@+id/google_login"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20sp"
+        android:layout_marginTop="109dp"
+        android:layout_marginBottom="94dp"
         android:text="Sign in."
-        android:textColor="@color/AppColor"
-        android:textStyle="bold" />
+        android:textColor="#99ebff"
+        android:textStyle="bold|italic" />
 
     <TextView
         android:id="@+id/terms"
@@ -97,6 +107,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/doppio_one"
-        android:text="@string/terms" />
+        android:text="@string/terms"
+        android:textColor="#ffffff"/>
 
 </RelativeLayout>

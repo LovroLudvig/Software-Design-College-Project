@@ -10,6 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/LoginTheme">
         <activity
+            android:name=".activities.RegisterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/RegisterTheme"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity
+            android:name=".activities.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginTheme"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity
             android:name=".activities.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
