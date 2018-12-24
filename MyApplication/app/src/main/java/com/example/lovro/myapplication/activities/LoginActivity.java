@@ -13,10 +13,10 @@ import com.example.lovro.myapplication.R;
 public class LoginActivity extends AppCompatActivity {
 
     //Variable definition
-    Button google_login;
-    Button email_login;
-    TextView sign_up;
-    TextView terms_of_service;
+    private Button google_login;
+    private Button email_login;
+    private TextView sign_up;
+    private TextView terms_of_service;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +40,12 @@ public class LoginActivity extends AppCompatActivity {
                 Intent register_activity = new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivity(register_activity);
             }
+        });
+
+        sign_up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+         }
         });
     }
 }
