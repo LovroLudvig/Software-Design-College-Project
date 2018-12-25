@@ -22,14 +22,15 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
-            android:name=".activities.SplashActivity"
+            android:name=".activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/LoginTheme"
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
-            android:name=".activities.LoginActivity"
-            android:screenOrientation="portrait">
+            android:name=".activities.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

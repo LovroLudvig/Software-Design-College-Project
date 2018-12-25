@@ -16,10 +16,6 @@ public class OfferDetailsActivity extends AppCompatActivity {
         return true;
     }
 
-    private User getUserDetails(){
-        return new User();
-    }
-
     private boolean checkUserDetails(User user){
         return true;
     }
