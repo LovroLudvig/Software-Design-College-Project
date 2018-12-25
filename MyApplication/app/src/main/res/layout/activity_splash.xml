@@ -12,7 +12,6 @@
         android:layout_width="150dp"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        app:lottie_autoPlay="true"
         app:lottie_colorFilter="@color/colorAccent"
         app:lottie_fileName="loading.json"
         app:lottie_loop="false"/>

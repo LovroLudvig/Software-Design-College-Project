@@ -53,6 +53,7 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         });
+        animation.playAnimation();
     }
 
 }
