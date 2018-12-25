@@ -1,5 +1,6 @@
 package com.example.lovro.myapplication.activities;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -16,46 +17,42 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.lovro.myapplication.R;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private ImageView app_logo;
+    LottieAnimationView animation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        app_logo = findViewById(R.id.app_logo);
-        startAnimation();
-    }
-
-    private void startAnimation(){
-        Animation myFadeInAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        app_logo.startAnimation(myFadeInAnimation);
-
-        myFadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
+        animation=findViewById(R.id.animation_view);
+        animation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(Animator animation) {
+
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
-                startApplication();
+            public void onAnimationEnd(Animator animation) {
+                Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
+                startActivity(intent);
+                finish();
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
             }
         });
     }
 
-
-
-    private void startApplication(){
-        Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
 }
