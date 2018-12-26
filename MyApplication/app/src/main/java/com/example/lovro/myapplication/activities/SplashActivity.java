@@ -37,16 +37,18 @@ public class SplashActivity extends AppCompatActivity {
 
                 if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
                     startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            finish();
+                        }
+                    }, 900 );
                 }else{
                     startActivity(intent);
+                    finish();
                 }
-                new Handler().postDelayed(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        finish();
-                    }
-                }, 900 );
 
             }
 
