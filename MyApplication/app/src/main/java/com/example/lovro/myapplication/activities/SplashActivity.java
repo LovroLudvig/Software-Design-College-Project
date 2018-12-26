@@ -3,6 +3,7 @@ package com.example.lovro.myapplication.activities;
 import android.animation.Animator;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -33,8 +34,12 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
-                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
 
+                if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
+                    startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
+                }else{
+                    startActivity(intent);
+                }
                 new Handler().postDelayed(new Runnable() {
 
                     @Override

@@ -2,6 +2,7 @@ package com.example.lovro.myapplication.activities;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -53,7 +54,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent signin_activity = new Intent(LoginActivity.this,SignInActivity.class);
-                startActivity(signin_activity,ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
+
+                if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
+                    startActivity(signin_activity,ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
+                }else{
+                    startActivity(signin_activity);
+                }
             }
         });
 
@@ -62,8 +68,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent register_activity = new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(register_activity,
-                        ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
+
+                if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
+                    startActivity(register_activity,ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
+                }else{
+                    startActivity(register_activity);
+                }
             }
         });
     }
