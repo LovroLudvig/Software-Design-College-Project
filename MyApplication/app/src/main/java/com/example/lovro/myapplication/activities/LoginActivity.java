@@ -1,10 +1,14 @@
 package com.example.lovro.myapplication.activities;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +26,12 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        getWindow().setBackgroundDrawableResource(R.drawable.theme1) ;
+
+// set an exit transition
+
+
         setContentView(R.layout.activity_login);
 
         //variable initialisation
@@ -31,6 +41,8 @@ public class LoginActivity extends AppCompatActivity {
         sign_in=findViewById(R.id.sign_in);
 
         //listeners initialisation
+        // inside your activity (if you did not enable transitions in your theme)
+
         initListeners();
     }
 
@@ -46,8 +58,10 @@ public class LoginActivity extends AppCompatActivity {
         email_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent register_activity = new Intent(LoginActivity.this,RegisterActivity.class);
-                startActivity(register_activity);
+                startActivity(register_activity,
+                        ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
             }
         });
     }

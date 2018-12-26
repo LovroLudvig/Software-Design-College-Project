@@ -17,9 +17,14 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Fade;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.domain.User;
 
@@ -37,12 +42,19 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout password_layout;
     private Button register_button;
     private Bitmap profile;
+    private LinearLayout linearLayout;
     private static final int GET_FROM_GALLERY = 3;
     private static int PERMISSION_FOR_GALLERY = 97;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        getWindow().setBackgroundDrawableResource(R.drawable.theme1) ;
+
+// set an exit transition
+        getWindow().setExitTransition(new Fade());
+        getWindow().setEnterTransition(new Fade());
         setContentView(R.layout.activity_register);
 
         profile_picture = findViewById(R.id.profilePicture);
@@ -53,6 +65,9 @@ public class RegisterActivity extends AppCompatActivity {
         email_layout = findViewById(R.id.email_layout);
         password_layout = findViewById(R.id.password_layout);
         username_layout = findViewById(R.id.username_layout);
+        email.clearFocus();
+        email_layout.clearFocus();
+
 
         initListeners();
     }

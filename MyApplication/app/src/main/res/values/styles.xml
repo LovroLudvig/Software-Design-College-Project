@@ -19,6 +19,11 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowBackground">@color/AppColor</item>
+        <item name="android:windowActivityTransitions">true</item>
+
+        <!-- specify enter and exit transitions -->
+        <item name="android:windowEnterTransition">@transition/fade</item>
+        <item name="android:windowExitTransition">@transition/fade</item>
     </style>
 
     <style name="RegisterTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -28,9 +33,19 @@
         <item name="android:statusBarColor">@color/AppColor</item>
     </style>
 
+    <style name="InputTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/AppColor</item>
+        <item name="colorPrimaryDark">@color/White</item>
+        <item name="colorAccent">@color/DarkWhite</item>
+        <item name="android:statusBarColor">@color/AppColor</item>
+    </style>
+
+
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
 </resources>

@@ -13,21 +13,22 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/LoginTheme">
+        android:theme="@style/RegisterTheme">
         <activity
             android:name=".activities.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            ></activity>
         <activity
             android:name=".activities.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme"
+            android:theme="@style/RegisterTheme"
             android:windowSoftInputMode="adjustResize"></activity>
         <activity
             android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme">
+            android:theme="@style/RegisterTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
