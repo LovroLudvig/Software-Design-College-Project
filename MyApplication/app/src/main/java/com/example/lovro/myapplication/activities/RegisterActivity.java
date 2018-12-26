@@ -41,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputEditText password;
     private TextInputLayout password_layout;
     private Button register_button;
+    private View backButton;
     private Bitmap profile;
     private LinearLayout linearLayout;
     private static final int GET_FROM_GALLERY = 3;
@@ -65,14 +66,20 @@ public class RegisterActivity extends AppCompatActivity {
         email_layout = findViewById(R.id.email_layout);
         password_layout = findViewById(R.id.password_layout);
         username_layout = findViewById(R.id.username_layout);
-        email.clearFocus();
-        email_layout.clearFocus();
+        backButton = findViewById(R.id.backButton);
 
 
         initListeners();
     }
 
     private void initListeners(){
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         profile_picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
