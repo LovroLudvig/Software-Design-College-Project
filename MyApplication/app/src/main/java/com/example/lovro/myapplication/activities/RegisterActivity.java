@@ -158,7 +158,10 @@ public class RegisterActivity extends AppCompatActivity {
                     .setCancelable(false)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            RegisterActivity.this.finish();
+                            email.setText("");
+                            username.setText("");
+                            password.setText("");
+                            RegisterActivity.this.onBackPressed();
                         }
                     })
                     .setNegativeButton("No", null)
