@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relative"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/White"
+    android:fadingEdge="horizontal|vertical"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0sp"
+        android:background="?attr/colorPrimary"
+        android:fillViewport="true"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="Sign in"
+        app:titleMarginStart="50sp"
+        app:titleTextColor="@color/White" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/email_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="25sp"
+                android:layout_marginTop="60sp"
+                android:layout_marginRight="25sp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/email_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="45sp"
+                    android:drawableLeft="@drawable/ic_email_black_24dp"
+                    android:hint="E-mail"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/AppColor"
+                    android:textColorHint="#a0a0a0" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/password_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginLeft="25sp"
+                android:layout_marginTop="30sp"
+                android:layout_marginRight="25sp">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/password_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="45sp"
+                    android:drawableLeft="@drawable/ic_security_black_24dp"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textColor="@color/AppColor"
+                    android:textColorHint="#a0a0a0" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/sign_in_button"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginLeft="30sp"
+                android:layout_marginTop="50sp"
+                android:layout_marginRight="30sp"
+                android:background="@drawable/rounded_corners"
+                android:fontFamily="@font/doppio_one"
+                android:text="Sign in"
+                android:textColor="@color/White"
+                android:textSize="16sp" />
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="30sp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="18dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
+
+</RelativeLayout>
