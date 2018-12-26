@@ -69,6 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
 
 
+
         initListeners();
     }
 
@@ -161,12 +162,18 @@ public class RegisterActivity extends AppCompatActivity {
                             email.setText("");
                             username.setText("");
                             password.setText("");
+                            email_layout.setHint("");
+                            password_layout.setHint("");
+                            username_layout.setHint("");
                             RegisterActivity.this.onBackPressed();
                         }
                     })
                     .setNegativeButton("No", null)
                     .show();
         }else {
+            email_layout.setHint("");
+            password_layout.setHint("");
+            username_layout.setHint("");
             super.onBackPressed();
         }
     }
