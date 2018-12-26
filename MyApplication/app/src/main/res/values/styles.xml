@@ -38,6 +38,11 @@
         <item name="colorPrimaryDark">@color/White</item>
         <item name="colorAccent">@color/DarkWhite</item>
         <item name="android:statusBarColor">@color/AppColor</item>
+
+        <item name="colorControlActivated">@color/DarkWhite</item>
+        <item name="colorControlNormal">@color/DarkWhite</item>
+        <item name="colorControlHighlight">@color/DarkWhite</item>
+
     </style>
 
 
