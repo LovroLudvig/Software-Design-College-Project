@@ -171,6 +171,12 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getWindow().setBackgroundDrawableResource(R.drawable.theme1);
+    }
+
     private boolean checkInputs(){
         if(email.getText().toString().equals("")){
             email_layout.setErrorEnabled(true);

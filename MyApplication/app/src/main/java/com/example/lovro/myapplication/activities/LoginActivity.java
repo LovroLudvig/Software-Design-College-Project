@@ -72,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         backButtonCount=0;
+        getWindow().setBackgroundDrawableResource(R.drawable.theme1);
     }
 
     @Override
