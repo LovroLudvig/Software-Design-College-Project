@@ -57,7 +57,7 @@
                 android:layout_marginLeft="25sp"
                 android:layout_marginTop="60sp"
                 android:layout_marginRight="25sp"
-                android:textColorHint="@color/DarkWhite">
+                android:textColorHint="@color/White">
 
                 <android.support.design.widget.TextInputEditText
                     android:theme="@style/InputTheme"
@@ -80,7 +80,7 @@
                 android:layout_marginLeft="25sp"
                 android:layout_marginTop="30sp"
                 android:layout_marginRight="25sp"
-                android:textColorHint="@color/DarkWhite">
+                android:textColorHint="@color/White">
 
                 <android.support.design.widget.TextInputEditText
                     android:theme="@style/InputTheme"
@@ -102,7 +102,7 @@
                 android:layout_marginLeft="25sp"
                 android:layout_marginTop="30sp"
                 android:layout_marginRight="25sp"
-                android:textColorHint="@color/DarkWhite">
+                android:textColorHint="@color/White">
 
                 <android.support.design.widget.TextInputEditText
                     android:theme="@style/InputTheme"
