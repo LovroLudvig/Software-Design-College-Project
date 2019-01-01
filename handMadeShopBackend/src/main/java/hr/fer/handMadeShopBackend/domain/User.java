@@ -15,7 +15,7 @@ public class User {
     private String cardNumber;
     private String address;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     private List<Role> roles;
 
     @ManyToOne

@@ -1,15 +1,36 @@
 package hr.fer.handMadeShopBackend.service;
 
+import hr.fer.handMadeShopBackend.Constants.Constants;
+import hr.fer.handMadeShopBackend.Exceptions.NotFoundException;
+import hr.fer.handMadeShopBackend.dao.RoleRepository;
+import hr.fer.handMadeShopBackend.dao.TownRepository;
 import hr.fer.handMadeShopBackend.dao.UserRepository;
+import hr.fer.handMadeShopBackend.dao.UserStatusRepository;
+import hr.fer.handMadeShopBackend.domain.Role;
+import hr.fer.handMadeShopBackend.domain.Town;
 import hr.fer.handMadeShopBackend.domain.User;
+import hr.fer.handMadeShopBackend.domain.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceJpa implements UserService {
 
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private UserStatusRepository userStatusRepository;
+
+    @Autowired
+    private RoleRepository roleRepo;
+
+    @Autowired
+    private TownRepository townRepository;
 
     @Override
     public User fetch(String username) {
@@ -18,9 +39,93 @@ public class UserServiceJpa implements UserService {
 
     @Override
     public User save(User user) {
+        UserStatus status = userStatusRepository.findByName(Constants.USER_STATUS_ALLOWED);
+        if(status == null) {
+            throw new IllegalArgumentException("Not status with name " + Constants.USER_STATUS_ALLOWED);
+        }
+        user.setUserStatus(status);
+
+        Role role = roleRepo.findByName(Constants.ROLE_USER);
+        List<Role> roles = new ArrayList<>();
+        roles.add(role);
+        user.setRoles(roles);
+
+        Town town = checkTown(user.getTown());
+        user.setTown(town);
+
         if(userRepo.countByUsername(user.getUsername()) != 0) {
-            throw new IllegalArgumentException("The user should not exist");
+            throw new IllegalArgumentException("The user already exists!");
         }
         return userRepo.save(user);
     }
+
+    @Override
+    public User deleteUser(String username) {
+        validateUserWithUsername(username);
+        userRepo.deleteByUsername(username);
+        return null;
+    }
+
+    @Override
+    public User forbidAccess(String username) {
+        validateUserWithUsername(username);
+
+        User u = userRepo.findByUsername(username);
+        UserStatus forbidden = userStatusRepository.findByName(Constants.USER_STATUS_FORBIDDEN);
+
+        u.setUserStatus(forbidden);
+
+        return userRepo.save(u);
+    }
+
+    private void validateUserWithUsername(String username) {
+        if(username == null) {
+            throw new IllegalArgumentException("The username of the user must be provided!");
+        }
+        User u = userRepo.findByUsername(username);
+        if(u == null) {
+            throw new NotFoundException("The specified user is not found!");
+        }
+    }
+
+    @Override
+    public User updateUserInfo(User user) {
+        User u = validate(user);
+
+        String hash = u.getPasswordHash();
+        user.setPasswordHash(hash);
+
+        Role role = roleRepo.findByName(Constants.ROLE_USER);
+        List<Role> roles = new ArrayList<>();
+        roles.add(role);
+        user.setRoles(roles);
+
+        UserStatus status = userStatusRepository.findByName(Constants.USER_STATUS_ALLOWED);
+        user.setUserStatus(status);
+
+        if(user.getTown() != null) {
+            Town town = checkTown(user.getTown());
+            user.setTown(town);
+        }
+
+        return userRepo.save(user);
+    }
+
+    private User validate(User user) {
+        if(user == null) {  throw new IllegalArgumentException("User object must be given"); }
+        User u = userRepo.findByUsername(user.getUsername());
+        if(u == null) {
+            throw new NotFoundException("The specified user is not found!");
+        }
+        return u;
+    }
+
+    private Town checkTown(Town town) {
+        Optional<Town> t = townRepository.findById(town.getPostCode());
+        if(!t.isPresent()) {
+            return townRepository.save(town);
+        }
+        return t.get();
+    }
+
 }

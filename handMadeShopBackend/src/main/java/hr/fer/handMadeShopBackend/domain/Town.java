@@ -7,14 +7,14 @@ import javax.persistence.Id;
 public class Town {
 
     @Id
-    private int postCode;
+    private Long postCode;
     private String name;
 
-    public int getPostCode() {
+    public Long getPostCode() {
         return postCode;
     }
 
-    public void setPostCode(int postCode) {
+    public void setPostCode(Long postCode) {
         this.postCode = postCode;
     }
 
