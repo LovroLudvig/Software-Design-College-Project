@@ -3,14 +3,10 @@ package hr.fer.handMadeShopBackend.rest;
 import hr.fer.handMadeShopBackend.domain.User;
 import hr.fer.handMadeShopBackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,11 +19,6 @@ public class TestController {
 
     @Autowired
     private InMemoryUserDetailsManager inMemoryUserDetailsManager;
-
-//    @Autowired
-//    public void SimpleSecurityController(InMemoryUserDetailsManager inMemoryUserDetailsManager) {
-//        this.inMemoryUserDetailsManager = inMemoryUserDetailsManager;
-//    }
 
     @GetMapping("")
     public User helloPublic() {

@@ -1,13 +1,11 @@
 package hr.fer.handMadeShopBackend.configuration;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
+import hr.fer.handMadeShopBackend.Constants.Constants;
+import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,20 +13,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
 import java.util.Properties;
 
-//@Configuration
-//@Lazy
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    public static final String USER = "USER";
-    public static final String ADMIN = "ADMIN";
-    private static String REALM="MY_REALM";
+    private static final String REALM = "MY_REALM";
 
     @Autowired
     UserDetailsService userDetailsService;
@@ -38,8 +30,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
 
         String hash = passwordEncoder().encode("password");
-        auth.inMemoryAuthentication().withUser("ivan").password(hash).roles(USER, ADMIN);
-        auth.inMemoryAuthentication().withUser("martin").password(hash).roles(USER, ADMIN);
+
+        auth.inMemoryAuthentication().withUser("ivan").password(hash).roles(Constants.ROLE_USER, Constants.ROLE_ADMIN);
+        auth.inMemoryAuthentication().withUser("martin").password(hash).roles(Constants.ROLE_USER, Constants.ROLE_ADMIN);
     }
 
     @Override
@@ -55,8 +48,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/auth/register").permitAll()
                 .antMatchers("/auth/login", "/auth/logout").authenticated()
-                .antMatchers("/hello").hasRole("USER")
-                .antMatchers("/hello/private").hasRole("ADMIN")
+                .antMatchers("/hello").hasRole(Constants.ROLE_USER)
+                .antMatchers("/hello/private").hasRole(Constants.ROLE_ADMIN)
+                .antMatchers("/user/delete/**", "/user/update").authenticated()
+                .antMatchers("/user/forbid/**").hasRole(Constants.ROLE_ADMIN)
+                .antMatchers("/orders", "/orders/manage").hasRole(Constants.ROLE_ADMIN)
+                .antMatchers("/transactions/all").hasRole(Constants.ROLE_ADMIN)
                 .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//We don't need sessions to be created.
     }

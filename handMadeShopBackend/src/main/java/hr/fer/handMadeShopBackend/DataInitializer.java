@@ -1,44 +1,50 @@
 package hr.fer.handMadeShopBackend;
 
-import hr.fer.handMadeShopBackend.domain.User;
-import hr.fer.handMadeShopBackend.service.UserService;
+import hr.fer.handMadeShopBackend.Constants.Constants;
+import hr.fer.handMadeShopBackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
 /**
  * Example component used to insert some test students at application startup.
  */
 @Component
 public class DataInitializer {
-//    @Autowired
-//    private StudentService studentService;
-//
-//    @Value("${opp.test.student.names}")
-//    private String testNames;
-//
-//    @Value("${opp.test.student.leads}")
-//    private int testLeadsCount;
-//
-//    @EventListener
-//    public void appReady(ApplicationReadyEvent event) {
-//        String[] names = testNames.split(",");
-//        Assert.isTrue(names.length < 10, "Can insert max 9 users");
-//        for (int i = 0; i < names.length; i++) {
-//            studentService.createStudent(makeStudent(names[i], i));
-//        }
-//    }
-//
-//    private User makeStudent(String prefix, int i) {
-//        User student = new User();
-//        student.setName(prefix + "ica");
-//        student.setLastName(prefix + "ić");
-//        return student;
-//    }
+
+    @Autowired
+    private UserStatusService userStatusService;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private StoryStatusService storyStatusService;
+
+    @Autowired
+    private OrderStatusService orderStatusService;
+
+    @EventListener
+    public void appReady(ApplicationReadyEvent event) {
+        // User status initialization
+        userStatusService.saveStatusWithName(Constants.USER_STATUS_ALLOWED);
+        userStatusService.saveStatusWithName(Constants.USER_STATUS_FORBIDDEN);
+
+        // Roles initialization
+        roleService.saveRoleWithName(Constants.ROLE_USER);
+        roleService.saveRoleWithName(Constants.ROLE_ADMIN);
+
+        // Story status initialization
+        storyStatusService.saveStoryStatusWithName(Constants.STORY_STATUS_ALLOWED);
+        storyStatusService.saveStoryStatusWithName(Constants.STORY_STATUS_DENIED);
+        storyStatusService.saveStoryStatusWithName(Constants.STORY_STATUS_IN_EVALUATION);
+
+        // Order status initialization
+        orderStatusService.saveOrderStatusWithName(Constants.ORDER_STATUS_ALLOWED);
+        orderStatusService.saveOrderStatusWithName(Constants.ORDER_STATUS_DENIED);
+        orderStatusService.saveOrderStatusWithName(Constants.ORDER_STATUS_IN_EVALUATION);
+    }
+
 }
 

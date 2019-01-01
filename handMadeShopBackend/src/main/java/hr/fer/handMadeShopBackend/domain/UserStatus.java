@@ -1,8 +1,6 @@
 package hr.fer.handMadeShopBackend.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class UserStatus {
@@ -10,6 +8,8 @@ public class UserStatus {
     @Id
     @GeneratedValue
     private Long id;
+
+    @Column(unique = true)
     private String name;
 
     public Long getId() {

@@ -1,5 +1,6 @@
 package hr.fer.handMadeShopBackend.rest;
 
+import hr.fer.handMadeShopBackend.Exceptions.NotFoundException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,15 @@ public class RestExceptionHandler {
         props.put("status", "400");
         props.put("error", "Bad Request");
         return new ResponseEntity<>(props, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    protected ResponseEntity<?> handleNotFound(Exception e, WebRequest request) {
+        Map<String, String> props = new HashMap<>();
+        props.put("message", e.getMessage());
+        props.put("status", "404");
+        props.put("error", "Not Found");
+        return new ResponseEntity<>(props, HttpStatus.NOT_FOUND);
     }
 }
 

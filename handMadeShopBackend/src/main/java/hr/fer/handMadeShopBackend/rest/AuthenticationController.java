@@ -1,7 +1,9 @@
 package hr.fer.handMadeShopBackend.rest;
 
+import hr.fer.handMadeShopBackend.Constants.Constants;
 import hr.fer.handMadeShopBackend.domain.User;
 import hr.fer.handMadeShopBackend.service.UserService;
+import hr.fer.handMadeShopBackend.service.UserStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -14,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 @Lazy
 public class AuthenticationController {
 
-    public static final String USER = "USER";
-    public static final String ADMIN = "ADMIN";
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Autowired
@@ -24,22 +24,21 @@ public class AuthenticationController {
     @Autowired
     private UserService userService;
 
-//    @Autowired
-//    public void SimpleSecurityController(InMemoryUserDetailsManager inMemoryUserDetailsManager) {
-//        this.inMemoryUserDetailsManager = inMemoryUserDetailsManager;
-//    }
+    @Autowired
+    private UserStatusService userStatusService;
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public User register(@RequestBody User user) {
         // The password hash property from the request is not actually a hash
         User u = userService.fetch(user.getUsername());
-
         String hash = encoder.encode(user.getPasswordHash());
+
         user.setPasswordHash(hash);
         inMemoryUserDetailsManager.createUser(
                 org.springframework.security.core.userdetails.User.withUsername(user.getUsername())
-                        .password(hash).roles(USER, ADMIN).build());
+                        .password(hash).roles(Constants.ROLE_USER, Constants.ROLE_ADMIN).build());
+
         return userService.save(user);
     }
 
