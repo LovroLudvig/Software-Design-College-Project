@@ -2,10 +2,14 @@ package com.example.lovro.myapplication.activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,24 +21,36 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.transition.Fade;
+import android.util.Patterns;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.domain.User;
+import com.example.lovro.myapplication.network.ApiService;
+import com.example.lovro.myapplication.network.GenericResponse;
+import com.example.lovro.myapplication.network.InitApiService;
 
 import java.io.IOException;
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private ImageView profile_picture;
     private TextInputEditText email;
+    private ProgressDialog progressDialog;
     private TextInputLayout email_layout;
     private TextInputEditText username;
     private TextInputLayout username_layout;
@@ -42,8 +58,8 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout password_layout;
     private Button register_button;
     private View backButton;
-    private Bitmap profile;
-    private LinearLayout linearLayout;
+    private Call<GenericResponse<User>> callRegister;
+    private ApiService apiService;
     private static final int GET_FROM_GALLERY = 3;
     private static int PERMISSION_FOR_GALLERY = 97;
 
@@ -53,9 +69,11 @@ public class RegisterActivity extends AppCompatActivity {
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         getWindow().setBackgroundDrawableResource(R.drawable.theme1) ;
 
-// set an exit transition
-        getWindow().setExitTransition(new Fade());
-        getWindow().setEnterTransition(new Fade());
+        // set an exit transition
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            getWindow().setExitTransition(new Fade());
+            getWindow().setEnterTransition(new Fade());
+        }
         setContentView(R.layout.activity_register);
 
         profile_picture = findViewById(R.id.profilePicture);
@@ -68,8 +86,12 @@ public class RegisterActivity extends AppCompatActivity {
         username_layout = findViewById(R.id.username_layout);
         backButton = findViewById(R.id.backButton);
 
+        //Initialization of static api service
+        //TODO PROMIJENITI LOKACIJU OVE API INICIJALIZACIJE
+        InitApiService.initApiService();
+        apiService = InitApiService.apiService;
 
-
+        //Initialization of listeners
         initListeners();
     }
 
@@ -122,8 +144,16 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(checkInputs()){
-                   User user = new User(email.getText().toString(),password.getText().toString(),username.getText().toString(),profile);
-                   register(user);
+                    if(isValidEmail(email.getText().toString())){
+                        email_layout.setErrorEnabled(false);
+                        if(isInternetAvailable()){
+                            hideKeyboard();
+                            User user = new User(email.getText().toString(),password.getText().toString(),username.getText().toString(),null,null,null,null,null,null);
+                            register(user);
+                        }
+                    }else{
+                        email_layout.setError("Invalid e-mail");
+                    }
                 }
             }
         });
@@ -171,10 +201,13 @@ public class RegisterActivity extends AppCompatActivity {
                     .setNegativeButton("No", null)
                     .show();
         }else {
-            email_layout.setHint("");
-            password_layout.setHint("");
-            username_layout.setHint("");
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+                    email_layout.setHint("");
+                    password_layout.setHint("");
+                    username_layout.setHint("");
+            }
             super.onBackPressed();
+
         }
     }
 
@@ -217,12 +250,94 @@ public class RegisterActivity extends AppCompatActivity {
         return true;
     }
 
-    private boolean register(User user){
-
-        //TODO logic for registering user into system
-
-        return true;
+    public static boolean isValidEmail(CharSequence target) {
+        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }
 
+    private void hideKeyboard(){
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    private boolean isInternetAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager == null) {
+            return false;
+        }
+
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
+
+    private void show_loading(){
+        progressDialog = ProgressDialog.show(this,"","Registration in process...",true,false);
+    }
+
+    private void stop_loading(){
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        }
+    }
+
+    private void showError(String message){
+        new AlertDialog.Builder(this)
+                .setTitle("")
+                .setMessage(message)
+                .setPositiveButton("OK",null)
+                .create()
+                .show();
+    }
+
+    @Override
+    protected void onPause() {
+        if(callRegister != null){
+            callRegister.cancel();
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        if(callRegister != null){
+            callRegister.cancel();
+        }
+        super.onStop();
+    }
+
+
+    private void register(User user){
+        show_loading();
+        callRegister = apiService.registerUser(user);
+        callRegister.enqueue(new Callback<GenericResponse<User>>() {
+            @Override
+            public void onResponse(Call<GenericResponse<User>> call, Response<GenericResponse<User>> response) {
+                stop_loading();
+                if(response.isSuccessful()){
+                    Toast.makeText(RegisterActivity.this,"Registration successful!",Toast.LENGTH_LONG).show();
+                }else {
+                    //showError("Unexpected error occurred. Please try again!");
+                    try {
+                        showError(response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GenericResponse<User>> call, Throwable t) {
+                stop_loading();
+                if(call.isCanceled()){
+                    //nothing
+                }else{
+                    showError(t.getMessage());
+                }
+
+            }
+        });
+    }
 
 }
