@@ -78,8 +78,8 @@
                 android:id="@+id/email_input"
                 android:layout_width="match_parent"
                 android:layout_height="45sp"
-                android:drawableLeft="@drawable/ic_email_black_24dp"
-                android:hint="E-mail"
+                android:drawableLeft="@drawable/ic_person_black_24dp"
+                android:hint="Username"
                 android:inputType="textEmailAddress"
                 android:textColor="#dddddd"
                 android:textColorHint="#dddddd" />

@@ -87,8 +87,6 @@ public class RegisterActivity extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
 
         //Initialization of static api service
-        //TODO PROMIJENITI LOKACIJU OVE API INICIJALIZACIJE
-        InitApiService.initApiService();
         apiService = InitApiService.apiService;
 
         //Initialization of listeners
@@ -150,6 +148,8 @@ public class RegisterActivity extends AppCompatActivity {
                             hideKeyboard();
                             User user = new User(email.getText().toString(),password.getText().toString(),username.getText().toString(),null,null,null,null,null,null);
                             register(user);
+                        }else {
+                            showError("No internet connection!");
                         }
                     }else{
                         email_layout.setError("Invalid e-mail");
@@ -317,12 +317,17 @@ public class RegisterActivity extends AppCompatActivity {
                 stop_loading();
                 if(response.isSuccessful()){
                     Toast.makeText(RegisterActivity.this,"Registration successful!",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(RegisterActivity.this,SignInActivity.class);
+                    intent.putExtra("from","register");
+                    intent.putExtra("username",username.getText().toString());
+                    intent.putExtra("pass",password.getText().toString());
+                    startActivity(intent);
+                    finish();
                 }else {
-                    //showError("Unexpected error occurred. Please try again!");
-                    try {
-                        showError(response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if(response.code() == 400){
+                        showError("E-mail or username is already in use!");
+                    }else{
+                        showError("Unexpected error occurred. Please try again!");
                     }
                 }
             }

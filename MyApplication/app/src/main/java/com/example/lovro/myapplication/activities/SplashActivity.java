@@ -3,6 +3,7 @@ package com.example.lovro.myapplication.activities;
 import android.animation.Animator;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,10 +14,12 @@ import android.view.Window;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.lovro.myapplication.R;
+import com.example.lovro.myapplication.network.InitApiService;
 
 public class SplashActivity extends AppCompatActivity {
 
     LottieAnimationView animation;
+    private boolean isUserLoggedIn = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,6 +28,13 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         animation=findViewById(R.id.animation_view);
+
+        //API initialization
+        InitApiService.initApiService();
+
+        //check for user in memory
+        checkIfUserIsLoggedIn();
+
         animation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -33,7 +43,13 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
+                Intent intent;
+
+                if(isUserLoggedIn){
+                    intent = new Intent(SplashActivity.this,OffersActivity.class);
+                }else{
+                    intent = new Intent(SplashActivity.this,LoginActivity.class);
+                }
 
                 if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
                     startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
@@ -63,6 +79,13 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
         animation.playAnimation();
+    }
+
+    private void checkIfUserIsLoggedIn() {
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+        if(prefs.getBoolean("saved",false)){
+            isUserLoggedIn = true;
+        }
     }
 
 }

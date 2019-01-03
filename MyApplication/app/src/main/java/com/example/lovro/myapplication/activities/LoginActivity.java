@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent signin_activity = new Intent(LoginActivity.this,SignInActivity.class);
-
+                signin_activity.putExtra("from","login");
                 if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
                     startActivity(signin_activity,ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
                 }else{
