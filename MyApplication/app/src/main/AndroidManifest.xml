@@ -21,7 +21,7 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
             ></activity>
         <activity
-            android:name=".activities.RegisterActivity"
+            android:name=".activities.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"

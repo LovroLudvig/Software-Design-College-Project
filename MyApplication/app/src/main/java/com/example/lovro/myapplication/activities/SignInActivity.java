@@ -3,6 +3,7 @@ package com.example.lovro.myapplication.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.transition.Fade;
@@ -26,7 +27,6 @@ public class SignInActivity extends BasicActivity {
     private Button sign_in_button;
     private TextInputEditText username;
     private TextInputEditText password;
-    private ProgressDialog progressDialog;
     private ApiService apiService = InitApiService.apiService;
     private View backButon;
     private Call<ResponseBody> callLogin;
@@ -35,9 +35,12 @@ public class SignInActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setBackgroundDrawableResource(R.drawable.theme1) ;
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        getWindow().setExitTransition(new Fade());
-        getWindow().setEnterTransition(new Fade());
+
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+            getWindow().setExitTransition(new Fade());
+            getWindow().setEnterTransition(new Fade());
+        }
         setContentView(R.layout.activity_sign_in);
 
         sign_in_button=findViewById(R.id.login_button);
@@ -91,23 +94,6 @@ public class SignInActivity extends BasicActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
-        if(callLogin != null){
-            callLogin.cancel();
-        }
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        if(callLogin != null){
-            callLogin.cancel();
-        }
-        super.onStop();
-    }
-
-
 
 
 
@@ -156,6 +142,22 @@ public class SignInActivity extends BasicActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        if(callLogin != null){
+            callLogin.cancel();
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        if(callLogin != null){
+            callLogin.cancel();
+        }
+        super.onStop();
     }
 
 }
