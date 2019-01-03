@@ -2,6 +2,7 @@ package com.example.lovro.myapplication.network;
 
 import com.example.lovro.myapplication.domain.User;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Header;
@@ -13,6 +14,6 @@ public interface ApiService {
     Call<GenericResponse<User>> registerUser(@Body User user);
 
     @POST("/auth/login")
-    Call<GenericResponse<String>> loginUser(@Header("Authorization") String auth);
+    Call<ResponseBody> loginUser(@Header("Authorization") String auth);
 
 }

@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/RegisterTheme">
         <activity
+            android:name=".activities.OffersActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/RegisterTheme"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
+            ></activity>
+        <activity
             android:name=".activities.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"

@@ -25,6 +25,7 @@ import com.example.lovro.myapplication.network.InitApiService;
 
 import java.io.IOException;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +38,7 @@ public class SignInActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private ApiService apiService = InitApiService.apiService;
     private View backButon;
-    private Call<GenericResponse<String>> callLogin;
+    private Call<ResponseBody> callLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +126,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void show_loading(){
-        progressDialog = ProgressDialog.show(this,"","Registration in process...",true,false);
+        progressDialog = ProgressDialog.show(this,"","Logging in...",true,false);
     }
 
     private void stop_loading(){
@@ -164,34 +165,36 @@ public class SignInActivity extends AppCompatActivity {
     private void login_user(String auth){
         show_loading();
         callLogin = apiService.loginUser(auth);
-        callLogin.enqueue(new Callback<GenericResponse<String>>() {
+        callLogin.enqueue(new Callback<ResponseBody>() {
+
             @Override
-            public void onResponse(Call<GenericResponse<String>> call, Response<GenericResponse<String>> response) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 stop_loading();
                 if(response.isSuccessful()){
                     saveUserInMemory();
-                    Intent intent = new Intent(SignInActivity.this,OffersActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), OffersActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                            Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-                    finish();
                 }else{
-                    //showError("Unexpected error occurred. Please try again!");
-                    try {
-                        showError(response.errorBody() != null ? response.errorBody().string() : "Null error");
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if(response.code() == 401){
+                        showError("Wrong email or password!");
+                    }else{
+                        showError("Unexpected error occurred. Please try again!");
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<GenericResponse<String>> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 stop_loading();
                 if(call.isCanceled()){
                     //nothing
                 }else{
-                    //showError("Unknown error occurred. Please try again!");
-                    showError(t.getMessage());
-                    t.printStackTrace();
+                    showError("Unknown error occurred. Please try again!");
+                    //showError(t.getMessage());
+                    //t.printStackTrace();
                 }
             }
         });
