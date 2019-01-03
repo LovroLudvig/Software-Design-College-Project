@@ -1,13 +1,16 @@
 package com.example.lovro.myapplication.activities;
 
 import android.app.ActivityOptions;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Explode;
 import android.transition.Fade;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -76,6 +79,26 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+        terms_of_service.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                open_terms();
+            }
+        });
+    }
+
+    private void open_terms(){
+        LayoutInflater inflater= LayoutInflater.from(this);
+        View view=inflater.inflate(R.layout.terms_of_service_layout, null);
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Terms of Service");
+        alertDialog.setIcon(R.drawable.ic_library_books_black_24dp);
+        alertDialog.setView(view);
+
+        AlertDialog alert = alertDialog.create();
+        alert.show();
     }
 
     @Override
