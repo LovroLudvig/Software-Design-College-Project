@@ -1,14 +1,12 @@
 package com.example.lovro.myapplication.activities;
 
 import android.app.ActivityOptions;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Explode;
 import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;

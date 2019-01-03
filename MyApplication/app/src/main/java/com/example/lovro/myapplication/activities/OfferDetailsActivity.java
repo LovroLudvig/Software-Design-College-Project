@@ -2,6 +2,7 @@ package com.example.lovro.myapplication.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
 import com.example.lovro.myapplication.domain.Offer;
 import com.example.lovro.myapplication.domain.User;
 
