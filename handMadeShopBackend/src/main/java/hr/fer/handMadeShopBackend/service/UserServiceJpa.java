@@ -121,6 +121,7 @@ public class UserServiceJpa implements UserService {
     }
 
     private Town checkTown(Town town) {
+        if(town == null) return null;
         Optional<Town> t = townRepository.findById(town.getPostCode());
         if(!t.isPresent()) {
             return townRepository.save(town);

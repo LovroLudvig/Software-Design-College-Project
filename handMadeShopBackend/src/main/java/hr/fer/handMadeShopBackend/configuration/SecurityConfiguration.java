@@ -1,7 +1,6 @@
 package hr.fer.handMadeShopBackend.configuration;
 
 import hr.fer.handMadeShopBackend.Constants.Constants;
-import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
