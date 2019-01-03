@@ -15,6 +15,7 @@ public class InitApiService {
         apiService = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(MoshiConverterFactory.create())
+                .client(createOkHttpClient())
                 .build()
                 .create(ApiService.class);
     }
