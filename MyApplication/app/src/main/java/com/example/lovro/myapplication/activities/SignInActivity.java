@@ -1,42 +1,32 @@
 package com.example.lovro.myapplication.activities;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.transition.Fade;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.network.ApiService;
-import com.example.lovro.myapplication.network.GenericResponse;
 import com.example.lovro.myapplication.network.InitApiService;
-
-import java.io.IOException;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends BasicActivity {
 
     private Button sign_in_button;
     private TextInputEditText username;
     private TextInputEditText password;
-    private ProgressDialog progressDialog;
     private ApiService apiService = InitApiService.apiService;
     private View backButon;
     private Call<ResponseBody> callLogin;
@@ -45,9 +35,12 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setBackgroundDrawableResource(R.drawable.theme1) ;
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        getWindow().setExitTransition(new Fade());
-        getWindow().setEnterTransition(new Fade());
+
+        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+            getWindow().setExitTransition(new Fade());
+            getWindow().setEnterTransition(new Fade());
+        }
         setContentView(R.layout.activity_sign_in);
 
         sign_in_button=findViewById(R.id.login_button);
@@ -101,58 +94,8 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onPause() {
-        if(callLogin != null){
-            callLogin.cancel();
-        }
-        super.onPause();
-    }
 
-    @Override
-    protected void onStop() {
-        if(callLogin != null){
-            callLogin.cancel();
-        }
-        super.onStop();
-    }
 
-    private void showError(String message){
-        new AlertDialog.Builder(this)
-                .setTitle("")
-                .setMessage(message)
-                .setPositiveButton("OK",null)
-                .create()
-                .show();
-    }
-
-    private void show_loading(){
-        progressDialog = ProgressDialog.show(this,"","Logging in...",true,false);
-    }
-
-    private void stop_loading(){
-        if(progressDialog != null){
-            progressDialog.dismiss();
-        }
-    }
-
-    private void hideKeyboard(){
-        View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-
-    private boolean isInternetAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager == null) {
-            return false;
-        }
-
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
-    }
 
     private void saveUserInMemory(){
         SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
@@ -164,7 +107,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void login_user(String auth){
-        show_loading();
+        show_loading("Logging in...");
         callLogin = apiService.loginUser(auth);
         callLogin.enqueue(new Callback<ResponseBody>() {
 
@@ -173,7 +116,7 @@ public class SignInActivity extends AppCompatActivity {
                 stop_loading();
                 if(response.isSuccessful()){
                     saveUserInMemory();
-                    Intent intent = new Intent(getApplicationContext(), OffersActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                             Intent.FLAG_ACTIVITY_CLEAR_TASK |
                             Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -199,6 +142,22 @@ public class SignInActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        if(callLogin != null){
+            callLogin.cancel();
+        }
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        if(callLogin != null){
+            callLogin.cancel();
+        }
+        super.onStop();
     }
 
 }

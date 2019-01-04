@@ -1,14 +1,12 @@
 package com.example.lovro.myapplication.activities;
 
 import android.app.ActivityOptions;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Explode;
 import android.transition.Fade;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent register_activity = new Intent(LoginActivity.this,RegisterActivity.class);
+                Intent register_activity = new Intent(LoginActivity.this,SignUpActivity.class);
 
                 if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
                     startActivity(register_activity,ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
@@ -93,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
         View view=inflater.inflate(R.layout.terms_of_service_layout, null);
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Terms of Service");
         alertDialog.setIcon(R.drawable.ic_library_books_black_24dp);
         alertDialog.setView(view);
 
