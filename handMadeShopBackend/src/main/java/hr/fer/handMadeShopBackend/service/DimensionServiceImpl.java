@@ -14,8 +14,12 @@ public class DimensionServiceImpl implements DimensionService{
 	
 	@Override
 	public Dimension save(Dimension dimension) {
+		
+		if(dimension == null) {
+			throw new IllegalArgumentException("Dimension cannot be null");
+		}
 		if(dimension.getDescription() == null) {
-			throw new IllegalArgumentException("The dimension must exist");
+			throw new IllegalArgumentException("Dimension must have a description");
 		}
 		return dimensionRepo.save(dimension);
 	}

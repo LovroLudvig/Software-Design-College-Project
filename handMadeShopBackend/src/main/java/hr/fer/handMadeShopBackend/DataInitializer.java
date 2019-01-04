@@ -80,6 +80,7 @@ public class DataInitializer {
             ad1.setName(name);
             ad1.setPrice(1000.0);
             ad1.setSpecification("Unspecified");
+            ad1.setImageURL("https://cdn.shopify.com/s/files/1/0095/4332/t/30/assets/no-image.svg?3412253793887835423");
             
             List<Dimension> dimensions = new ArrayList<Dimension>();
             Dimension dim1 = new Dimension();

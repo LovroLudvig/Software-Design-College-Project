@@ -20,25 +20,27 @@ public class AdServiceImpl implements AdService{
 	}
 
 	@Override
-	public Advertisement save(Advertisement advertisement) { 
-		if(advertisement.getDescription() == null) {
-			throw new IllegalArgumentException("The description must exist");
+	public Advertisement save(Advertisement advertisement) {
+		if(advertisement==null) {
+			throw new IllegalArgumentException("An advertisement must be provided");
 		}
-		if(advertisement.getDimensions() == null) {
-			throw new IllegalArgumentException("The dimensions must exist");
-
+		if(advertisement.getDescription() == null) {
+			throw new IllegalArgumentException("Advertisement must have a description");
+		}
+		if(advertisement.getDimensions() == null || advertisement.getDimensions().size() == 0) {
+			throw new IllegalArgumentException("At least one dimension must exist");
 		}
 		if(advertisement.getName() == null) {
-			throw new IllegalArgumentException("The name must exist");
+			throw new IllegalArgumentException("Advertisement must have a name");
 		}
-		if(advertisement.getPrice()==null) {
-			throw new IllegalArgumentException("The price must exist");
+		if(advertisement.getPrice() == null) {
+			throw new IllegalArgumentException("Advertisement must have a price");
 		}
-		if(advertisement.getStyles() == null) {
-			throw new IllegalArgumentException("The styles must exist");
+		if(advertisement.getStyles() == null || advertisement.getStyles().size() == 0) {
+			throw new IllegalArgumentException("At least one style must exist");
 		}
 		if(advertisement.getSpecification() == null) {
-			throw new IllegalArgumentException("The specification must exist");
+			throw new IllegalArgumentException("Advertisement must have a specification");
 		}
         return adRepo.save(advertisement);
 	}

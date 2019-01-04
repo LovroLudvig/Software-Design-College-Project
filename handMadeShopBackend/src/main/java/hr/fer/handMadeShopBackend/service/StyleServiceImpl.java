@@ -14,11 +14,15 @@ public class StyleServiceImpl implements StyleService {
 	
 	@Override
 	public Style save(Style style) {
+		
+		if(style == null) {
+			throw new IllegalArgumentException("Style cannot be null");
+		}
 		if(style.getPrice()==null) {
-			throw new IllegalArgumentException("The price must exist");
+			throw new IllegalArgumentException("Styles must have a price");
 		} 
 		if(style.getDescription()==null) {
-			throw new IllegalArgumentException("The description must exist");
+			throw new IllegalArgumentException("Styles must have a description");
 		}
 		return styleRepo.save(style);
 	}
