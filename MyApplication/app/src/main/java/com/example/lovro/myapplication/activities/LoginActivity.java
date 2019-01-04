@@ -91,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
         View view=inflater.inflate(R.layout.terms_of_service_layout, null);
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Terms of Service");
         alertDialog.setIcon(R.drawable.ic_library_books_black_24dp);
         alertDialog.setView(view);
 

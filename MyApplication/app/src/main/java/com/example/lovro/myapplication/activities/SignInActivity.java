@@ -107,7 +107,7 @@ public class SignInActivity extends BasicActivity {
     }
 
     private void login_user(String auth){
-        show_loading();
+        show_loading("Logging in...");
         callLogin = apiService.loginUser(auth);
         callLogin.enqueue(new Callback<ResponseBody>() {
 

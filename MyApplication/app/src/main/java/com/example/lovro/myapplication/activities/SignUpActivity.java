@@ -170,7 +170,6 @@ public class SignUpActivity extends BasicActivity {
         View view=inflater.inflate(R.layout.terms_of_service_layout, null);
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Terms of Service");
         alertDialog.setIcon(R.drawable.ic_library_books_black_24dp);
         alertDialog.setView(view);
 
@@ -243,7 +242,7 @@ public class SignUpActivity extends BasicActivity {
 
 
     private void register(User user){
-        show_loading();
+        show_loading("Registering in process...");
         callRegister = apiService.registerUser(user);
         callRegister.enqueue(new Callback<GenericResponse<User>>() {
             @Override

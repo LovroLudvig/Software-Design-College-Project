@@ -8,10 +8,6 @@
     android:orientation="vertical"
     tools:context=".activities.HomeActivity">
 
-
-
-
-
         <!-- Middle section (body) -->
         <RelativeLayout
             android:layout_width="match_parent"
