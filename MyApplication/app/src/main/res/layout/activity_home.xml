@@ -11,13 +11,18 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/Toolbar"
         android:layout_width="match_parent"
-        android:layout_height="68dp"
+        android:layout_height="50dp"
         android:background="@color/AppColor"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="Craftery"
-        app:titleTextColor="@color/White"
-        app:titleTextAppearance="@style/Toolbar.TitleText"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/app_logo_text" />
+    </android.support.v7.widget.Toolbar>
 
         <!-- Middle section (body) -->
         <RelativeLayout
