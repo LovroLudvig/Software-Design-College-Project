@@ -3,6 +3,7 @@ package hr.fer.handMadeShopBackend.rest;
 import hr.fer.handMadeShopBackend.dao.AdvertisementRepository;
 import hr.fer.handMadeShopBackend.dao.DimensionRepository;
 import hr.fer.handMadeShopBackend.dao.StyleRepository;
+import hr.fer.handMadeShopBackend.dao.TransactionRepository;
 import hr.fer.handMadeShopBackend.domain.*;
 import hr.fer.handMadeShopBackend.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,8 +63,9 @@ public class OrderController {
 
     @PostMapping("/manage")
     public AdOrder manageOrder(@RequestParam(value="orderId", required=true) Long orderId,
-                               @RequestParam(value="isAllowed", required=true) boolean isAlowed) {
-        return orderService.manageOrder(orderId, isAlowed);
+                               @RequestParam(value="isAllowed", required=true) boolean isAlowed,
+                               @RequestParam(value="price", required=true) Double price) {
+        return orderService.manageOrder(orderId, isAlowed, price);
     }
 
     @GetMapping("")
