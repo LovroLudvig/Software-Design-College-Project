@@ -76,7 +76,7 @@ public class DataInitializer {
     private void createFakeAds(String... names) {
     	for(String name: names) {
     		Advertisement ad1 = new Advertisement();
-            ad1.setDescription("Some description");
+            ad1.setDescription("Some description for " + name);
             ad1.setName(name);
             ad1.setPrice(1000.0);
             ad1.setSpecification("Unspecified");

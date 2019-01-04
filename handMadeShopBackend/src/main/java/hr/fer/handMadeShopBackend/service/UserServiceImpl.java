@@ -103,10 +103,8 @@ public class UserServiceImpl implements UserService {
         UserStatus status = userStatusRepository.findByName(Constants.USER_STATUS_ALLOWED);
         user.setUserStatus(status);
 
-        if(user.getTown() != null) {
-            Town town = checkTown(user.getTown());
-            user.setTown(town);
-        }
+        Town town = checkTown(user.getTown());
+        user.setTown(town);
 
         return userRepo.save(user);
     }
