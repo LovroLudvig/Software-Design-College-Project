@@ -9,7 +9,7 @@ import hr.fer.handMadeShopBackend.dao.TransactionRepository;
 import hr.fer.handMadeShopBackend.domain.Transaction;
 
 @Service
-public class TransactionServiceJpa implements TransactionService {
+public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepo;
