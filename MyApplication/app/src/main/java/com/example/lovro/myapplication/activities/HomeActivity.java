@@ -18,6 +18,7 @@ import com.example.lovro.myapplication.adapters.SectionsPagerAdapter;
 public class HomeActivity extends AppCompatActivity implements ProfileFragment.OnFragmentInteractionListener, NotificationsFragment.OnFragmentInteractionListener, StoryFragment.OnFragmentInteractionListener, OffersFragment.OnFragmentInteractionListener {
 
     private int backButtonCount=0;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,24 +37,41 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.O
         ViewPager viewPager = findViewById(R.id.container);
         viewPager.setAdapter(adapter);
 
-        TabLayout tabLayout = findViewById(R.id.tabs);
+        tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         tabLayout.getTabAt(0).setIcon(R.drawable.story_btn);
-        tabLayout.getTabAt(1).setIcon(R.drawable.shop_btn);
-        tabLayout.getTabAt(2).setIcon(R.drawable.notif_btn);
-        tabLayout.getTabAt(3).setIcon(R.drawable.profile_btn);
+        tabLayout.getTabAt(1).setIcon(R.drawable.shop_btn_deselected);
+        tabLayout.getTabAt(2).setIcon(R.drawable.notif_btn_deselected);
+        tabLayout.getTabAt(3).setIcon(R.drawable.profile_btn_deselected);
 
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                Toast.makeText(getApplicationContext(), String.valueOf(tab.getPosition()),Toast.LENGTH_SHORT).show();
+                if (tab.getPosition()==0){
+                    tabLayout.getTabAt(0).setIcon(R.drawable.story_btn);
+                }else if (tab.getPosition()==1){
+                    tabLayout.getTabAt(1).setIcon(R.drawable.shop_btn);
+                }else if (tab.getPosition()==2){
+                    tabLayout.getTabAt(2).setIcon(R.drawable.notif_btn);
+                }else if (tab.getPosition()==3){
+                    tabLayout.getTabAt(3).setIcon(R.drawable.profile_btn);
+                }
+
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
+                if (tab.getPosition()==0){
+                    tabLayout.getTabAt(0).setIcon(R.drawable.story_btn_deselected);
+                }else if (tab.getPosition()==1){
+                    tabLayout.getTabAt(1).setIcon(R.drawable.shop_btn_deselected);
+                }else if (tab.getPosition()==2){
+                    tabLayout.getTabAt(2).setIcon(R.drawable.notif_btn_deselected);
+                }else if (tab.getPosition()==3){
+                    tabLayout.getTabAt(3).setIcon(R.drawable.profile_btn_deselected);
+                }
             }
 
             @Override
