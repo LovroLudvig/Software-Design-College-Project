@@ -1,80 +1,189 @@
 package com.example.lovro.myapplication.Fragments;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
+import com.example.lovro.myapplication.adapters.OfferAdapter;
+import com.example.lovro.myapplication.domain.Offer;
+import com.example.lovro.myapplication.network.ApiService;
+import com.example.lovro.myapplication.network.GenericResponse;
+import com.example.lovro.myapplication.network.InitApiService;
+import com.squareup.moshi.Json;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OffersFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link OffersFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
+
 public class OffersFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private List<Offer> offerList = new ArrayList<>();
+    private Call<List<Offer>> getOffers;
+    private ProgressBar progressBar;
+    private ApiService apiService = InitApiService.apiService;
+    private ProgressDialog progressDialog;
+    private OfferAdapter offerAdapter;
 
-    private OnFragmentInteractionListener mListener;
-
-    public OffersFragment() {
-        // Required empty public constructor
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_offers, container, false);
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment OffersFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static OffersFragment newInstance(String param1, String param2) {
-        OffersFragment fragment = new OffersFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        recyclerView = view.findViewById(R.id.recyclerview_offers);
+        swipeRefreshLayout = view.findViewById(R.id.swipeLayout);
+        progressBar = view.findViewById(R.id.offers_progressbar);
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        initRecyclerView();
+        initOfferAdapter(offerList);
+        initListeners();
+
+        if(isInternetAvailable()){
+            loadOffers(getUserAuth());
+        }else{
+            progressBar.setVisibility(View.GONE);
+            showError("No internet connection!");
+        }
+    }
+
+    private void initListeners(){
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadOffers(getUserAuth());
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        offerAdapter.setListener(new OfferAdapter.OnShowClickListener() {
+            @Override
+            public void onShowClick(Offer offer) {
+                Toast.makeText(getContext(),"Kliknuo si na mene!",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+    protected boolean isInternetAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager == null) {
+            return false;
+        }
+
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
+
+    private void initRecyclerView(){
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    private void initOfferAdapter(List<Offer> offerList){
+        offerAdapter = new OfferAdapter(offerList);
+        recyclerView.setAdapter(offerAdapter);
+    }
+
+    private String getUserAuth(){
+        SharedPreferences prefs = this.getActivity().getSharedPreferences("UserData", MODE_PRIVATE);
+        String username = prefs.getString("username","");
+        String pass = prefs.getString("password","");
+
+        String token = username.trim()+":"+pass.trim();
+        String encoded_token = Base64.encodeToString(token.getBytes(),0);
+        String auth = "Basic"+" "+encoded_token.trim();
+
+        return auth;
+    }
+
+    private void loadOffers(String auth){
+        progressBar.setVisibility(View.VISIBLE);
+        getOffers = apiService.getAllOffers(auth);
+        getOffers.enqueue(new Callback<List<Offer>>() {
+            @Override
+            public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {
+                if(response.isSuccessful()){
+                    offerList = response.body();
+                    displayOffers(offerList);
+                }else{
+                    progressBar.setVisibility(View.GONE);
+                    if(call.isCanceled()){
+                        //nothing
+                    }else{
+                        try {
+                            showError(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Offer>> call, Throwable t) {
+                Toast.makeText(getActivity(),"Error loading offers", Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void displayOffers(List<Offer> offers){
+        progressBar.setVisibility(View.GONE);
+
+        if(offerAdapter != null){
+            offerAdapter.setOffers(offers);
+        }else{
+            initOfferAdapter(offers);
+        }
+    }
+
+    protected void showError(String message){
+        new AlertDialog.Builder(getContext())
+                .setTitle("")
+                .setMessage(message)
+                .setPositiveButton("OK",null)
+                .create()
+                .show();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_offers, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
     @Override
     public void onResume() {
@@ -84,32 +193,11 @@ public class OffersFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }
