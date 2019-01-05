@@ -1,6 +1,7 @@
 package com.example.lovro.myapplication.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -89,18 +90,29 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.O
     @Override
     public void onBackPressed()
     {
+        if(userIsRegistered()){
+            if(backButtonCount >= 1)
+            {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+            else
+            {
+                Toast.makeText(this, "Press the back button once again to close the application.", Toast.LENGTH_SHORT).show();
+                backButtonCount++;
+            }
+        }else{
+            finish();
+        }
+    }
 
-        if(backButtonCount >= 1)
-        {
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+    private boolean userIsRegistered(){
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+        if(prefs.getBoolean("saved",false)){
+            return true;
         }
-        else
-        {
-            Toast.makeText(this, "Press the back button once again to close the application.", Toast.LENGTH_SHORT).show();
-            backButtonCount++;
-        }
+        return false;
     }
 }

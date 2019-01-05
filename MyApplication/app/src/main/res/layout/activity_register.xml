@@ -121,7 +121,7 @@
                 android:layout_marginRight="30sp"
                 style="@android:style/Widget.Material.Light.Button"
 
-                android:layout_below="@+id/google_login"
+                android:layout_below="@+id/guest_login"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/round_button2"
                 android:fontFamily="@font/doppio_one"

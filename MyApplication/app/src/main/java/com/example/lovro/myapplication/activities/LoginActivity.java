@@ -20,7 +20,7 @@ import com.example.lovro.myapplication.R;
 public class LoginActivity extends AppCompatActivity {
 
     //Variable definition
-    private Button google_login;
+    private Button guest_login;
     private Button email_login;
     private TextView terms_of_service;
     private TextView sign_in;
@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         //variable initialisation
-        google_login = findViewById(R.id.google_login);
+        guest_login = findViewById(R.id.guest_login);
         email_login = findViewById(R.id.email_login);
         terms_of_service = findViewById(R.id.terms);
         sign_in=findViewById(R.id.sign_in);
@@ -61,6 +61,14 @@ public class LoginActivity extends AppCompatActivity {
                 }else{
                     startActivity(signin_activity);
                 }
+            }
+        });
+
+        guest_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
             }
         });
 

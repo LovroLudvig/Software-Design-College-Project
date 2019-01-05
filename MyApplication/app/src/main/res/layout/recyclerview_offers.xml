@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/White"
-    android:paddingBottom="10sp">
+    android:paddingBottom="0sp">
 
     <ImageView
         android:id="@+id/imageView"
@@ -55,4 +55,15 @@
         android:textColor="@android:color/background_dark"
         android:textSize="20sp"
         android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="3sp"
+        android:layout_below="@+id/textView12"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="20sp"
+        android:background="@color/AppGrey" />
+
 </RelativeLayout>
