@@ -10,15 +10,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingTop="50dp"
+        android:paddingTop="30dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:id="@+id/profile_image"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
             android:layout_gravity="center"
             android:src="@drawable/placeholder"
             android:scaleType="fitXY"
+            android:background="@drawable/frame_for_picture"
             android:layout_marginBottom="20dp"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,6 +39,7 @@
                     android:src="@drawable/ic_person_pin_black_24dp"
                     android:layout_marginRight="8dp"/>
                 <TextView
+                    android:id="@+id/name_username_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Name: *name*, Also known as: *username*"/>
@@ -52,6 +55,7 @@
                     android:src="@drawable/ic_location_city_black_24dp"
                     android:layout_marginRight="8dp"/>
                 <TextView
+                    android:id="@+id/location_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Lives in Zagreb, Croatia"/>
@@ -67,6 +71,7 @@
                     android:src="@drawable/ic_email_black_24dp"
                     android:layout_marginRight="8dp"/>
                 <TextView
+                    android:id="@+id/email_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="neme.surname@gmail.com"/>
@@ -82,6 +87,7 @@
                     android:src="@drawable/ic_credit_card_black_24dp"
                     android:layout_marginRight="8dp"/>
                 <TextView
+                    android:id="@+id/card_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="VISA 56*************56"/>
@@ -95,6 +101,8 @@
             android:layout_width="match_parent"
             android:layout_height="50sp"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
             style="@android:style/Widget.Material.Light.Button"
             android:layout_centerHorizontal="true"
             android:background="@drawable/round_button3"
