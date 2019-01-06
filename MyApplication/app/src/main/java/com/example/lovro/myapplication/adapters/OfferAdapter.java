@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.domain.Offer;
@@ -41,7 +42,7 @@ public class OfferAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder> 
         TextView offerPrice = holder.itemView.findViewById(R.id.offer_price);
         TextView more_styles = holder.itemView.findViewById(R.id.more_styles);
 
-        //Picasso.get().load(offer.getImageUrl()).into(offerImage);
+        Picasso.get().load(offer.getImageUrl()).into(offerImage);
         //offerImage.setImageResource(R.drawable.placeholder);
         offerName.setText(offer.getName());
         offerPrice.setText(offer.getPrice().toString());

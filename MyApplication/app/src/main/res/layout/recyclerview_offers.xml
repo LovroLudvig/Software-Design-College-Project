@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/card_background"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:clickable="true"
     android:padding="10dp"
     android:layout_margin="8dp">
 
@@ -17,6 +19,7 @@
         android:layout_marginTop="5sp"
         android:background="@drawable/frame_for_picture"
         android:src= "@drawable/random_picture"
+        android:scaleType="fitXY"
         />
 
     <TextView
