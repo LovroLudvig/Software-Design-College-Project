@@ -6,6 +6,8 @@
 
     <!-- Defined colors -->
     <color name="AppColor">#3372A6</color>
+    <color name="AppCOlorLight">#ebf3f9</color>
+    <color name="AppCOlorLightDarker">#d8e7f3</color>
     <color name="White">#FFF</color>
     <color name="DarkWhite">#DDDDDD</color>
     <color name="AppGrey">#d3d3d3</color>
