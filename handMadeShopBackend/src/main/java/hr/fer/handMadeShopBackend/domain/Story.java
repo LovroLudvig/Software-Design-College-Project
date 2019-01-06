@@ -16,6 +16,8 @@ public class Story {
 
     @ManyToOne
     private StoryStatus status;
+    @ManyToOne
+    private User user;
 
     @OneToMany
     private List<Comment> comments;
@@ -66,5 +68,13 @@ public class Story {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
