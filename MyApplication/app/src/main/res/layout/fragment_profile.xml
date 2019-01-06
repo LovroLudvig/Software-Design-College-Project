@@ -97,7 +97,7 @@
 
 
         <Button
-            android:id="@+id/register_button"
+            android:id="@+id/editProfileButton"
             android:layout_width="match_parent"
             android:layout_height="50sp"
             android:layout_marginTop="20dp"
