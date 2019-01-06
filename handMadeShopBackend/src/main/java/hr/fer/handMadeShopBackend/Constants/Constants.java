@@ -22,11 +22,8 @@ public class Constants {
 
     // Image locations
     public static final String IMAGE_BASE_URL_STORIES = "src/main/resources/images/stories/";
-    public static final String IMAGE_RESOURCE_URL_STORIES = "images/stories/";
     public static final String IMAGE_BASE_URL_ADVERTISEMENTS = "src/main/resources/images/advertisements/";
-    public static final String IMAGE_RESOURCE_URL_ADVERTISEMENTS = "images/advertisements/";
 
     // Video locations
     public static final String VIDEO_BASE_URL_STORIES = "src/main/resources/videos/stories/";
-    public static final String VIDEO_RESOURCE_URL_STORIES = "videos/stories/";
 }
