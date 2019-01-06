@@ -18,7 +18,7 @@ public interface ApiService {
     Call<GenericResponse<User>> registerUser(@Body User user);
 
     @POST("/auth/login")
-    Call<ResponseBody> loginUser(@Header("Authorization") String auth);
+    Call<ResponseBody> loginUser(@Header("Authorization") String auth,@Body User user);
 
     @GET("/advertisement/all")
     Call<List<Offer>> getAllOffers(@Header("Authorization") String auth);

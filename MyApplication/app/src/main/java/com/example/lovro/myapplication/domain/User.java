@@ -45,6 +45,10 @@ public class User {
         this.userStatus = userStatus;
     }
 
+    public User(String username){
+        this.username=username;
+    }
+
     public String getName() {
         return name;
     }

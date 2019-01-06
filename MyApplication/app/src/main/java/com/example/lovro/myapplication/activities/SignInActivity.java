@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
+import com.example.lovro.myapplication.domain.User;
 import com.example.lovro.myapplication.network.ApiService;
 import com.example.lovro.myapplication.network.InitApiService;
 
@@ -67,7 +68,7 @@ public class SignInActivity extends BasicActivity {
                     String auth = "Basic"+" "+encoded_token.trim();
                     if(isInternetAvailable()){
                         hideKeyboard();
-                        login_user(auth);
+                        login_user(auth, username.getText().toString().trim());
                     }else{
                         showError("No internet connection!");
                     }
@@ -106,9 +107,9 @@ public class SignInActivity extends BasicActivity {
         editor.apply();
     }
 
-    private void login_user(String auth){
+    private void login_user(String auth,String username){
         show_loading("Logging in...");
-        callLogin = apiService.loginUser(auth);
+        callLogin = apiService.loginUser(auth, new User(username));
         callLogin.enqueue(new Callback<ResponseBody>() {
 
             @Override
