@@ -19,6 +19,11 @@ public class UserController {
     @Autowired
     private InMemoryUserDetailsManager inMemoryUserDetailsManager;
 
+    @GetMapping("/{username}")
+    public User getUserWithUsername(@PathVariable("username") String username) {
+        return userService.fetch(username);
+    }
+
     @PostMapping("/delete/{username}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public User deleteUser(@PathVariable("username") String username) {

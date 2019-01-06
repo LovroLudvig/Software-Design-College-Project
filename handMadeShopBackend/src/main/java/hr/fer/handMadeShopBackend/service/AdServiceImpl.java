@@ -1,6 +1,7 @@
 package hr.fer.handMadeShopBackend.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,12 @@ public class AdServiceImpl implements AdService{
 	
 	@Autowired
     private AdvertisementRepository adRepo;
+
+	@Override
+	public Advertisement fetch(Long advertisementId) {
+		Optional<Advertisement> opt = adRepo.findById(advertisementId);
+		return opt.isPresent() ? opt.get() : null;
+	}
 
 	@Override
 	public List<Advertisement> fetchAll() {

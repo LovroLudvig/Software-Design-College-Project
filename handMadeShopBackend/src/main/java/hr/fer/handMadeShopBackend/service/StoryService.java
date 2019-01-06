@@ -7,6 +7,8 @@ import java.util.List;
 public interface StoryService {
 
     Story recommendStory(Story story);
+    Story fetch(Long id);
+    Story save(Story story);
     Story publishStory(Story story);
     List<Story> listAllStories();
     Story manageRecommendedStory(Long storyId, boolean isAllowed);
