@@ -34,7 +34,7 @@ public class ImageController {
             baos.close();
             return img_in_bytes;
         } catch (IOException e) {
-            return new byte[1];
+            return new byte[0];
         }
     }
 
