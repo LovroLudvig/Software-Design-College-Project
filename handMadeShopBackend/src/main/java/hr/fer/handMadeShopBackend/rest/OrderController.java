@@ -64,7 +64,7 @@ public class OrderController {
     @PostMapping("/manage")
     public AdOrder manageOrder(@RequestParam(value="orderId", required=true) Long orderId,
                                @RequestParam(value="isAllowed", required=true) boolean isAlowed,
-                               @RequestParam(value="price", required=true) Double price) {
+                               @RequestParam(value="price", required=false) Double price) {
         return orderService.manageOrder(orderId, isAlowed, price);
     }
 

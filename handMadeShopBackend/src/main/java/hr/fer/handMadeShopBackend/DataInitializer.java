@@ -3,27 +3,24 @@ package hr.fer.handMadeShopBackend;
 import java.util.ArrayList;
 import java.util.List;
 
+import hr.fer.handMadeShopBackend.domain.*;
+import hr.fer.handMadeShopBackend.rest.AuthenticationController;
+import hr.fer.handMadeShopBackend.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Component;
 
 import hr.fer.handMadeShopBackend.Constants.Constants;
-import hr.fer.handMadeShopBackend.domain.Advertisement;
-import hr.fer.handMadeShopBackend.domain.Dimension;
-import hr.fer.handMadeShopBackend.domain.Style;
-import hr.fer.handMadeShopBackend.service.AdService;
-import hr.fer.handMadeShopBackend.service.DimensionService;
-import hr.fer.handMadeShopBackend.service.OrderStatusService;
-import hr.fer.handMadeShopBackend.service.RoleService;
-import hr.fer.handMadeShopBackend.service.StoryStatusService;
-import hr.fer.handMadeShopBackend.service.StyleService;
-import hr.fer.handMadeShopBackend.service.UserStatusService;
 
 /**
  * Example component used to insert some test students at application startup.
  */
 @Component
+@Lazy
 public class DataInitializer {
 
     @Autowired
@@ -47,6 +44,17 @@ public class DataInitializer {
     @Autowired
     private DimensionService dimensionService;
 
+    @Autowired
+    private AuthenticationController authenticationController;
+
+    @Autowired
+    private UserService userService;
+
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+    @Autowired
+    private InMemoryUserDetailsManager inMemoryUserDetailsManager;
+
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
         // User status initialization
@@ -66,13 +74,32 @@ public class DataInitializer {
         orderStatusService.saveOrderStatusWithName(Constants.ORDER_STATUS_ALLOWED);
         orderStatusService.saveOrderStatusWithName(Constants.ORDER_STATUS_DENIED);
         orderStatusService.saveOrderStatusWithName(Constants.ORDER_STATUS_IN_EVALUATION);
-        
+
+        createUsers();
         createFakeAds("Šaht", "Bakrena žica", "Ljuska od jaja", "Ruska nevjesta", "Prazna kutija cigareta");
-        
-        
+
+
         //TODO dragi martine sad sam se sjetio da nisi osiguro adove od null ap sredi to kad si gotov
     }
-    
+
+    private void createUsers() {
+        String[] usernames = new String[] {"mcolja", "ialmer", "ilovrencic", "lludvig", "hspolador", "mdadanovic"};
+        String password = "secret";
+
+        for(String username: usernames) {
+            User user = new User();
+            user.setUsername(username);
+            String hash = encoder.encode(password);
+            user.setPasswordHash(hash);
+
+            inMemoryUserDetailsManager.createUser(
+                    org.springframework.security.core.userdetails.User.withUsername(username)
+                            .password(hash).roles(Constants.ROLE_ADMIN, Constants.ROLE_USER).build());
+
+            userService.saveAdminUser(user);
+        }
+    }
+
     private void createFakeAds(String... names) {
     	for(String name: names) {
     		Advertisement ad1 = new Advertisement();
