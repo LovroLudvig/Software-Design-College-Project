@@ -60,6 +60,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User saveAdminUser(User user) {
+        UserStatus status = userStatusRepository.findByName(Constants.USER_STATUS_ALLOWED);
+        if(status == null) {
+            throw new IllegalArgumentException("No status with name " + Constants.USER_STATUS_ALLOWED);
+        }
+        user.setUserStatus(status);
+
+        List<Role> roles = new ArrayList<>();
+        roles.add(roleRepo.findByName(Constants.ROLE_USER));
+        roles.add(roleRepo.findByName(Constants.ROLE_ADMIN));
+        user.setRoles(roles);
+
+        Town town = checkTown(user.getTown());
+        user.setTown(town);
+
+        if(userRepo.countByUsername(user.getUsername()) != 0) {
+            throw new IllegalArgumentException("The user already exists!");
+        }
+        return userRepo.save(user);
+    }
+
+    @Override
     public User deleteUser(String username) {
         validateUserWithUsername(username);
         userRepo.deleteByUsername(username);

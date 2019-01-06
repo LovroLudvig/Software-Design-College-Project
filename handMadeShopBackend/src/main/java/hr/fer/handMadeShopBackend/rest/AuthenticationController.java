@@ -31,20 +31,24 @@ public class AuthenticationController {
     @ResponseStatus(HttpStatus.CREATED)
     public User register(@RequestBody User user) {
         // The password hash property from the request is not actually a hash
-        User u = userService.fetch(user.getUsername());
         String hash = encoder.encode(user.getPasswordHash());
 
         user.setPasswordHash(hash);
         inMemoryUserDetailsManager.createUser(
                 org.springframework.security.core.userdetails.User.withUsername(user.getUsername())
-                        .password(hash).roles(Constants.ROLE_USER, Constants.ROLE_ADMIN).build());
+                        .password(hash).roles(Constants.ROLE_USER).build());
 
         return userService.save(user);
     }
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void login() {}
+    public User login(@RequestBody User user) {
+        if(user == null) {
+            throw new IllegalArgumentException("The user with his username must be provided in body of the request.");
+        }
+        return userService.fetch(user.getUsername());
+    }
 
     @PostMapping("/logout")
     @ResponseStatus(HttpStatus.ACCEPTED)

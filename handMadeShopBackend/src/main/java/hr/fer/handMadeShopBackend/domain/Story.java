@@ -1,9 +1,6 @@
 package hr.fer.handMadeShopBackend.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -16,6 +13,9 @@ public class Story {
     private String text;
     private String imageUrl;
     private String videoUrl;
+
+    @ManyToOne
+    private StoryStatus status;
 
     @OneToMany
     private List<Comment> comments;
@@ -50,5 +50,21 @@ public class Story {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public StoryStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(StoryStatus status) {
+        this.status = status;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
