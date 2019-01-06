@@ -53,7 +53,6 @@ public class OffersFragment extends Fragment {
     private Call<List<Offer>> getOffers;
     private ProgressBar progressBar;
     private ApiService apiService = InitApiService.apiService;
-    private ProgressDialog progressDialog;
     private OfferAdapter offerAdapter;
 
     @Override
@@ -77,9 +76,12 @@ public class OffersFragment extends Fragment {
         initListeners();
 
         if(isInternetAvailable()){
-            loadOffers(getUserAuth());
+            if(offerList.size() == 0){
+                loadOffers(getUserAuth());
+            }else{
+                progressBar.setVisibility(View.GONE);
+            }
         }else{
-            progressBar.setVisibility(View.GONE);
             showError("No internet connection!");
         }
     }
@@ -171,7 +173,6 @@ public class OffersFragment extends Fragment {
 
     private void displayOffers(List<Offer> offers){
         progressBar.setVisibility(View.GONE);
-
         if(offerAdapter != null){
             offerAdapter.setOffers(offers);
         }else{
