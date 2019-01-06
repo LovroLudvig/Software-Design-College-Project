@@ -3,11 +3,13 @@ package com.example.lovro.myapplication.Fragments;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,11 +25,14 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
+import com.example.lovro.myapplication.activities.HomeActivity;
+import com.example.lovro.myapplication.activities.OfferDetailsActivity;
 import com.example.lovro.myapplication.adapters.OfferAdapter;
 import com.example.lovro.myapplication.domain.Offer;
 import com.example.lovro.myapplication.network.ApiService;
 import com.example.lovro.myapplication.network.GenericResponse;
 import com.example.lovro.myapplication.network.InitApiService;
+import com.google.gson.Gson;
 import com.squareup.moshi.Json;
 
 import java.io.IOException;
@@ -91,7 +96,12 @@ public class OffersFragment extends Fragment {
         offerAdapter.setListener(new OfferAdapter.OnShowClickListener() {
             @Override
             public void onShowClick(Offer offer) {
-                Toast.makeText(getContext(),"Kliknuo si na mene!",Toast.LENGTH_LONG).show();
+                Gson gson = new Gson();
+                String offerAsString = gson.toJson(offer);
+
+                Intent offer_details = new Intent(getActivity(),OfferDetailsActivity.class);
+                offer_details.putExtra("Offer",offerAsString);
+                startActivity(offer_details);
             }
         });
     }
