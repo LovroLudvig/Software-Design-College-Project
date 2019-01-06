@@ -32,6 +32,20 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
+    public Story fetch(Long id) {
+        Optional<Story> opt = storyRepository.findById(id);
+        return opt.isPresent() ? opt.get() : null;
+    }
+
+    @Override
+    public Story save(Story story) {
+        if(story == null) {
+            throw new IllegalArgumentException("The story to save must not be null");
+        }
+        return storyRepository.save(story);
+    }
+
+    @Override
     public Story publishStory(Story story) {
         validate(story);
 

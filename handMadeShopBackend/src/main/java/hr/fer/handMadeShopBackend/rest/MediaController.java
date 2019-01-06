@@ -1,6 +1,12 @@
 package hr.fer.handMadeShopBackend.rest;
 
 import hr.fer.handMadeShopBackend.Constants.Constants;
+import hr.fer.handMadeShopBackend.domain.Advertisement;
+import hr.fer.handMadeShopBackend.domain.Story;
+import hr.fer.handMadeShopBackend.service.AdService;
+import hr.fer.handMadeShopBackend.service.StoryService;
+import net.bytebuddy.asm.Advice;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -17,11 +23,22 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/media")
 @Lazy
 public class MediaController {
+
+    public static final String BASE_URL_GET_STORY_IMAGE = "http://104.248.255.232:8080/media/story/image/";
+    public static final String BASE_URL_GET_ADVERTISEMENT_IMAGE = "http://104.248.255.232:8080/media/advertisement/image/";
+    public static final String BASE_URL_GET_STORY_VIDEO = "http://104.248.255.232:8080/media/story/video/";
+
+    @Autowired
+    private StoryService storyService;
+
+    @Autowired
+    private AdService adService;
 
     @GetMapping(value = "/story/image/{storyId}", headers = "Accept=image/jpeg, image/jpg, image/png")
     public byte[] getStoryImage(@PathVariable("storyId") long storyId) {
@@ -39,6 +56,7 @@ public class MediaController {
             baos.flush();
             byte[] img_in_bytes = baos.toByteArray();
             baos.close();
+
             return img_in_bytes;
         } catch (IOException e) {
             return new byte[0];
@@ -46,7 +64,7 @@ public class MediaController {
     }
 
     @PostMapping("/story/image/{storyId}")
-    public void saveStoryImage(@RequestParam("file") MultipartFile filedata, @PathVariable("storyId") long storyId) {
+    public Story saveStoryImage(@RequestParam("file") MultipartFile filedata, @PathVariable("storyId") long storyId) {
         String url = Constants.IMAGE_BASE_URL_STORIES + "image" + storyId + ".png";
         try {
             byte[] bytes = filedata.getBytes();
@@ -55,9 +73,16 @@ public class MediaController {
             OutputStream os = Files.newOutputStream(Paths.get(url), StandardOpenOption.CREATE_NEW);
             ImageIO.write(final_img, "png", os);
 
+            Story story = storyService.fetch(storyId);
+            if(story != null) {
+                story.setImageUrl(BASE_URL_GET_STORY_IMAGE + storyId);
+                return storyService.save(story);
+            }
+
         } catch (IOException e) {
             throw new IllegalArgumentException("The image could not be saved - " + e.getMessage());
         }
+        return null;
     }
 
     @GetMapping(value = "/advertisement/image/{advertisementId}", headers = "Accept=image/jpeg, image/jpg, image/png")
@@ -83,7 +108,7 @@ public class MediaController {
     }
 
     @PostMapping("/advertisement/image/{advertisementId}")
-    public void saveAdvertisementImage(@RequestParam("file") MultipartFile filedata, @PathVariable("advertisementId") long advertisementId) {
+    public Advertisement saveAdvertisementImage(@RequestParam("file") MultipartFile filedata, @PathVariable("advertisementId") long advertisementId) {
         String url = Constants.IMAGE_BASE_URL_ADVERTISEMENTS + "image" + advertisementId+ ".png";
         try {
             byte[] bytes = filedata.getBytes();
@@ -92,13 +117,20 @@ public class MediaController {
             OutputStream os = Files.newOutputStream(Paths.get(url), StandardOpenOption.CREATE_NEW);
             ImageIO.write(final_img, "png", os);
 
+            Advertisement advertisement = adService.fetch(advertisementId);
+            if(advertisement != null) {
+                advertisement.setImageURL(BASE_URL_GET_ADVERTISEMENT_IMAGE + advertisementId);
+                return adService.save(advertisement);
+            }
+
         } catch (IOException e) {
             throw new IllegalArgumentException("The image could not be saved - " + e.getMessage());
         }
+        return null;
     }
 
     @GetMapping(value = "/story/video/{storyId}", headers = "Accept=video/mpeg, video/quicktime, video/mp4")
-    public ResponseEntity<InputStreamResource> getStoryVideo(@PathVariable int storyId, HttpServletResponse response) throws IOException {
+    public ResponseEntity<InputStreamResource> getStoryVideo(@PathVariable Long storyId, HttpServletResponse response) throws IOException {
         String url = Constants.VIDEO_BASE_URL_STORIES + "storyVideo" + storyId + ".mp4";
 
         MediaType mediaType = MediaType.parseMediaType("video/mp4");
@@ -114,15 +146,23 @@ public class MediaController {
     }
 
     @PostMapping("/story/video/{storyId}")
-    public void create(@PathVariable int storyId, @RequestParam("file") MultipartFile file) {
+    public Story create(@PathVariable Long storyId, @RequestParam("file") MultipartFile file) {
         String url = Constants.VIDEO_BASE_URL_STORIES + "storyVideo" + storyId + ".mp4";
         try {
             byte[] bytes = file.getBytes();
             OutputStream os = Files.newOutputStream(Paths.get(url), StandardOpenOption.CREATE_NEW);
             os.write(bytes);
+
+            Story story = storyService.fetch(storyId);
+            if(story != null) {
+                story.setVideoUrl(BASE_URL_GET_STORY_VIDEO + storyId);
+                return storyService.save(story);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
 
