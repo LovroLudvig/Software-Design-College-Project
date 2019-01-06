@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserStatusServiceJpa implements UserStatusService {
+public class UserStatusServiceImpl implements UserStatusService {
 
     @Autowired
     private UserStatusRepository userStatusRepo;

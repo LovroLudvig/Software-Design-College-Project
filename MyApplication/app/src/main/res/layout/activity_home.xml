@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.HomeActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/AppColor"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/app_logo_text" />
+    </android.support.v7.widget.Toolbar>
+
+        <!-- Middle section (body) -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/relLayout2">
+
+
+        <include layout="@layout/layout_center_viewpager"/>
+
+
+    </RelativeLayout>
+
+    <!-- bottom toolbar -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relLayout1"
+        >
+        <include layout="@layout/layout_bottom_tabs"/>
+
+    </RelativeLayout>
+
+
+
+
+
+
+</LinearLayout>

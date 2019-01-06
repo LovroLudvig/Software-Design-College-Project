@@ -18,19 +18,17 @@
             android:name=".activities.OffersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".activities.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
-            ></activity>
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"
-            android:windowSoftInputMode="adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
@@ -50,7 +48,9 @@
             android:name=".activities.SignInActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
+        <activity android:name=".activities.HomeActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

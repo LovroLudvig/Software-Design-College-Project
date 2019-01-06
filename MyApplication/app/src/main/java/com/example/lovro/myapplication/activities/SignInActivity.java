@@ -107,7 +107,7 @@ public class SignInActivity extends BasicActivity {
     }
 
     private void login_user(String auth){
-        show_loading();
+        show_loading("Logging in...");
         callLogin = apiService.loginUser(auth);
         callLogin.enqueue(new Callback<ResponseBody>() {
 
@@ -116,7 +116,7 @@ public class SignInActivity extends BasicActivity {
                 stop_loading();
                 if(response.isSuccessful()){
                     saveUserInMemory();
-                    Intent intent = new Intent(getApplicationContext(), OffersActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
                             Intent.FLAG_ACTIVITY_CLEAR_TASK |
                             Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -30,8 +30,8 @@ public abstract class BasicActivity extends AppCompatActivity {
         return networkInfo != null && networkInfo.isConnected();
     }
 
-    protected void show_loading(){
-        progressDialog = ProgressDialog.show(this,"","Registration in process...",true,false);
+    protected void show_loading(String message){
+        progressDialog = ProgressDialog.show(this,"",message,true,false);
     }
 
     protected void stop_loading(){

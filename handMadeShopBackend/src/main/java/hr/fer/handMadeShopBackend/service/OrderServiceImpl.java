@@ -4,6 +4,7 @@ import hr.fer.handMadeShopBackend.Constants.Constants;
 import hr.fer.handMadeShopBackend.dao.AdvertisementRepository;
 import hr.fer.handMadeShopBackend.dao.OrderRepository;
 import hr.fer.handMadeShopBackend.dao.OrderStatusRepository;
+import hr.fer.handMadeShopBackend.dao.TransactionRepository;
 import hr.fer.handMadeShopBackend.domain.*;
 import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private AdvertisementRepository advertisementRepository;
 
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     @Override
     public List<AdOrder> listAllNotManaged() {
@@ -34,12 +37,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public AdOrder manageOrder(Long orderId, boolean isAlowed) {
+    public AdOrder manageOrder(Long orderId, boolean isAlowed, Double price) {
         Optional<AdOrder> opt = orderRepository.findById(orderId);
         if(!opt.isPresent()) {
             throw new IllegalArgumentException("The order does not exist.");
         }
         AdOrder order = opt.get();
+        if(price != null) {
+            order.setPrice(price);
+        }
 
         if(isAlowed) {
             OrderStatus status = orderStatusRepository.findByName(Constants.ORDER_STATUS_ALLOWED);
@@ -71,14 +77,14 @@ public class OrderServiceImpl implements OrderService {
         Transaction t = new Transaction();
         t.setAdOrder(o);
 
-        // TODO: - save the transaction to repository, maybe return a transaction
+        transactionRepository.save(t);
 
         return o;
     }
 
     @Override
     public AdOrder orderObjectDecoration(AdOrder adOrder, User user) {
-        validate(adOrder);
+        validateDecorationOrder(adOrder);
         validateUser(user);
 
         OrderStatus status = orderStatusRepository.findByName(Constants.ORDER_STATUS_IN_EVALUATION);
@@ -107,6 +113,22 @@ public class OrderServiceImpl implements OrderService {
         }
         if(adOrder.getDimension() == null) {
             throw new IllegalArgumentException("The dimension of the object must be provided.");
+        }
+        if(adOrder.getStyle() == null) {
+            throw new IllegalArgumentException("The style for the decoration must be provided.");
+        }
+    }
+
+    private void validateDecorationOrder(AdOrder adOrder) {
+        if(adOrder == null) {
+            throw new IllegalArgumentException("The order must be provided!");
+        }
+        if(adOrder.getAdvertisement() == null) {
+            throw new IllegalArgumentException("The advertisement you want to buy must be provided.");
+        }
+        Optional<Advertisement> ad = advertisementRepository.findById(adOrder.getAdvertisement().getId());
+        if(!ad.isPresent()) {
+            throw new IllegalArgumentException("The advertisement does not exist!");
         }
         if(adOrder.getStyle() == null) {
             throw new IllegalArgumentException("The style for the decoration must be provided.");

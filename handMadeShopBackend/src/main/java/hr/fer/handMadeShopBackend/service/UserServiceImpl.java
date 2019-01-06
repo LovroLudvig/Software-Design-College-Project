@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceJpa implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepo;
@@ -103,10 +103,8 @@ public class UserServiceJpa implements UserService {
         UserStatus status = userStatusRepository.findByName(Constants.USER_STATUS_ALLOWED);
         user.setUserStatus(status);
 
-        if(user.getTown() != null) {
-            Town town = checkTown(user.getTown());
-            user.setTown(town);
-        }
+        Town town = checkTown(user.getTown());
+        user.setTown(town);
 
         return userRepo.save(user);
     }
