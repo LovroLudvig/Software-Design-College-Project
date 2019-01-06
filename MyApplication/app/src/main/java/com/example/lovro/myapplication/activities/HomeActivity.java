@@ -1,5 +1,7 @@
 package com.example.lovro.myapplication.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -7,6 +9,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.lovro.myapplication.Fragments.NotificationsFragment;
@@ -20,6 +23,7 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.O
 
     private int backButtonCount=0;
     private TabLayout tabLayout;
+    private View logoutButon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +44,39 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.O
 
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+        logoutButon=findViewById(R.id.logout_image);
 
         tabLayout.getTabAt(0).setIcon(R.drawable.story_btn);
         tabLayout.getTabAt(1).setIcon(R.drawable.shop_btn_deselected);
         tabLayout.getTabAt(2).setIcon(R.drawable.notif_btn_deselected);
         tabLayout.getTabAt(3).setIcon(R.drawable.profile_btn_deselected);
+
+        logoutButon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog alertDialog = new AlertDialog.Builder(HomeActivity.this).create();
+                alertDialog.setTitle("Log out");
+                alertDialog.setMessage("Are you sure you want to log out?");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putBoolean("saved",false);
+                                editor.apply();
+                                Intent i = new Intent(HomeActivity.this, LoginActivity.class);
+                                startActivity(i);
+                                finish();
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+        });
 
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
