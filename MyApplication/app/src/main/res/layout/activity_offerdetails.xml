@@ -191,10 +191,10 @@
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/style_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="150dp"
                 android:layout_marginTop="3dp"
                 android:background="@android:drawable/dialog_holo_light_frame"
                 android:orientation="vertical"
@@ -202,7 +202,7 @@
                 android:paddingTop="15dp">
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/ask_for_own_style"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -215,7 +215,7 @@
                     android:id="@+id/imageView5321"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_alignParentTop="true"
+                    android:layout_below="@+id/ask_for_own_style"
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="7dp"
                     android:layout_marginTop="0dp"
@@ -223,7 +223,29 @@
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
                     app:srcCompat="@color/AppGrey" />
-            </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView18"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginBottom="30dp"
+                    android:text="Style"
+                    android:textSize="16sp" />
+
+                <Spinner
+                    android:id="@+id/spinner2"
+                    android:layout_width="234dp"
+                    android:layout_height="51dp"
+                    android:layout_alignTop="@+id/textView18"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="89dp"
+                    android:layout_marginTop="-12dp"
+                    android:layout_marginEnd="17dp"
+                    android:layout_toEndOf="@+id/textView18" />
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/textView10"
@@ -258,14 +280,15 @@
 
                 <Spinner
                     android:id="@+id/spinner"
-                    android:layout_width="125dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/textView12"
+                    android:layout_width="169dp"
+                    android:layout_height="45dp"
+                    android:layout_alignBottom="@+id/textView12"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="107dp"
-                    android:layout_marginTop="-4dp"
-                    android:layout_marginEnd="38dp"
+                    android:layout_marginStart="64dp"
+                    android:layout_marginEnd="55dp"
+                    android:layout_marginBottom="-13dp"
                     android:layout_toEndOf="@+id/textView12"
+                    android:paddingBottom="5dp"
                     android:spinnerMode="dropdown" />
             </RelativeLayout>
 

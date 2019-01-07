@@ -30,7 +30,7 @@ public class SignInActivity extends BasicActivity {
     private TextInputEditText password;
     private ApiService apiService = InitApiService.apiService;
     private View backButon;
-    private Call<ResponseBody> callLogin;
+    private Call<User> callLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,10 +110,10 @@ public class SignInActivity extends BasicActivity {
     private void login_user(String auth,String username){
         show_loading("Logging in...");
         callLogin = apiService.loginUser(auth, new User(username));
-        callLogin.enqueue(new Callback<ResponseBody>() {
+        callLogin.enqueue(new Callback<User>() {
 
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 stop_loading();
                 if(response.isSuccessful()){
                     saveUserInMemory();
@@ -130,7 +130,7 @@ public class SignInActivity extends BasicActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 stop_loading();
                 if(call.isCanceled()){
                     //nothing

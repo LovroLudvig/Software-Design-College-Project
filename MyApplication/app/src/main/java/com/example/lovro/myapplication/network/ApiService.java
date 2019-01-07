@@ -1,6 +1,7 @@
 package com.example.lovro.myapplication.network;
 
 import com.example.lovro.myapplication.domain.Offer;
+import com.example.lovro.myapplication.domain.Order;
 import com.example.lovro.myapplication.domain.User;
 
 import java.util.List;
@@ -11,6 +12,8 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService {
 
@@ -18,8 +21,11 @@ public interface ApiService {
     Call<GenericResponse<User>> registerUser(@Body User user);
 
     @POST("/auth/login")
-    Call<ResponseBody> loginUser(@Header("Authorization") String auth,@Body User user);
+    Call<User> loginUser(@Header("Authorization") String auth,@Body User user);
 
     @GET("/advertisement/all")
     Call<List<Offer>> getAllOffers(@Header("Authorization") String auth);
+
+    @POST("/orders/add/{advertisementId}")
+    Call<Order> orderOffer(@Path("advertisementId") String offerId, @Query("styleId") String styleId, @Query("dimensionId") String dimensionId, @Body User user);
 }

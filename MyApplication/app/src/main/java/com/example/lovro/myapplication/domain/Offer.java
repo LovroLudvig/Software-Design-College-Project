@@ -21,7 +21,7 @@ public class Offer {
     @Json(name = "description")
     private String description;
 
-    @Json(name = "imageUrl")
+    @Json(name = "imageURL")
     private String imageUrl;
 
     @Json(name = "styles")

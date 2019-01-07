@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 
 import com.squareup.moshi.Json;
 
+import java.util.List;
+
 public class User {
 
     @Json(name = "email")
@@ -25,15 +27,15 @@ public class User {
     private String address;
 
     @Json(name = "roles")
-    private String roles;
+    private List<Role> roles;
 
     @Json(name = "userStatus")
-    private String userStatus;
+    private Status userStatus;
 
     @Json(name = "town")
     private Town town;
 
-    public User(String email,String password,String username,String name,String cardNumber,String address,String roles,String userStatus,Town town){
+    public User(String email,String password,String username,String name,String cardNumber,String address,List<Role> roles,Status userStatus,Town town){
         this.username = username;
         this.password = password;
         this.email = email;
@@ -69,20 +71,20 @@ public class User {
         return password;
     }
 
-    public String getRoles() {
-        return roles;
-    }
-
     public String getUsername() {
         return username;
     }
 
-    public String getUserStatus() {
-        return userStatus;
-    }
-
     public Town getTown() {
         return town;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public Status getUserStatus() {
+        return userStatus;
     }
 
 }
