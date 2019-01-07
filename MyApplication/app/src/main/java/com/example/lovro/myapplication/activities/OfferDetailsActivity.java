@@ -243,19 +243,6 @@ public class OfferDetailsActivity extends BasicActivity {
                 .show();
     }
 
-    private String getUserAuth(){
-        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
-        String username = prefs.getString("username","");
-        String pass = prefs.getString("password","");
-
-        user = username;
-        String token = username.trim()+":"+pass.trim();
-        String encoded_token = Base64.encodeToString(token.getBytes(),0);
-        String auth = "Basic"+" "+encoded_token.trim();
-
-        return auth;
-    }
-
 
     protected boolean isInternetAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

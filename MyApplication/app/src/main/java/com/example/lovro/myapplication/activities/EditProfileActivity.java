@@ -1,5 +1,7 @@
 package com.example.lovro.myapplication.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,9 +18,17 @@ import com.example.lovro.myapplication.domain.Status;
 import com.example.lovro.myapplication.domain.Town;
 import com.example.lovro.myapplication.domain.User;
 import com.example.lovro.myapplication.domain.UserProfile;
+import com.example.lovro.myapplication.network.ApiService;
+import com.example.lovro.myapplication.network.InitApiService;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EditProfileActivity extends BasicActivity {
     private ArrayAdapter<String> arrayAdapter;
@@ -31,7 +41,8 @@ public class EditProfileActivity extends BasicActivity {
     private EditText emailEditText;
     private EditText cardEditText;
     private EditText poscalCodeEditText;
-    private UserProfile currentUser;
+    private User currentUser;
+    private ApiService apiService = InitApiService.apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +51,7 @@ public class EditProfileActivity extends BasicActivity {
 
         String userAsString = getIntent().getStringExtra("UserCurrent");
         Gson gson = new Gson();
-        currentUser = gson.fromJson(userAsString,UserProfile.class);
+        currentUser = gson.fromJson(userAsString,User.class);
 
         cardPicker=findViewById(R.id.card_picker);
         saveChangesButton=findViewById(R.id.saveChangesButton);
@@ -66,7 +77,7 @@ public class EditProfileActivity extends BasicActivity {
         usernameEditText.setText(currentUser.getUsername());
         if (!(currentUser.getTown()==null)){
             townEditText.setText(currentUser.getTown().getName());
-            poscalCodeEditText.setText(currentUser.getTown().getPostCode());
+            poscalCodeEditText.setText(String.valueOf(currentUser.getTown().getPostCode()));
         }
         addressEditText.setText(currentUser.getAddress());
         emailEditText.setText(currentUser.getEmail());
@@ -101,12 +112,61 @@ public class EditProfileActivity extends BasicActivity {
             @Override
             public void onClick(View v) {
                 if (checkFields()){
-                    User user=new User(emailEditText.getText().toString(), usernameEditText.getText().toString(),nameEditText.getText().toString(), cardPicker.getSelectedItem().toString()+" "+cardEditText.getText().toString(),addressEditText.getText().toString(),new Town(townEditText.getText().toString(),Integer.parseInt(poscalCodeEditText.toString())));
-                    finish();
+                    String postalCode= poscalCodeEditText.getText().toString();
+                    int finalValue=Integer.parseInt(postalCode);
+
+
+                    currentUser.setName(nameEditText.getText().toString());
+                    currentUser.setEmail(emailEditText.getText().toString());
+                    currentUser.setUsername(usernameEditText.getText().toString());
+                    currentUser.setCardNumber(cardPicker.getSelectedItem().toString()+" "+cardEditText.getText().toString());
+                    currentUser.setTown(new Town(townEditText.getText().toString(),finalValue));
+                    currentUser.setAddress(addressEditText.getText().toString());
+
+                    updateUser(currentUser);
                 }else{
                     Toast.makeText(EditProfileActivity.this, "Please fill in all the fields", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private void updateUser(User user){
+        Call<ResponseBody> updateUser = apiService.updateUser(getUserAuth(), user);
+
+        updateUser.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    returnUser();
+                }else{
+
+                    if(call.isCanceled()){
+                        //nothing
+                    }else{
+                        try {
+                            showError(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(EditProfileActivity.this,"Error loading user", Toast.LENGTH_LONG).show();
+
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void returnUser() {
+        Gson gson = new Gson();
+        String userAsString = gson.toJson(currentUser);
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("result",userAsString);
+        setResult(Activity.RESULT_OK,returnIntent);
+        finish();
     }
 }

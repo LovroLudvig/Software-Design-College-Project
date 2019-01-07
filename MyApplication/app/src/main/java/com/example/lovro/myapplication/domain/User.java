@@ -55,8 +55,51 @@ public class User {
         this.username=username;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public User(String email,String username,String name,String cardNumber,String address,Town town){
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void setUserStatus(Status userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public void setTown(Town town) {
+        this.town = town;
+    }
+
+    public User(String email, String username, String name, String cardNumber, String address, Town town){
         this.username = username;
         this.email = email;
         this.address = address;

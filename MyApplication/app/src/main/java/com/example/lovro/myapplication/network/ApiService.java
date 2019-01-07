@@ -39,4 +39,7 @@ public interface ApiService {
     @POST("/user/update")
     Call<ResponseBody> updateUser(@Header("Authorization") String auth, @Body User user);
 
+    @GET("/user/{username}")
+    Call<User> getUserByUsername2(@Header("Authorization") String auth, @Path("username") String username);
+
 }

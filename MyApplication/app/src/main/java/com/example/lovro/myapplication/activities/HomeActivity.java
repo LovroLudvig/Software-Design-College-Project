@@ -41,6 +41,7 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.O
         adapter.addFragment(new ProfileFragment()); //index 3
         ViewPager viewPager = findViewById(R.id.container);
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(4);
 
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);

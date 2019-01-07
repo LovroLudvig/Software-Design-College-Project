@@ -1,5 +1,6 @@
 package com.example.lovro.myapplication.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -51,7 +52,7 @@ public class ProfileFragment extends Fragment {
     private TextView emailText;
     private TextView cardText;
     private ProgressBar progressBar;
-    private UserProfile currentUser;
+    private User currentUser;
 
 
     @Override
@@ -79,6 +80,21 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                String result=data.getStringExtra("result");
+                Gson gson = new Gson();
+                currentUser = gson.fromJson(result,User.class);
+                setUpLayout(currentUser);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
+    }
+
     private void initListeners() {
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +104,7 @@ public class ProfileFragment extends Fragment {
 
                 Intent i = new Intent(getActivity(),EditProfileActivity.class);
                 i.putExtra("UserCurrent",userAsString);
-                startActivity(i);
+                startActivityForResult(i,1);
             }
         });
     }
@@ -113,15 +129,15 @@ public class ProfileFragment extends Fragment {
 
     private void loadUserFromAPI(){
         progressBar.setVisibility(View.VISIBLE);
-        Call<UserProfile> getUser = apiService.getUserByUsername(getUserAuth(), getUserUsername());
+        Call<User> getUser = apiService.getUserByUsername2(getUserAuth(), getUserUsername());
 
-        getUser.enqueue(new Callback<UserProfile>() {
+        getUser.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<UserProfile> call, Response<UserProfile> response) {
+            public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
                     progressBar.setVisibility(View.GONE);
                     //Toast.makeText(getContext(), "i got a user", Toast.LENGTH_SHORT).show();
-                    UserProfile currentUser=response.body();
+                    User currentUser=response.body();
                     setUpLayout(currentUser);
                 }else{
                     progressBar.setVisibility(View.GONE);
@@ -137,7 +153,7 @@ public class ProfileFragment extends Fragment {
                 }
             }
             @Override
-            public void onFailure(Call<UserProfile> call, Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 Toast.makeText(getActivity(),"Error loading user", Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.GONE);
                 t.printStackTrace();
@@ -145,7 +161,8 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void setUpLayout(UserProfile user) {
+
+    private void setUpLayout(User user) {
         currentUser=user;
         if (user==null){
             Toast.makeText(getContext(), "user not found", Toast.LENGTH_SHORT).show();
@@ -154,12 +171,12 @@ public class ProfileFragment extends Fragment {
             if (user.getTown()==null){
                 town="unknown";
             }else{
-                town=user.getTown().getName();
+                town=String.valueOf(user.getTown().getPostCode())+" "+user.getTown().getName();
             }
 
-            nameUsernameText.setText("Name: "+getName(user.getName())+", also known as "+getName(user.getUsername()));
+            nameUsernameText.setText("His/hers name is "+getName(user.getName())+", also known as "+getName(user.getUsername()));
             locationText.setText("Lives in "+getName(user.getAddress())+", "+town);
-            emailText.setText(getName(user.getEmail())); //TODO: after email is added to backend do this too
+            emailText.setText(getName(user.getEmail()));
             cardText.setText(getName(user.getCardNumber()));
         }
     }
