@@ -23,16 +23,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/media")
 @Lazy
 public class MediaController {
 
-    public static final String BASE_URL_GET_STORY_IMAGE = "http://104.248.255.232:8080/media/story/image/";
-    public static final String BASE_URL_GET_ADVERTISEMENT_IMAGE = "http://104.248.255.232:8080/media/advertisement/image/";
-    public static final String BASE_URL_GET_STORY_VIDEO = "http://104.248.255.232:8080/media/story/video/";
+    public static final String BASE_URL_GET_STORY_IMAGE = "http://104.248.255.232:8080/media/story/image/download/";
+    public static final String BASE_URL_GET_ADVERTISEMENT_IMAGE = "http://104.248.255.232:8080/media/advertisement/image/download/";
+    public static final String BASE_URL_GET_STORY_VIDEO = "http://104.248.255.232:8080/media/story/video/download/";
 
     @Autowired
     private StoryService storyService;
@@ -69,6 +68,9 @@ public class MediaController {
         
         String url = Constants.IMAGE_BASE_URL_STORIES + "image" + storyId + ".png";
         try {
+            if(Files.exists(Paths.get(url))) {
+                Files.delete(Paths.get(url));
+            }
             byte[] bytes = filedata.getBytes();
 
             BufferedImage final_img = ImageIO.read(new ByteArrayInputStream(bytes));
@@ -115,6 +117,9 @@ public class MediaController {
         String url = Constants.IMAGE_BASE_URL_ADVERTISEMENTS + "image" + advertisementId+ ".png";
 
         try {
+            if(Files.exists(Paths.get(url))) {
+                Files.delete(Paths.get(url));
+            }
             byte[] bytes = filedata.getBytes();
 
             BufferedImage final_img = ImageIO.read(new ByteArrayInputStream(bytes));
@@ -137,6 +142,10 @@ public class MediaController {
     public ResponseEntity<InputStreamResource> getStoryVideo(@PathVariable Long storyId, HttpServletResponse response) throws IOException {
         String url = Constants.VIDEO_BASE_URL_STORIES + "storyVideo" + storyId + ".mp4";
 
+        if(!Files.exists(Paths.get(url))) {
+            throw new IllegalArgumentException("The file does not exist");
+        }
+
         MediaType mediaType = MediaType.parseMediaType("video/mp4");
         Path p = Paths.get(url);
         InputStream is = Files.newInputStream(p);
@@ -155,7 +164,11 @@ public class MediaController {
         String url = Constants.VIDEO_BASE_URL_STORIES + "storyVideo" + storyId + ".mp4";
 
         try {
+            if(Files.exists(Paths.get(url))) {
+                Files.delete(Paths.get(url));
+            }
             byte[] bytes = file.getBytes();
+
             OutputStream os = Files.newOutputStream(Paths.get(url), StandardOpenOption.CREATE_NEW);
             os.write(bytes);
 
