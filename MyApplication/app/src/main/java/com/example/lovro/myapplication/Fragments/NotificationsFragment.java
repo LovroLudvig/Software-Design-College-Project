@@ -87,7 +87,7 @@ public class NotificationsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //TODO mocked values
+        //TODO REMOVE mocked values
         Notification notif1 = new Notification("Craftery admin", "Accepted your offer", "tue 15:33");
         Notification notif2 = new Notification("Craftery admin", "Accepted your offer", "tue 15:33");
         Notification notif3 = new Notification("Craftery admin", "Accepted your offer", "tue 15:33");

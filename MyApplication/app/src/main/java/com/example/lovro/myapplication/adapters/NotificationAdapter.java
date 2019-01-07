@@ -42,14 +42,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         holder.notifText.setText(notification.getText());
         holder.userName.setText(notification.getUserWhoCaused());
+        holder.notifDate.setText(notification.getDate());
 
-        //Always the same value (mocked)
-        holder.notifDate.setText("tue 15:33");
-        holder.userFoto.setImageResource(R.drawable.placeholder);
+        //TODO REMOVE MOCK Always the same value (mocked)
+        holder.userFoto.setImageResource(R.drawable.app_logo);
         //Picasso.get().load(offer.getImageUrl()).into(offerImage);
 
 
-        //TODO Functionality
+        //TODO Functionality - set up listener
 
     }
 

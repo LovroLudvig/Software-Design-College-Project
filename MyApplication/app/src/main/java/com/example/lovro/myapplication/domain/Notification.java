@@ -4,7 +4,7 @@ import com.squareup.moshi.Json;
 
 public class Notification {
 
-    //OVO JE SVE MOCKANO I CIJELU KLASU TREBA NAPISAT, nisam znao koja polja da stavim pa sam ova
+    //TODO This is a mocked class, write the real one compatible with database
     private String userWhoCaused;
     private String text;
     private String date;
