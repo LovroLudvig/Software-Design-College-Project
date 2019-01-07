@@ -132,11 +132,13 @@ public class EditProfileActivity extends BasicActivity {
     }
 
     private void updateUser(User user){
+        show_loading("Updating user...");
         Call<ResponseBody> updateUser = apiService.updateUser(getUserAuth(), user);
 
         updateUser.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                stop_loading();
                 if(response.isSuccessful()){
                     returnUser();
                 }else{
@@ -154,8 +156,8 @@ public class EditProfileActivity extends BasicActivity {
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                stop_loading();
                 Toast.makeText(EditProfileActivity.this,"Error loading user", Toast.LENGTH_LONG).show();
-
                 t.printStackTrace();
             }
         });
