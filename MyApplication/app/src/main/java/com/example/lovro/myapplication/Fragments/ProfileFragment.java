@@ -28,6 +28,7 @@ import com.example.lovro.myapplication.domain.UserProfile;
 import com.example.lovro.myapplication.network.ApiService;
 import com.example.lovro.myapplication.network.GenericResponse;
 import com.example.lovro.myapplication.network.InitApiService;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.List;
@@ -82,7 +83,11 @@ public class ProfileFragment extends Fragment {
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Gson gson = new Gson();
+                String userAsString = gson.toJson(currentUser);
+
                 Intent i = new Intent(getActivity(),EditProfileActivity.class);
+                i.putExtra("UserCurrent",userAsString);
                 startActivity(i);
             }
         });
@@ -154,7 +159,7 @@ public class ProfileFragment extends Fragment {
 
             nameUsernameText.setText("Name: "+getName(user.getName())+", also known as "+getName(user.getUsername()));
             locationText.setText("Lives in "+getName(user.getAddress())+", "+town);
-            //emailText.setText(user.getEmail()); //TODO: after email is added to backend do this too
+            emailText.setText(getName(user.getEmail())); //TODO: after email is added to backend do this too
             cardText.setText(getName(user.getCardNumber()));
         }
     }

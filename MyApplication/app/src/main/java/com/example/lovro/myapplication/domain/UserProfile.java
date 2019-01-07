@@ -21,13 +21,17 @@ public class UserProfile {
     @Json(name = "town")
     private Town town;
 
-    public UserProfile(String username, String name, String lastName, String cardNumber, String address, Town town) {
+    @Json(name = "email")
+    private String email;
+
+    public UserProfile(String username, String name, String lastName, String cardNumber, String address, Town town, String email) {
         this.username = username;
         this.name = name;
         this.lastName = lastName;
         this.cardNumber = cardNumber;
         this.address = address;
         this.town = town;
+        this.email = email;
     }
 
     public String getUsername() {
@@ -76,5 +80,13 @@ public class UserProfile {
 
     public void setTown(Town town) {
         this.town = town;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

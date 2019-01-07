@@ -1,6 +1,7 @@
 package com.example.lovro.myapplication.domain;
 
 import android.graphics.Bitmap;
+import android.text.Editable;
 
 import com.squareup.moshi.Json;
 
@@ -50,9 +51,18 @@ public class User {
         this.userStatus = userStatus;
     }
 
-
     public User(String username){
         this.username=username;
+    }
+
+
+    public User(String email,String username,String name,String cardNumber,String address,Town town){
+        this.username = username;
+        this.email = email;
+        this.address = address;
+        this.cardNumber = cardNumber;
+        this.name = name;
+        this.town = town;
     }
 
     public String getName() {
