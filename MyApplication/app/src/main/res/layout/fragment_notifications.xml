@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/White"
+    android:background="@color/AppCOlorLight"
     android:gravity="center"
     tools:context=".Fragments.NotificationsFragment">
 
@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:paddingTop="0sp">
+        android:paddingTop="20dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/notif_recyclerview"

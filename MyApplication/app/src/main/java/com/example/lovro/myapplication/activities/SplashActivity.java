@@ -36,6 +36,7 @@ public class SplashActivity extends AppCompatActivity {
         //check for user in memory
         checkIfUserIsLoggedIn();
 
+        animation.setSpeed(200);
         animation.addAnimatorListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
