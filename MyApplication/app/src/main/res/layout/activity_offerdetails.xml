@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/AppGrey">
+    android:background="@color/AppCOlorLight">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -32,8 +32,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-
-
             >
 
             <ImageView
@@ -41,270 +39,281 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:scaleType="centerCrop"
+                android:layout_marginBottom="10dp"
                 app:srcCompat="@drawable/placeholder" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="115sp"
-                android:background="@android:drawable/dialog_holo_light_frame">
-
-                <TextView
-                    android:id="@+id/offer_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="17dp"
-                    android:layout_marginTop="14dp"
-                    android:fontFamily="@font/doppio_one"
-                    android:text="Offer name"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="18sp" />
-
-                <ImageView
-                    android:id="@+id/imageView13"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginTop="53dp"
-                    android:layout_marginRight="17dp"
-                    android:paddingLeft="0dp"
-                    android:paddingRight="0dp"
-                    app:srcCompat="@color/AppGrey"></ImageView>
-
-                <TextView
-                    android:id="@+id/offer_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/offer_name"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginBottom="16dp"
-                    android:text="45.00"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="23sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/offer_price"
-                    android:layout_marginStart="0dp"
-                    android:layout_toEndOf="@+id/offer_price"
-                    android:paddingLeft="3sp"
-                    android:text="HRK"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="23sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:paddingLeft="10dp"
-                android:text="About This item"
-                android:textColor="@android:color/background_dark"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="210dp"
-                android:layout_marginTop="2sp"
-                android:background="@android:drawable/dialog_holo_light_frame">
-
-                <TextView
-                    android:id="@+id/textView16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="17dp"
-                    android:layout_marginTop="27dp"
-                    android:text="Specification"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/offer_specification"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/textView16"
-                    android:layout_marginStart="52dp"
-                    android:layout_marginBottom="-1dp"
-                    android:layout_toEndOf="@+id/textView16"
-                    android:text="New item with styles"
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="17dp"
-                    android:layout_marginTop="64dp"
-                    android:layout_marginRight="17dp"
-                    android:paddingLeft="0dp"
-                    android:paddingRight="0dp"
-                    app:srcCompat="@color/AppGrey" />
-
-                <TextView
-                    android:id="@+id/offer_description"
-                    android:layout_width="375dp"
-                    android:layout_height="80dp"
-                    android:layout_alignStart="@+id/textView16"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="76dp"
-                    android:layout_marginEnd="17dp"
-                    android:text="This where you can put your description. Here the buyer can see everything about your product."
-                    android:textColor="@android:color/background_dark"
-                    android:textSize="16sp" />
-
-                <Button
-                    android:id="@+id/item_desc"
-                    style="@android:style/Widget.DeviceDefault.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/offer_description"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginEnd="5dp"
-                    android:text="Item description"
-                    android:textColor="@color/AppColor" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:paddingLeft="10dp"
-                android:text="Add styles to your item"
-                android:textColor="@android:color/background_dark"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <RelativeLayout
-                android:id="@+id/style_layout"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="3dp"
-                android:background="@android:drawable/dialog_holo_light_frame"
                 android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingTop="15dp">
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="115sp"
+                    android:background="@drawable/card_background">
+
+                    <TextView
+                        android:id="@+id/offer_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="14dp"
+                        android:fontFamily="@font/doppio_one"
+                        android:text="Offer name"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="18sp" />
+
+                    <ImageView
+                        android:id="@+id/imageView13"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="17dp"
+                        android:layout_marginTop="53dp"
+                        android:layout_marginRight="17dp"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="0dp"
+                        app:srcCompat="@color/AppGrey"></ImageView>
+
+                    <TextView
+                        android:id="@+id/offer_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/offer_name"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginBottom="16dp"
+                        android:text="45.00"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="23sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/offer_price"
+                        android:layout_marginStart="0dp"
+                        android:layout_toEndOf="@+id/offer_price"
+                        android:paddingLeft="3sp"
+                        android:text="HRK"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="23sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:paddingLeft="10dp"
+                    android:text="About This item"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:layout_marginTop="2sp"
+                    android:background="@drawable/card_background">
+
+                    <TextView
+                        android:id="@+id/textView16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="17dp"
+                        android:layout_marginTop="27dp"
+                        android:text="Specification"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/offer_specification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/textView16"
+                        android:layout_marginStart="52dp"
+                        android:layout_marginBottom="-1dp"
+                        android:layout_toEndOf="@+id/textView16"
+                        android:text="New item with styles"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="17dp"
+                        android:layout_marginTop="64dp"
+                        android:layout_marginRight="17dp"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="0dp"
+                        app:srcCompat="@color/AppGrey" />
+
+                    <TextView
+                        android:id="@+id/offer_description"
+                        android:layout_width="375dp"
+                        android:layout_height="80dp"
+                        android:layout_alignStart="@+id/textView16"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="76dp"
+                        android:layout_marginEnd="17dp"
+                        android:text="This where you can put your description. Here the buyer can see everything about your product."
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/item_desc"
+                        style="@android:style/Widget.DeviceDefault.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/offer_description"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="5dp"
+                        android:text="Item description"
+                        android:textColor="@color/AppColor" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/textView19"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:paddingLeft="10dp"
+                    android:text="Add styles to your item"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:id="@+id/style_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@drawable/card_background"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="15dp">
+
+                    <Button
+                        android:id="@+id/ask_for_own_style"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="+ Ask for own style"
+                        android:textColor="@color/AppColor" />
+
+                    <ImageView
+                        android:id="@+id/imageView5321"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/ask_for_own_style"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginRight="7dp"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="0dp"
+                        app:srcCompat="@color/AppGrey" />
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="26dp"
+                        android:layout_marginBottom="30dp"
+                        android:text="Style"
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:id="@+id/spinner2"
+                        android:layout_width="234dp"
+                        android:layout_height="51dp"
+                        android:layout_alignTop="@+id/textView18"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="89dp"
+                        android:layout_marginTop="-12dp"
+                        android:layout_marginEnd="17dp"
+                        android:layout_toEndOf="@+id/textView18" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:paddingLeft="10dp"
+                    android:text="Choose a dimension"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:id="@+id/dimension_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@drawable/card_background"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="15dp">
+
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="28dp"
+                        android:text="Dimension"
+                        android:textSize="16sp" />
+
+                    <Spinner
+                        android:id="@+id/spinner"
+                        android:layout_width="169dp"
+                        android:layout_height="45dp"
+                        android:layout_alignBottom="@+id/textView12"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="64dp"
+                        android:layout_marginEnd="55dp"
+                        android:layout_marginBottom="-13dp"
+                        android:layout_toEndOf="@+id/textView12"
+                        android:paddingBottom="5dp"
+                        android:spinnerMode="dropdown" />
+                </RelativeLayout>
 
                 <Button
-                    android:id="@+id/ask_for_own_style"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginBottom="10dp"
-                    android:text="+ Ask for own style"
-                    android:textColor="@color/AppColor" />
-
-                <ImageView
-                    android:id="@+id/imageView5321"
+                    android:id="@+id/buy_button"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_below="@+id/ask_for_own_style"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginRight="7dp"
-                    android:paddingLeft="0dp"
-                    android:paddingRight="0dp"
-                    app:srcCompat="@color/AppGrey" />
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@color/AppColor"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:fontFamily="@font/doppio_one"
+                    android:text="BUY IT NOW"
+                    android:textColor="@color/White" />
 
-                <TextView
-                    android:id="@+id/textView18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="26dp"
-                    android:layout_marginBottom="30dp"
-                    android:text="Style"
-                    android:textSize="16sp" />
+            </LinearLayout>
 
-                <Spinner
-                    android:id="@+id/spinner2"
-                    android:layout_width="234dp"
-                    android:layout_height="51dp"
-                    android:layout_alignTop="@+id/textView18"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="89dp"
-                    android:layout_marginTop="-12dp"
-                    android:layout_marginEnd="17dp"
-                    android:layout_toEndOf="@+id/textView18" />
-            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:paddingLeft="10dp"
-                android:text="Choose a dimension"
-                android:textColor="@android:color/background_dark"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <RelativeLayout
-                android:id="@+id/dimension_layout"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="3dp"
-                android:background="@android:drawable/dialog_holo_light_frame"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingTop="15dp">
-
-                <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="28dp"
-                    android:text="Dimension"
-                    android:textSize="16sp" />
-
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="169dp"
-                    android:layout_height="45dp"
-                    android:layout_alignBottom="@+id/textView12"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="64dp"
-                    android:layout_marginEnd="55dp"
-                    android:layout_marginBottom="-13dp"
-                    android:layout_toEndOf="@+id/textView12"
-                    android:paddingBottom="5dp"
-                    android:spinnerMode="dropdown" />
-            </RelativeLayout>
-
-            <Button
-                android:id="@+id/buy_button"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="15dp"
-                android:background="@color/AppColor"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:fontFamily="@font/doppio_one"
-                android:text="BUY IT NOW"
-                android:textColor="@color/White" />
         </LinearLayout>
     </ScrollView>
 
