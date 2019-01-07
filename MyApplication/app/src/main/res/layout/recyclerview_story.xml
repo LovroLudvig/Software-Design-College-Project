@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/White"
-    android:paddingLeft="0sp"
-    android:paddingBottom="0sp">
+    android:background="@drawable/card_background"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_marginBottom="8dp">
 
     <ImageView
         android:id="@+id/profile_image"

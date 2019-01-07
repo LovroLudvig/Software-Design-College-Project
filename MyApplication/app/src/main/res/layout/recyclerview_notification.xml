@@ -18,7 +18,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="5sp"
         android:layout_marginTop="5sp"
-        android:src= "@drawable/app_logo"
+        android:src= "@drawable/notification"
         android:scaleType="fitXY"
         />
 
@@ -41,8 +41,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/notif_userName"
-        android:layout_alignStart="@+id/notif_userName"
+        android:layout_alignStart="@+id/notif_picture"
         android:layout_alignTop="@id/notif_userName"
+        android:layout_marginStart="75dp"
         android:paddingTop="25sp"
         android:text="Accepted your offer"
         android:textColor="@android:color/background_dark"
@@ -60,7 +61,6 @@
         android:textColor="@color/AppColor"
         android:textSize="15sp"
         android:textStyle="italic"/>
-
 
 
     <TextView

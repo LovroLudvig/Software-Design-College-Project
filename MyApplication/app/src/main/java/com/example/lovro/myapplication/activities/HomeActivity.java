@@ -30,6 +30,8 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setupViewPager();
+
+
     }
 
 
@@ -46,6 +48,10 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.O
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         logoutButon=findViewById(R.id.logout_image);
+
+        if(!userIsRegistered()){
+            logoutButon.setVisibility(View.GONE);
+        }
 
         tabLayout.getTabAt(0).setIcon(R.drawable.story_btn);
         tabLayout.getTabAt(1).setIcon(R.drawable.shop_btn_deselected);

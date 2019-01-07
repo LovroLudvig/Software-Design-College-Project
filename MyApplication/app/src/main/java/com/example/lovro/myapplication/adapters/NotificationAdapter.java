@@ -45,7 +45,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         holder.notifDate.setText(notification.getDate());
 
         //TODO REMOVE MOCK Always the same value (mocked)
-        holder.userFoto.setImageResource(R.drawable.app_logo);
+        //holder.userFoto.setImageResource(R.drawable.app_logo);
         //Picasso.get().load(offer.getImageUrl()).into(offerImage);
 
 
