@@ -110,7 +110,7 @@ public class StoryServiceImpl implements StoryService {
         if(story == null) {
             throw new IllegalArgumentException("Story can not be null");
         }
-        StoryStatus status = storyStatusRepository.findByName(Constants.ORDER_STATUS_ALLOWED_SEEN);
+        StoryStatus status = storyStatusRepository.findByName(Constants.STORY_STATUS_ALLOWED_SEEN);
         story.setStatus(status);
         return storyRepository.save(story);
     }
