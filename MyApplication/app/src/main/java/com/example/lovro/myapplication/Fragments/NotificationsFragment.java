@@ -3,12 +3,25 @@ package com.example.lovro.myapplication.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.lovro.myapplication.R;
+import com.example.lovro.myapplication.adapters.NotificationAdapter;
+import com.example.lovro.myapplication.adapters.OfferAdapter;
+import com.example.lovro.myapplication.domain.Notification;
+import com.example.lovro.myapplication.domain.Offer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +32,15 @@ import com.example.lovro.myapplication.R;
  * create an instance of this fragment.
  */
 public class NotificationsFragment extends Fragment {
+
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private ProgressBar progressBar;
+
+    private  NotificationAdapter notifAdapter;
+    private List<Notification> notifList = new ArrayList<>();
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -59,6 +81,34 @@ public class NotificationsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //TODO mocked values
+        Notification notif1 = new Notification("Craftery admin", "Accepted your offer", "tue 15:33");
+        Notification notif2 = new Notification("Craftery admin", "Accepted your offer", "tue 15:33");
+        Notification notif3 = new Notification("Craftery admin", "Accepted your offer", "tue 15:33");
+        List<Notification> mockedList = new ArrayList<>();
+        mockedList.add(notif1);
+        mockedList.add(notif2);
+        mockedList.add(notif3);
+        this.notifList = mockedList;
+
+        recyclerView = view.findViewById(R.id.notif_recyclerview);
+        swipeRefreshLayout = view.findViewById(R.id.notif_swipeLayout);
+        progressBar = view.findViewById(R.id.notif_progressbar);
+
+        progressBar.setVisibility(View.VISIBLE);
+
+        initRecyclerView();
+        initNotificationAdapter(notifList);
+        //initListeners();
+
+        //TODO pull the data from API here, check internet
+        displayNotifications(notifList);
     }
 
     @Override
@@ -105,5 +155,25 @@ public class NotificationsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    private void displayNotifications(List<Notification> notificationList){
+        progressBar.setVisibility(View.GONE);
+        if(notifAdapter != null){
+            notifAdapter.setOffers(notificationList);
+        }else{
+            initNotificationAdapter(notificationList);
+        }
+    }
+
+
+    private void initRecyclerView(){
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    private void initNotificationAdapter(List<Notification> notificationList){
+        notifAdapter = new NotificationAdapter(notificationList);
+        recyclerView.setAdapter(notifAdapter);
     }
 }

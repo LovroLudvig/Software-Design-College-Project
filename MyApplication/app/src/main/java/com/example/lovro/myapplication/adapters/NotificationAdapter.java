@@ -11,20 +11,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
+import com.example.lovro.myapplication.domain.Notification;
 import com.example.lovro.myapplication.domain.Offer;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>{
 
-    private List<Offer> offers;
-    private OnShowClickListener onShowClickListener;
+    private List<Notification> notifications;
 
-
-    public NotificationAdapter(List<Offer> offers){
-        this.offers = offers;
+    public NotificationAdapter(List<Notification> notifications){
+        this.notifications = notifications;
     }
 
 
@@ -37,59 +38,52 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull NotificationAdapter.ViewHolder holder, int position) {
-        final Offer offer = offers.get(position);
-        final ImageView offerImage = holder.itemView.findViewById(R.id.offer_picture);
-        TextView offerName = holder.itemView.findViewById(R.id.offer_name);
-        TextView offerPrice = holder.itemView.findViewById(R.id.offer_price);
-        TextView more_styles = holder.itemView.findViewById(R.id.more_styles);
+        final Notification notification = notifications.get(position);
 
-        Picasso.get().load(offer.getImageUrl()).into(offerImage);
-        //offerImage.setImageResource(R.drawable.placeholder);
-        offerName.setText(offer.getName());
-        offerPrice.setText(offer.getPrice().toString());
+        holder.notifText.setText(notification.getText());
+        holder.userName.setText(notification.getUserWhoCaused());
 
-        if(offer.getStyles().size() == 0){
-            more_styles.setText("");
-        }
+        //Always the same value (mocked)
+        holder.notifDate.setText("tue 15:33");
+        holder.userFoto.setImageResource(R.drawable.placeholder);
+        //Picasso.get().load(offer.getImageUrl()).into(offerImage);
 
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onShowClickListener.onShowClick(offer);
-            }
-        };
 
-        holder.itemView.setOnClickListener(listener);
+        //TODO Functionality
+
     }
 
 
-    public void setOffers(List<Offer> offers) {
-        this.offers = offers;
+    public void setOffers(List<Notification> notifications) {
+        this.notifications = notifications;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return offers.size();
+        return notifications.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
 
         private View itemView;
+        private ImageView userFoto;
+        private TextView userName;
+        private TextView notifText;
+        private TextView notifDate;
 
         public ViewHolder(View itemView){
             super(itemView);
             this.itemView = itemView;
+
+            userFoto = itemView.findViewById(R.id.notif_picture);
+            userName = itemView.findViewById(R.id.notif_userName);
+            notifText = itemView.findViewById(R.id.notif_text);
+            notifDate = itemView.findViewById(R.id.notif_date);
+
         }
     }
 
-    public void setListener(OnShowClickListener listener){
-        this.onShowClickListener = listener;
-    }
 
-
-    public interface OnShowClickListener{
-        void onShowClick(Offer offer);
-    }
 
 }

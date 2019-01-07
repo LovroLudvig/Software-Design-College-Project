@@ -21,7 +21,7 @@
         />
 
     <TextView
-        android:id="@+id/notif_name"
+        android:id="@+id/notif_userName"
         android:layout_width="127dp"
         android:layout_height="44dp"
         android:layout_alignParentEnd="true"
@@ -35,22 +35,22 @@
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/notif_price"
+        android:id="@+id/notif_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/notif_name"
-        android:layout_alignStart="@+id/notif_name"
-        android:layout_alignTop="@id/notif_name"
+        android:layout_below="@+id/notif_userName"
+        android:layout_alignStart="@+id/notif_userName"
+        android:layout_alignTop="@id/notif_userName"
         android:paddingTop="25sp"
         android:text="Accepted your offer"
         android:textColor="@android:color/background_dark"
         android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/notif_textView"
+        android:id="@+id/notif_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/notif_name"
+        android:layout_alignTop="@id/notif_userName"
         android:layout_alignParentEnd="true"
         android:paddingLeft="3sp"
         android:paddingTop="3sp"
@@ -62,7 +62,7 @@
 
 
     <TextView
-        android:id="@+id/notif_moreSyles"
+        android:id="@+id/notif_seeMore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/notif_picture"

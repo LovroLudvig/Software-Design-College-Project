@@ -8,20 +8,20 @@
     tools:context=".Fragments.NotificationsFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeLayout"
+        android:id="@+id/notif_swipeLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:paddingTop="0sp">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview_offers"
+            android:id="@+id/notif_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <ProgressBar
-        android:id="@+id/offers_progressbar"
+        android:id="@+id/notif_progressbar"
         style="?android:attr/progressBarStyle"
         android:layout_width="75sp"
         android:layout_height="75sp"
