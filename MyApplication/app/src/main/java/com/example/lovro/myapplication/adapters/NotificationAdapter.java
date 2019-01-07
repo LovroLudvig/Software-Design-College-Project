@@ -17,25 +17,26 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class NotificationAdapter extends RecyclerView.Adapter<OfferAdapter.ViewHolder>{
+public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>{
 
     private List<Offer> offers;
     private OnShowClickListener onShowClickListener;
 
 
-    public OfferAdapter(List<Offer> offers){
+    public NotificationAdapter(List<Offer> offers){
         this.offers = offers;
     }
 
+
     @NonNull
     @Override
-    public OfferAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_notification,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OfferAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NotificationAdapter.ViewHolder holder, int position) {
         final Offer offer = offers.get(position);
         final ImageView offerImage = holder.itemView.findViewById(R.id.offer_picture);
         TextView offerName = holder.itemView.findViewById(R.id.offer_name);
@@ -60,6 +61,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<OfferAdapter.ViewH
 
         holder.itemView.setOnClickListener(listener);
     }
+
 
     public void setOffers(List<Offer> offers) {
         this.offers = offers;
