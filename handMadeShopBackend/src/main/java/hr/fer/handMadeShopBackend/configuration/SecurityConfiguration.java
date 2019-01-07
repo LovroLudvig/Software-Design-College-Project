@@ -45,16 +45,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().sameOrigin();
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/auth/register").permitAll()
-                .antMatchers("/auth/login", "/auth/logout").authenticated()
                 .antMatchers("/hello").hasRole(Constants.ROLE_USER)
                 .antMatchers("/hello/private").hasRole(Constants.ROLE_ADMIN)
+                .antMatchers("/auth/register").permitAll()
+                .antMatchers("/auth/login", "/auth/logout").authenticated()
                 .antMatchers("/user/delete/**", "/user/update").authenticated()
                 .antMatchers("/user/forbid/**").hasRole(Constants.ROLE_ADMIN)
                 .antMatchers("/orders", "/orders/manage").hasRole(Constants.ROLE_ADMIN)
+                .antMatchers("/orders/orderDecoration/**").authenticated()
                 .antMatchers("/transactions/all").hasRole(Constants.ROLE_ADMIN)
-                .antMatchers("/advertisement/all").authenticated()
                 .antMatchers("/advertisement/publish").hasRole(Constants.ROLE_ADMIN)
+                .antMatchers("/stories/recommend").authenticated()
+                .antMatchers("/stories/publish", "/stories/manage").hasRole(Constants.ROLE_ADMIN)
+                .antMatchers("/media/story/image/upload/**", "media/story/video/upload/**").authenticated()
+                .antMatchers("/media/advertisement/image/upload/**").hasRole(Constants.ROLE_ADMIN)
                 .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//We don't need sessions to be created.
     }

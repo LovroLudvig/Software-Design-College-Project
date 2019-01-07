@@ -29,9 +29,9 @@ import java.nio.file.StandardOpenOption;
 @Lazy
 public class MediaController {
 
-    public static final String BASE_URL_GET_STORY_IMAGE = "http://104.248.255.232:8080/media/story/image/";
-    public static final String BASE_URL_GET_ADVERTISEMENT_IMAGE = "http://104.248.255.232:8080/media/advertisement/image/";
-    public static final String BASE_URL_GET_STORY_VIDEO = "http://104.248.255.232:8080/media/story/video/";
+    public static final String BASE_URL_GET_STORY_IMAGE = "http://104.248.255.232:8080/media/story/image/download/";
+    public static final String BASE_URL_GET_ADVERTISEMENT_IMAGE = "http://104.248.255.232:8080/media/advertisement/image/download/";
+    public static final String BASE_URL_GET_STORY_VIDEO = "http://104.248.255.232:8080/media/story/video/download/";
 
     @Autowired
     private StoryService storyService;
@@ -39,7 +39,7 @@ public class MediaController {
     @Autowired
     private AdService adService;
 
-    @GetMapping(value = "/story/image/{storyId}", headers = "Accept=image/jpeg, image/jpg, image/png")
+    @GetMapping(value = "/story/image/download/{storyId}", headers = "Accept=image/jpeg, image/jpg, image/png")
     public byte[] getStoryImage(@PathVariable("storyId") long storyId) {
         String url = Constants.IMAGE_BASE_URL_STORIES + "image" + storyId + ".png";
 
@@ -62,10 +62,15 @@ public class MediaController {
         }
     }
 
-    @PostMapping("/story/image/{storyId}")
+    @PostMapping("/story/image/upload/{storyId}")
     public Story saveStoryImage(@RequestParam("file") MultipartFile filedata, @PathVariable("storyId") long storyId) {
+        validateStoryExists(storyId);
+        
         String url = Constants.IMAGE_BASE_URL_STORIES + "image" + storyId + ".png";
         try {
+            if(Files.exists(Paths.get(url))) {
+                Files.delete(Paths.get(url));
+            }
             byte[] bytes = filedata.getBytes();
 
             BufferedImage final_img = ImageIO.read(new ByteArrayInputStream(bytes));
@@ -84,7 +89,7 @@ public class MediaController {
         return null;
     }
 
-    @GetMapping(value = "/advertisement/image/{advertisementId}", headers = "Accept=image/jpeg, image/jpg, image/png")
+    @GetMapping(value = "/advertisement/image/download/{advertisementId}", headers = "Accept=image/jpeg, image/jpg, image/png")
     public byte[] getAdvertisementImage(@PathVariable("advertisementId") long advertisementId) {
         String url = Constants.IMAGE_BASE_URL_ADVERTISEMENTS + "image" + advertisementId+ ".png";
 
@@ -106,10 +111,15 @@ public class MediaController {
         }
     }
 
-    @PostMapping("/advertisement/image/{advertisementId}")
+    @PostMapping("/advertisement/image/upload/{advertisementId}")
     public Advertisement saveAdvertisementImage(@RequestParam("file") MultipartFile filedata, @PathVariable("advertisementId") long advertisementId) {
+        validateAdvertisementExists(advertisementId);
         String url = Constants.IMAGE_BASE_URL_ADVERTISEMENTS + "image" + advertisementId+ ".png";
+
         try {
+            if(Files.exists(Paths.get(url))) {
+                Files.delete(Paths.get(url));
+            }
             byte[] bytes = filedata.getBytes();
 
             BufferedImage final_img = ImageIO.read(new ByteArrayInputStream(bytes));
@@ -128,9 +138,13 @@ public class MediaController {
         return null;
     }
 
-    @GetMapping(value = "/story/video/{storyId}", headers = "Accept=video/mpeg, video/quicktime, video/mp4")
+    @GetMapping(value = "/story/video/download/{storyId}", headers = "Accept=video/mpeg, video/quicktime, video/mp4")
     public ResponseEntity<InputStreamResource> getStoryVideo(@PathVariable Long storyId, HttpServletResponse response) throws IOException {
         String url = Constants.VIDEO_BASE_URL_STORIES + "storyVideo" + storyId + ".mp4";
+
+        if(!Files.exists(Paths.get(url))) {
+            throw new IllegalArgumentException("The file does not exist");
+        }
 
         MediaType mediaType = MediaType.parseMediaType("video/mp4");
         Path p = Paths.get(url);
@@ -144,11 +158,17 @@ public class MediaController {
                 .body(resource);
     }
 
-    @PostMapping("/story/video/{storyId}")
+    @PostMapping("/story/video/upload/{storyId}")
     public Story create(@PathVariable Long storyId, @RequestParam("file") MultipartFile file) {
+        validateStoryExists(storyId);
         String url = Constants.VIDEO_BASE_URL_STORIES + "storyVideo" + storyId + ".mp4";
+
         try {
+            if(Files.exists(Paths.get(url))) {
+                Files.delete(Paths.get(url));
+            }
             byte[] bytes = file.getBytes();
+
             OutputStream os = Files.newOutputStream(Paths.get(url), StandardOpenOption.CREATE_NEW);
             os.write(bytes);
 
@@ -164,5 +184,18 @@ public class MediaController {
         return null;
     }
 
+    private void validateStoryExists(long storyId) {
+        Story story = storyService.fetch(storyId);
+        if(story == null) {
+            throw new IllegalArgumentException("The story with the specified id does not exist.");
+        }
+    }
+
+    private void validateAdvertisementExists(long advertisementId) {
+        Advertisement advertisement = adService.fetch(advertisementId);
+        if(advertisement == null) {
+            throw new IllegalArgumentException("The advertisement with the specified id does not exist.");
+        }
+    }
 
 }
