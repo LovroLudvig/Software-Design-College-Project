@@ -12,6 +12,7 @@ public class Constants {
 
     // Story status constants
     public static final String STORY_STATUS_ALLOWED = "STORY_ALLOWED";
+    public static final String STORY_STATUS_ALLOWED_SEEN = "STORY_ALLOWED_SEEN";
     public static final String STORY_STATUS_DENIED = "STORY_DENIED";
     public static final String STORY_STATUS_IN_EVALUATION = "STORY_IN_EVALUATION";
 
