@@ -60,7 +60,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Who are you?"/>
+                            android:text="Who are you?"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/background_dark"/>
 
                     </LinearLayout>
 
@@ -72,7 +75,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
-                            android:text="Name:"/>
+                            android:text="Name:"
+                            android:textSize="16sp"/>
                         <LinearLayout
                             android:focusable="true"
                             android:focusableInTouchMode="true"
@@ -90,7 +94,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
-                            android:text="Username:"/>
+                            android:text="Username:"
+                            android:textSize="16sp"/>
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
@@ -124,7 +129,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Where do you live?"/>
+                            android:text="Where do you live?"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/background_dark"/>
 
                     </LinearLayout>
 
@@ -136,7 +144,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
-                            android:text="Town:"/>
+                            android:text="Town:"
+                            android:textSize="16sp"/>
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
@@ -149,7 +158,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
-                            android:text="Address:"/>
+                            android:text="Address:"
+                            android:textSize="16sp"/>
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
@@ -183,7 +193,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="What's your email?"/>
+                            android:text="What's your email?"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/background_dark"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -193,7 +206,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
-                            android:text="Email:"/>
+                            android:text="Email:"
+                            android:textSize="16sp"/>
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
@@ -228,7 +242,10 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Credit card details please. We wont tell anyone."/>
+                            android:text="Credit card details please. We wont tell anyone."
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/background_dark"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -239,7 +256,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
-                            android:text="Credit card:"/>
+                            android:text="Credit card:"
+                            android:textSize="16sp"/>
                         <Spinner
                             android:id="@+id/card_picker"
                             android:layout_width="wrap_content"
@@ -257,7 +275,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="5dp"
-                            android:text="Card number:"/>
+                            android:text="Card number:"
+                            android:textSize="16sp"/>
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>

@@ -42,7 +42,8 @@
                     android:id="@+id/name_username_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name: *name*, Also known as: *username*"/>
+                    android:text="Name: *name*, Also known as: *username*"
+                    android:textSize="18sp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -58,7 +59,8 @@
                     android:id="@+id/location_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lives in Zagreb, Croatia"/>
+                    android:text="Lives in Zagreb, Croatia"
+                    android:textSize="18sp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -74,7 +76,8 @@
                     android:id="@+id/email_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="neme.surname@gmail.com"/>
+                    android:text="neme.surname@gmail.com"
+                    android:textSize="18sp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -90,7 +93,8 @@
                     android:id="@+id/card_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="VISA 56*************56"/>
+                    android:text="VISA 56*************56"
+                    android:textSize="18sp"/>
             </LinearLayout>
 
         </LinearLayout>
