@@ -67,6 +67,7 @@ public class DataInitializer {
 
         // Story status initialization
         storyStatusService.saveStoryStatusWithName(Constants.STORY_STATUS_ALLOWED);
+        storyStatusService.saveStoryStatusWithName(Constants.STORY_STATUS_ALLOWED_SEEN);
         storyStatusService.saveStoryStatusWithName(Constants.STORY_STATUS_DENIED);
         storyStatusService.saveStoryStatusWithName(Constants.STORY_STATUS_IN_EVALUATION);
 

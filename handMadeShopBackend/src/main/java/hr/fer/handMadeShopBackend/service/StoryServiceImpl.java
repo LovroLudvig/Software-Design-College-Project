@@ -8,13 +8,12 @@ import hr.fer.handMadeShopBackend.dao.UserRepository;
 import hr.fer.handMadeShopBackend.domain.Story;
 import hr.fer.handMadeShopBackend.domain.StoryStatus;
 import hr.fer.handMadeShopBackend.domain.User;
-import net.bytebuddy.asm.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
+import java.util.stream.Collectors;
 
 @Service
 public class StoryServiceImpl implements StoryService {
@@ -78,7 +77,42 @@ public class StoryServiceImpl implements StoryService {
 
     @Override
     public List<Story> listAllStories() {
-        return storyRepository.findAll();
+        return storyRepository.findAll()
+                .stream()
+                .filter(s -> s.getStatus().getName().equals(Constants.STORY_STATUS_ALLOWED) ||
+                            s.getStatus().getName().equals(Constants.STORY_STATUS_ALLOWED_SEEN))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Story> listMyRecommendedStories(User user) {
+        if(user == null) {
+            throw new IllegalArgumentException("User can not be null");
+        }
+        return storyRepository.findAll()
+                .stream()
+                .filter(s -> s.getUser().getUsername().equals(user.getUsername()))
+                .filter(s -> s.getStatus().getName().equals(Constants.STORY_STATUS_IN_EVALUATION) ||
+                        s.getStatus().getName().equals(Constants.STORY_STATUS_ALLOWED))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Story> listAllInEvaluation() {
+        return storyRepository.findAll()
+                .stream()
+                .filter(s -> s.getStatus().getName().equals(Constants.STORY_STATUS_IN_EVALUATION))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Story setSeen(Story story) {
+        if(story == null) {
+            throw new IllegalArgumentException("Story can not be null");
+        }
+        StoryStatus status = storyStatusRepository.findByName(Constants.ORDER_STATUS_ALLOWED_SEEN);
+        story.setStatus(status);
+        return storyRepository.save(story);
     }
 
     @Override
