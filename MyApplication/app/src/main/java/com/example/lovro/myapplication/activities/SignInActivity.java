@@ -118,10 +118,8 @@ public class SignInActivity extends BasicActivity {
                 if(response.isSuccessful()){
                     saveUserInMemory();
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                            Intent.FLAG_ACTIVITY_CLEAR_TASK |
-                            Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
+                    finish();
                 }else{
                     if(response.code() == 401){
                         showError("Wrong email or password!");
