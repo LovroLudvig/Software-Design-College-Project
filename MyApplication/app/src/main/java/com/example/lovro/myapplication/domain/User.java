@@ -20,6 +20,9 @@ public class User {
     @Json(name = "name")
     private String name;
 
+    @Json(name = "lastName")
+    private String lastName;
+
     @Json(name = "cardNumber")
     private String cardNumber;
 
@@ -46,6 +49,7 @@ public class User {
         this.town = town;
         this.userStatus = userStatus;
     }
+
 
     public User(String username){
         this.username=username;

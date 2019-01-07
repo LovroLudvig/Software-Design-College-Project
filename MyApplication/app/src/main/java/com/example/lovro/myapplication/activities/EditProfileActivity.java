@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.lovro.myapplication.R;
@@ -15,6 +16,12 @@ public class EditProfileActivity extends AppCompatActivity {
     private ArrayAdapter<String> arrayAdapter;
     private Spinner cardPicker;
     private Button saveChangesButton;
+    private EditText nameEditText;
+    private EditText usernameEditText;
+    private EditText townEditText;
+    private EditText addressEditText;
+    private EditText emailEditText;
+    private EditText cardEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

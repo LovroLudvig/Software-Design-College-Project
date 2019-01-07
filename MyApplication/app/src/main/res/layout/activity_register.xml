@@ -64,7 +64,7 @@
                     android:id="@+id/email_input"
                     android:layout_width="match_parent"
                     android:layout_height="45sp"
-                    android:drawableLeft="@drawable/ic_email_black_24dp"
+                    android:drawableLeft="@drawable/ic_email_white_24dp"
                     android:hint="E-mail"
                     android:inputType="textEmailAddress"
                     android:textColor="#dddddd"

@@ -83,6 +83,7 @@
                             android:layout_width="0px"
                             android:layout_height="0px"/>
                         <EditText
+                            android:id="@+id/name_editText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
@@ -97,6 +98,7 @@
                             android:text="Username:"
                             android:textSize="16sp"/>
                         <EditText
+                            android:id="@+id/username_editText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
@@ -147,6 +149,7 @@
                             android:text="Town:"
                             android:textSize="16sp"/>
                         <EditText
+                            android:id="@+id/town_editText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
@@ -161,6 +164,7 @@
                             android:text="Address:"
                             android:textSize="16sp"/>
                         <EditText
+                            android:id="@+id/address_editText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
@@ -209,6 +213,7 @@
                             android:text="Email:"
                             android:textSize="16sp"/>
                         <EditText
+                            android:id="@+id/email_editText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
@@ -278,6 +283,7 @@
                             android:text="Card number:"
                             android:textSize="16sp"/>
                         <EditText
+                            android:id="@+id/card_editText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
