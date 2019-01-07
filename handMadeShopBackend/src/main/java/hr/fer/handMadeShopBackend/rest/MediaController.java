@@ -23,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/media")
@@ -39,7 +40,7 @@ public class MediaController {
     @Autowired
     private AdService adService;
 
-    @GetMapping(value = "/story/image/{storyId}", headers = "Accept=image/jpeg, image/jpg, image/png")
+    @GetMapping(value = "/story/image/download/{storyId}", headers = "Accept=image/jpeg, image/jpg, image/png")
     public byte[] getStoryImage(@PathVariable("storyId") long storyId) {
         String url = Constants.IMAGE_BASE_URL_STORIES + "image" + storyId + ".png";
 
@@ -62,8 +63,10 @@ public class MediaController {
         }
     }
 
-    @PostMapping("/story/image/{storyId}")
+    @PostMapping("/story/image/upload/{storyId}")
     public Story saveStoryImage(@RequestParam("file") MultipartFile filedata, @PathVariable("storyId") long storyId) {
+        validateStoryExists(storyId);
+        
         String url = Constants.IMAGE_BASE_URL_STORIES + "image" + storyId + ".png";
         try {
             byte[] bytes = filedata.getBytes();
@@ -84,7 +87,7 @@ public class MediaController {
         return null;
     }
 
-    @GetMapping(value = "/advertisement/image/{advertisementId}", headers = "Accept=image/jpeg, image/jpg, image/png")
+    @GetMapping(value = "/advertisement/image/download/{advertisementId}", headers = "Accept=image/jpeg, image/jpg, image/png")
     public byte[] getAdvertisementImage(@PathVariable("advertisementId") long advertisementId) {
         String url = Constants.IMAGE_BASE_URL_ADVERTISEMENTS + "image" + advertisementId+ ".png";
 
@@ -106,9 +109,11 @@ public class MediaController {
         }
     }
 
-    @PostMapping("/advertisement/image/{advertisementId}")
+    @PostMapping("/advertisement/image/upload/{advertisementId}")
     public Advertisement saveAdvertisementImage(@RequestParam("file") MultipartFile filedata, @PathVariable("advertisementId") long advertisementId) {
+        validateAdvertisementExists(advertisementId);
         String url = Constants.IMAGE_BASE_URL_ADVERTISEMENTS + "image" + advertisementId+ ".png";
+
         try {
             byte[] bytes = filedata.getBytes();
 
@@ -128,7 +133,7 @@ public class MediaController {
         return null;
     }
 
-    @GetMapping(value = "/story/video/{storyId}", headers = "Accept=video/mpeg, video/quicktime, video/mp4")
+    @GetMapping(value = "/story/video/download/{storyId}", headers = "Accept=video/mpeg, video/quicktime, video/mp4")
     public ResponseEntity<InputStreamResource> getStoryVideo(@PathVariable Long storyId, HttpServletResponse response) throws IOException {
         String url = Constants.VIDEO_BASE_URL_STORIES + "storyVideo" + storyId + ".mp4";
 
@@ -144,9 +149,11 @@ public class MediaController {
                 .body(resource);
     }
 
-    @PostMapping("/story/video/{storyId}")
+    @PostMapping("/story/video/upload/{storyId}")
     public Story create(@PathVariable Long storyId, @RequestParam("file") MultipartFile file) {
+        validateStoryExists(storyId);
         String url = Constants.VIDEO_BASE_URL_STORIES + "storyVideo" + storyId + ".mp4";
+
         try {
             byte[] bytes = file.getBytes();
             OutputStream os = Files.newOutputStream(Paths.get(url), StandardOpenOption.CREATE_NEW);
@@ -164,5 +171,18 @@ public class MediaController {
         return null;
     }
 
+    private void validateStoryExists(long storyId) {
+        Story story = storyService.fetch(storyId);
+        if(story == null) {
+            throw new IllegalArgumentException("The story with the specified id does not exist.");
+        }
+    }
+
+    private void validateAdvertisementExists(long advertisementId) {
+        Advertisement advertisement = adService.fetch(advertisementId);
+        if(advertisement == null) {
+            throw new IllegalArgumentException("The advertisement with the specified id does not exist.");
+        }
+    }
 
 }
