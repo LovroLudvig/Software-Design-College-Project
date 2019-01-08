@@ -2,6 +2,7 @@ package com.example.lovro.myapplication.network;
 
 import com.example.lovro.myapplication.domain.Offer;
 import com.example.lovro.myapplication.domain.Order;
+import com.example.lovro.myapplication.domain.Story;
 import com.example.lovro.myapplication.domain.User;
 import com.example.lovro.myapplication.domain.UserProfile;
 
@@ -41,5 +42,8 @@ public interface ApiService {
 
     @GET("/user/{username}")
     Call<User> getUserByUsername2(@Header("Authorization") String auth, @Path("username") String username);
+
+    @GET("/stories/all")
+    Call<List<Story>> getAllStories();
 
 }
