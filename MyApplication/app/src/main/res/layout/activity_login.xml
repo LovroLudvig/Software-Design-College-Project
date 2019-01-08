@@ -79,7 +79,7 @@
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
         android:clickable="true"
-        android:padding="0sp"
+        android:padding="10dp"
         android:text="Sign in."
         android:textColor="#99ebff"
         android:textStyle="bold|italic" />
