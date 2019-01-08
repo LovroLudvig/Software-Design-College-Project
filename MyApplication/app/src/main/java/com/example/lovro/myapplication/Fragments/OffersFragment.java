@@ -55,6 +55,7 @@ public class OffersFragment extends Fragment {
     private ApiService apiService = InitApiService.apiService;
     private OfferAdapter offerAdapter;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
