@@ -36,12 +36,6 @@ public class SignInActivity extends BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setBackgroundDrawableResource(R.drawable.theme1) ;
-
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-            getWindow().setExitTransition(new Fade());
-            getWindow().setEnterTransition(new Fade());
-        }
         setContentView(R.layout.activity_sign_in);
 
         sign_in_button=findViewById(R.id.login_button);

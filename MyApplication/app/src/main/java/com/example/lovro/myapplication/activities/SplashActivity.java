@@ -23,9 +23,6 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        }
         setContentView(R.layout.activity_splash);
 
         animation=findViewById(R.id.animation_view);
@@ -53,19 +50,9 @@ public class SplashActivity extends AppCompatActivity {
                     intent = new Intent(SplashActivity.this,LoginActivity.class);
                 }
 
-                if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
-                    startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this).toBundle());
-                    new Handler().postDelayed(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            finish();
-                        }
-                    }, 900 );
-                }else{
-                    startActivity(intent);
-                    finish();
-                }
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
 
 
             }

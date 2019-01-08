@@ -63,13 +63,6 @@ public class SignUpActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
 
         getWindow().setBackgroundDrawableResource(R.drawable.theme1) ;
-
-        // set an exit transition
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            getWindow().setExitTransition(new Fade());
-            getWindow().setEnterTransition(new Fade());
-            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        }
         setContentView(R.layout.activity_register);
 
         profile_picture = findViewById(R.id.profilePicture);
@@ -285,23 +278,23 @@ public class SignUpActivity extends BasicActivity {
                     .setCancelable(false)
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            email.setText("");
-                            username.setText("");
-                            password.setText("");
-                            email_layout.setHint("");
-                            password_layout.setHint("");
-                            username_layout.setHint("");
-                            SignUpActivity.this.onBackPressed();
+                            //email.setText("");
+                            //username.setText("");
+                            //password.setText("");
+                            //email_layout.setHint("");
+                            //password_layout.setHint("");
+                            //username_layout.setHint("");
+                            finish();
                         }
                     })
                     .setNegativeButton("No", null)
                     .show();
         }else {
-            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-                email_layout.setHint("");
-                password_layout.setHint("");
-                username_layout.setHint("");
-            }
+            //if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+              //  email_layout.setHint("");
+                //password_layout.setHint("");
+                //username_layout.setHint("");
+            //}
             super.onBackPressed();
 
         }

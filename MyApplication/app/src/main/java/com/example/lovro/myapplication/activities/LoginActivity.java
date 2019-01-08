@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Fade;
@@ -29,12 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-        getWindow().setEnterTransition(new Fade());
         getWindow().setBackgroundDrawableResource(R.drawable.theme1) ;
-
-// set an exit transition
-
 
         setContentView(R.layout.activity_login);
 
@@ -56,11 +52,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent signin_activity = new Intent(LoginActivity.this,SignInActivity.class);
                 signin_activity.putExtra("from","login");
-                if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
-                    startActivity(signin_activity,ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
-                }else{
-                    startActivity(signin_activity);
-                }
+                startActivity(signin_activity);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
 
@@ -77,12 +70,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent register_activity = new Intent(LoginActivity.this,SignUpActivity.class);
+                startActivity(register_activity);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 
-                if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
-                    startActivity(register_activity,ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this).toBundle());
-                }else{
-                    startActivity(register_activity);
-                }
+                //Bundle bundle = ActivityOptionsCompat.makeCustomAnimation(LoginActivity.this, android.R.anim.fade_in, android.R.anim.fade_out).toBundle();
+                //startActivity(register_activity, bundle);
             }
         });
 
