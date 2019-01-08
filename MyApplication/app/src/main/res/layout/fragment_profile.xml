@@ -6,7 +6,55 @@
     android:layout_height="match_parent"
     android:background="@color/AppCOlorLight"
     tools:context=".Fragments.ProfileFragment">
+    <RelativeLayout
+        android:id="@+id/unregistered_user_panel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wanna have all the features?"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/background_dark"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Join here now!"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/AppColor"/>
+            <Button
+                android:id="@+id/joinNowButton"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="30dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                style="@android:style/Widget.Material.Light.Button"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/round_button3"
+                android:fontFamily="@font/doppio_one"
+                android:text="Join now"
+                android:textColor="@color/AppColor" />
+
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
     <ScrollView
+        android:id="@+id/registered_user_panel"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

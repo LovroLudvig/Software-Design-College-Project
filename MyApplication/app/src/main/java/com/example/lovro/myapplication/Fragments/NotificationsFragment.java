@@ -32,6 +32,7 @@ public class NotificationsFragment extends Fragment {
 
     private  NotificationAdapter notifAdapter;
     private List<Notification> notifList = new ArrayList<>();
+    private List<Notification> mockedList = new ArrayList<>();
 
 
     private OnFragmentInteractionListener mListener;
@@ -47,29 +48,35 @@ public class NotificationsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-        Notification notif1 = new Notification("Craftery admin", "Accepted your offer", "tue 15:33");
-        Notification notif2 = new Notification("Craftery admin", "Accepted your offer", "tue 15:33");
-        Notification notif3 = new Notification("Craftery admin", "Accepted your offer", "tue 15:33");
-        List<Notification> mockedList = new ArrayList<>();
-        mockedList.add(notif1);
-        mockedList.add(notif2);
-        mockedList.add(notif3);
-        this.notifList = mockedList;
-
         recyclerView = view.findViewById(R.id.notif_recyclerview);
         swipeRefreshLayout = view.findViewById(R.id.notif_swipeLayout);
         progressBar = view.findViewById(R.id.notif_progressbar);
-
         progressBar.setVisibility(View.VISIBLE);
 
-        initRecyclerView();
-        initNotificationAdapter(notifList);
-        //initListeners();
+        if (notifList.size()==0){
+            Notification notif1 = new Notification("Craftery admin", "Accepted your offer", "tue 15:33");
+            Notification notif2 = new Notification("Craftery admin", "Accepted your offer", "tue 15:33");
+            Notification notif3 = new Notification("Craftery admin", "Accepted your offer", "tue 15:33");
 
-        //TODO pull the data from API here, check internet
-        displayNotifications(notifList);
+            mockedList.add(notif1);
+            mockedList.add(notif2);
+            mockedList.add(notif3);
+            notifList = mockedList;
+
+            initRecyclerView();
+            initNotificationAdapter(notifList);
+            //initListeners();
+
+            //TODO pull the data from API here, check internet
+            displayNotifications(notifList);
+        }
+
+
+
+
+
+
+
     }
 
     @Override

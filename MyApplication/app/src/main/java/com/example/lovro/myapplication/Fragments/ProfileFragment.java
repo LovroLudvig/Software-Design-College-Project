@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.activities.EditProfileActivity;
 import com.example.lovro.myapplication.activities.OfferDetailsActivity;
+import com.example.lovro.myapplication.activities.SignUpActivity;
 import com.example.lovro.myapplication.domain.Offer;
 import com.example.lovro.myapplication.domain.User;
 import com.example.lovro.myapplication.domain.UserForRegister;
@@ -53,6 +54,7 @@ public class ProfileFragment extends Fragment {
     private TextView cardText;
     private ProgressBar progressBar;
     private User currentUser;
+    private Button joinNowButton;
 
 
     @Override
@@ -64,19 +66,40 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (userIsRegistered()){
+            editProfileButton=view.findViewById(R.id.editProfileButton);
+            progressBar=view.findViewById(R.id.progressbar);
+            nameUsernameText=view.findViewById(R.id.name_username_text);
+            locationText=view.findViewById(R.id.location_text);
+            emailText=view.findViewById(R.id.email_text);
+            cardText=view.findViewById(R.id.card_text);
 
-        editProfileButton=view.findViewById(R.id.editProfileButton);
-        progressBar=view.findViewById(R.id.progressbar);
-        nameUsernameText=view.findViewById(R.id.name_username_text);
-        locationText=view.findViewById(R.id.location_text);
-        emailText=view.findViewById(R.id.email_text);
-        cardText=view.findViewById(R.id.card_text);
-        initListeners();
-        if (currentUser==null){
-            loadUserFromAPI();
-        } else{
-            setUpLayout(currentUser);
+            view.findViewById(R.id.registered_user_panel).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.unregistered_user_panel).setVisibility(View.GONE);
+            if (currentUser==null){
+                loadUserFromAPI();
+            } else{
+                setUpLayout(currentUser);
+            }
+            initListeners();
+        }else{
+            view.findViewById(R.id.registered_user_panel).setVisibility(View.GONE);
+            view.findViewById(R.id.unregistered_user_panel).setVisibility(View.VISIBLE);
+            joinNowButton=view.findViewById(R.id.joinNowButton);
+            initListenersUnregistered();
         }
+
+
+    }
+
+    private void initListenersUnregistered() {
+        joinNowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(),SignUpActivity.class);
+                startActivity(i);
+            }
+        });
 
     }
 
@@ -107,6 +130,7 @@ public class ProfileFragment extends Fragment {
                 startActivityForResult(i,1);
             }
         });
+
     }
     private String getUserUsername(){
         SharedPreferences prefs = this.getActivity().getSharedPreferences("UserData", MODE_PRIVATE);
@@ -196,6 +220,14 @@ public class ProfileFragment extends Fragment {
                 .setPositiveButton("OK",null)
                 .create()
                 .show();
+    }
+
+    private boolean userIsRegistered(){
+        SharedPreferences prefs = getActivity().getSharedPreferences("UserData", MODE_PRIVATE);
+        if(prefs.getBoolean("saved",false)){
+            return true;
+        }
+        return false;
     }
 
     @Override

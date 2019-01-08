@@ -28,6 +28,7 @@
             android:name=".activities.SignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"
+            android:parentActivityName=".activities.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".activities.LoginActivity"

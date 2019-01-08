@@ -127,6 +127,12 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.O
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        backButtonCount=0;
+    }
+
+    @Override
     public void onBackPressed()
     {
         if(userIsRegistered()){
