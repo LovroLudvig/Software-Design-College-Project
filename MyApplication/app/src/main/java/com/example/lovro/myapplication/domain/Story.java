@@ -1,9 +1,6 @@
 package com.example.lovro.myapplication.domain;
 
 import com.squareup.moshi.Json;
-
-import org.w3c.dom.Comment;
-
 import java.util.List;
 
 public class Story {
