@@ -24,6 +24,7 @@ import com.example.lovro.myapplication.activities.EditProfileActivity;
 import com.example.lovro.myapplication.activities.OfferDetailsActivity;
 import com.example.lovro.myapplication.activities.SignUpActivity;
 import com.example.lovro.myapplication.domain.Offer;
+import com.example.lovro.myapplication.domain.Role;
 import com.example.lovro.myapplication.domain.User;
 import com.example.lovro.myapplication.domain.UserForRegister;
 import com.example.lovro.myapplication.domain.UserProfile;
@@ -55,6 +56,7 @@ public class ProfileFragment extends Fragment {
     private ProgressBar progressBar;
     private User currentUser;
     private Button joinNowButton;
+    private View adminTab;
 
 
     @Override
@@ -66,6 +68,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        adminTab=view.findViewById(R.id.admin_tab);
         if (userIsRegistered()){
             editProfileButton=view.findViewById(R.id.editProfileButton);
             progressBar=view.findViewById(R.id.progressbar);
@@ -87,6 +90,7 @@ public class ProfileFragment extends Fragment {
             view.findViewById(R.id.unregistered_user_panel).setVisibility(View.VISIBLE);
             joinNowButton=view.findViewById(R.id.joinNowButton);
             initListenersUnregistered();
+            adminTab.setVisibility(View.GONE);
         }
 
 
@@ -188,9 +192,15 @@ public class ProfileFragment extends Fragment {
 
     private void setUpLayout(User user) {
         currentUser=user;
+
         if (user==null){
             Toast.makeText(getContext(), "user not found", Toast.LENGTH_SHORT).show();
         }else{
+            if (checkIfUserAdmin()){
+                adminTab.setVisibility(View.VISIBLE);
+            }else{
+                adminTab.setVisibility(View.GONE);
+            }
             String town;
             if (user.getTown()==null){
                 town="unknown";
@@ -203,6 +213,15 @@ public class ProfileFragment extends Fragment {
             emailText.setText(getName(user.getEmail()));
             cardText.setText(getName(user.getCardNumber()));
         }
+    }
+
+    private boolean checkIfUserAdmin() {
+        for (Role role:currentUser.getRoles()){
+            if (role.getId()==4){
+                return true;
+            }
+        }
+        return false;
     }
 
     private String getName(String name){
