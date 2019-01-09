@@ -22,9 +22,16 @@ public class Constants {
     public static final String ORDER_STATUS_IN_EVALUATION = "ORDER_IN_EVALUATION";
 
     // Image locations
-    public static final String IMAGE_BASE_URL_STORIES = "src/main/resources/images/stories/";
-    public static final String IMAGE_BASE_URL_ADVERTISEMENTS = "src/main/resources/images/advertisements/";
+    public static final String IMAGE_BASE_URL_STORIES = "/root/projekt/images/stories/";
+    public static final String IMAGE_BASE_URL_ADVERTISEMENTS = "/root/projekt/images/advertisements/";
 
     // Video locations
-    public static final String VIDEO_BASE_URL_STORIES = "src/main/resources/videos/stories/";
+    public static final String VIDEO_BASE_URL_STORIES = "/root/projekt/videos/stories/";
+
+//    // Image locations
+//    public static final String IMAGE_BASE_URL_STORIES = "src/main/resources/images/stories/";
+//    public static final String IMAGE_BASE_URL_ADVERTISEMENTS = "src/main/resources/images/advertisements/";
+//
+//    // Video locations
+//    public static final String VIDEO_BASE_URL_STORIES = "src/main/resources/videos/stories/";
 }

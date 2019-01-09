@@ -6,6 +6,7 @@ import hr.fer.handMadeShopBackend.dao.StyleRepository;
 import hr.fer.handMadeShopBackend.dao.TransactionRepository;
 import hr.fer.handMadeShopBackend.domain.*;
 import hr.fer.handMadeShopBackend.service.OrderService;
+import hr.fer.handMadeShopBackend.service.StyleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,9 @@ public class OrderController {
 
     @Autowired
     private StyleRepository styleRepository;
+
+    @Autowired
+    private StyleService styleService;
 
     @Autowired
     private DimensionRepository dimensionRepository;
@@ -50,9 +54,18 @@ public class OrderController {
     @PostMapping("/orderDecoration/{advertisementId}")
     public AdOrder orderObjectDecoration(@PathVariable("advertisementId") Long advertisementId,
                                          @RequestParam(value="styleId", required=true) Long styleId,
+                                         @RequestParam(value="styleName", required=false) String styleDescription,
                                          @RequestBody User user) {
         Advertisement ad = getAdvertisement(advertisementId);
         Style style = getStyle(styleId);
+        if(style == null) {
+            if(styleDescription == null) {
+                throw new IllegalArgumentException("The style name must be provided if new style is being created.");
+            }
+            style = new Style();
+            style.setDescription(styleDescription);
+            styleService.save(style);
+        }
 
         AdOrder order = new AdOrder();
         order.setAdvertisement(ad);
@@ -64,7 +77,7 @@ public class OrderController {
     @PostMapping("/manage")
     public AdOrder manageOrder(@RequestParam(value="orderId", required=true) Long orderId,
                                @RequestParam(value="isAllowed", required=true) boolean isAlowed,
-                               @RequestParam(value="price", required=false) Double price) {
+                               @RequestParam(value="price", required=true) Double price) {
         return orderService.manageOrder(orderId, isAlowed, price);
     }
 
@@ -76,7 +89,8 @@ public class OrderController {
     private Style getStyle(Long id) {
         Optional<Style> sOpt = styleRepository.findById(id);
         if(!sOpt.isPresent()) {
-            throw new IllegalArgumentException("The style does not exist");
+//            throw new IllegalArgumentException("The style does not exist");
+            return null;
         }
         return sOpt.get();
     }

@@ -115,12 +115,9 @@ public class UserServiceImpl implements UserService {
         User u = validate(user);
 
         String hash = u.getPasswordHash();
+        
         user.setPasswordHash(hash);
-
-        Role role = roleRepo.findByName(Constants.ROLE_USER);
-        List<Role> roles = new ArrayList<>();
-        roles.add(role);
-        user.setRoles(roles);
+        user.setRoles(u.getRoles());
 
         UserStatus status = userStatusRepository.findByName(Constants.USER_STATUS_ALLOWED);
         user.setUserStatus(status);
