@@ -1,10 +1,7 @@
 package hr.fer.handMadeShopBackend.service;
 
 import hr.fer.handMadeShopBackend.Constants.Constants;
-import hr.fer.handMadeShopBackend.dao.AdvertisementRepository;
-import hr.fer.handMadeShopBackend.dao.OrderRepository;
-import hr.fer.handMadeShopBackend.dao.OrderStatusRepository;
-import hr.fer.handMadeShopBackend.dao.TransactionRepository;
+import hr.fer.handMadeShopBackend.dao.*;
 import hr.fer.handMadeShopBackend.domain.*;
 import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +19,9 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
+    private TownRepository townRepository;
+
+    @Autowired
     private OrderStatusRepository orderStatusRepository;
 
     @Autowired
@@ -37,17 +37,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public AdOrder manageOrder(Long orderId, boolean isAlowed, Double price) {
+    public AdOrder manageOrder(Long orderId, boolean isAllowed, Double price) {
         Optional<AdOrder> opt = orderRepository.findById(orderId);
         if(!opt.isPresent()) {
             throw new IllegalArgumentException("The order does not exist.");
         }
         AdOrder order = opt.get();
         if(price != null) {
-            order.setPrice(price);
+            order.getStyle().setPrice(price);
+            order.setPrice(calculatePrice(order));
         }
 
-        if(isAlowed) {
+        if(isAllowed) {
             OrderStatus status = orderStatusRepository.findByName(Constants.ORDER_STATUS_ALLOWED);
             order.setStatus(status);
             return orderRepository.save(order);
@@ -91,10 +92,12 @@ public class OrderServiceImpl implements OrderService {
         adOrder.setStatus(status);
         adOrder.setPrice(adOrder.getStyle().getPrice());
 
+        Town town = checkTown(user.getTown());
+
         adOrder.setName(user.getName());
         adOrder.setLastName(user.getLastName());
         adOrder.setCardNumber(user.getCardNumber());
-        adOrder.setTown(user.getTown());
+        adOrder.setTown(town);
         adOrder.setAddress(user.getAddress());
 
         return orderRepository.save(adOrder);
@@ -149,6 +152,15 @@ public class OrderServiceImpl implements OrderService {
         price += adOrder.getStyle().getPrice();
 
         return price;
+    }
+
+    private Town checkTown(Town town) {
+        if(town == null) return null;
+        Optional<Town> t = townRepository.findById(town.getPostCode());
+        if(!t.isPresent()) {
+            return townRepository.save(town);
+        }
+        return t.get();
     }
 
 }

@@ -33,6 +33,9 @@ public class DataInitializer {
     private StoryStatusService storyStatusService;
 
     @Autowired
+    private StoryService storyService;
+
+    @Autowired
     private OrderStatusService orderStatusService;
     
     @Autowired
@@ -78,6 +81,7 @@ public class DataInitializer {
 
         createUsers();
         createFakeAds("Šaht", "Bakrena žica", "Ljuska od jaja", "Ruska nevjesta", "Prazna kutija cigareta");
+        createStories();
 
 
         //TODO dragi martine sad sam se sjetio da nisi osiguro adove od null ap sredi to kad si gotov
@@ -136,6 +140,36 @@ public class DataInitializer {
             
             adService.save(ad1);
     	}
+    }
+
+    private void createStories() {
+        String[] imageUrls = new String[]{"https://i.ytimg.com/vi/dkNCQeN45So/maxresdefault.jpg",
+                "https://akos.ba/wp-content/uploads/2017/02/jorgovan-naslovna.jpg",
+                "https://cenazlata.org/wp-content/uploads/2017/01/Otkup-folija-od-cigareta-istina-ili-zabluda-%C5%A1ta-treba-znati.jpg",
+                "https://images-na.ssl-images-amazon.com/images/I/71dz1ztYLUL._SX425_.jpg",
+                null};
+
+        String[] storyTexts = new String[] {"My new napkin is crazy cool!",
+                "Please check out my beautiful flowers I just bought yesterday. Please leave a like and subscribe.",
+                "I am extreamely unhappy with this empty box of cigaretts I just bought! Not recommended!",
+                "Quite unhappy with this Egg shells I recently bought. I was under impression I would only get the shells!!!",
+                "Some text for the story"};
+
+        String[] usernames = new String[]{"lludvig", "ilovrencic", "mcolja", "ilovrencic", "ialmer"};
+
+        for(int i = 0; i < imageUrls.length; i++) {
+            Story story = new Story();
+            story.setImageUrl(imageUrls[i]);
+            story.setText(storyTexts[i]);
+
+            User user = new User();
+            user.setUsername(usernames[i]);
+
+            story.setUser(user);
+
+            storyService.publishStory(story);
+        }
+
     }
     
 
