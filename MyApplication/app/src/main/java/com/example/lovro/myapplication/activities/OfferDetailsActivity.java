@@ -207,7 +207,7 @@ public class OfferDetailsActivity extends BasicActivity {
     }
 
     private void getUserFromLogin(){
-        callLogin = apiService.loginUser(getUserAuth(),new User(user));
+        callLogin = apiService.loginUser(getUserAuth(),new User(getSharedPreferences("UserData", MODE_PRIVATE).getString("username", "")));
         callLogin.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
