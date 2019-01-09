@@ -1,6 +1,7 @@
 package com.example.lovro.myapplication.Fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,8 @@ import com.example.lovro.myapplication.domain.Offer;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class NotificationsFragment extends Fragment {
@@ -52,6 +55,14 @@ public class NotificationsFragment extends Fragment {
         swipeRefreshLayout = view.findViewById(R.id.notif_swipeLayout);
         progressBar = view.findViewById(R.id.notif_progressbar);
         progressBar.setVisibility(View.VISIBLE);
+        if (userIsRegistered()){
+            view.findViewById(R.id.registered_user_panel).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.unregistered_user_panel).setVisibility(View.GONE);
+        }else{
+            view.findViewById(R.id.registered_user_panel).setVisibility(View.GONE);
+            view.findViewById(R.id.unregistered_user_panel).setVisibility(View.VISIBLE);
+        }
+
 
         if (notifList.size()==0){
             Notification notif1 = new Notification("Craftery admin", "Accepted your offer", "tue 15:33");
@@ -77,6 +88,14 @@ public class NotificationsFragment extends Fragment {
 
 
 
+    }
+
+    private boolean userIsRegistered(){
+        SharedPreferences prefs = getActivity().getSharedPreferences("UserData", MODE_PRIVATE);
+        if(prefs.getBoolean("saved",false)){
+            return true;
+        }
+        return false;
     }
 
     @Override
