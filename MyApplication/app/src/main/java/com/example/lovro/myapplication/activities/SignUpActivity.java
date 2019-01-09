@@ -248,7 +248,7 @@ public class SignUpActivity extends BasicActivity {
                     intent.putExtra("username",username.getText().toString());
                     intent.putExtra("pass",password.getText().toString());
                     startActivity(intent);
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                     finish();
                 }else {
                     if(response.code() == 400){
