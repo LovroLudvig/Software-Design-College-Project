@@ -148,7 +148,7 @@ public class StoryFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //TODO pozvati load stories
+                load_stories();
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
