@@ -207,10 +207,12 @@ public class OfferDetailsActivity extends BasicActivity {
     }
 
     private void getUserFromLogin(){
-        callLogin = apiService.loginUser(getUserAuth(),new User(getSharedPreferences("UserData", MODE_PRIVATE).getString("username", "")));
+        show_loading("Getting you details...");
+        callLogin = apiService.getUserByUsername2(getUserAuth(),getSharedPreferences("UserData", MODE_PRIVATE).getString("username", ""));
         callLogin.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
+                stop_loading();
                 if(response.isSuccessful()){
                     if((response.body().getCardNumber() != null)){
                         order_item(response.body());
@@ -229,6 +231,7 @@ public class OfferDetailsActivity extends BasicActivity {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+                stop_loading();
                 showError(t.getMessage());
                 t.printStackTrace();
             }
