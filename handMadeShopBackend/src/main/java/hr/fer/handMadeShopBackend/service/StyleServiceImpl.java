@@ -18,9 +18,6 @@ public class StyleServiceImpl implements StyleService {
 		if(style == null) {
 			throw new IllegalArgumentException("Style cannot be null");
 		}
-		if(style.getPrice()==null) {
-			throw new IllegalArgumentException("Styles must have a price");
-		} 
 		if(style.getDescription()==null) {
 			throw new IllegalArgumentException("Styles must have a description");
 		}
