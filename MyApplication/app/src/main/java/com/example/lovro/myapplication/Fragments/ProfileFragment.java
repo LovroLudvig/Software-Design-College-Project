@@ -5,6 +5,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,6 +29,7 @@ import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.activities.EditProfileActivity;
 import com.example.lovro.myapplication.activities.OfferDetailsActivity;
 import com.example.lovro.myapplication.activities.SignUpActivity;
+import com.example.lovro.myapplication.domain.Colors;
 import com.example.lovro.myapplication.domain.Offer;
 import com.example.lovro.myapplication.domain.Role;
 import com.example.lovro.myapplication.domain.User;
@@ -60,6 +65,8 @@ public class ProfileFragment extends Fragment {
     private Button joinNowButton;
     private View adminTab;
     private View blockButton;
+    private TextView userLetter;
+    private View imageCircle;
 
 
     @Override
@@ -80,6 +87,8 @@ public class ProfileFragment extends Fragment {
             emailText=view.findViewById(R.id.email_text);
             cardText=view.findViewById(R.id.card_text);
             blockButton=view.findViewById(R.id.block_button);
+            userLetter=view.findViewById(R.id.profile_image_text);
+            imageCircle=view.findViewById(R.id.profile_image_circle);
 
             view.findViewById(R.id.registered_user_panel).setVisibility(View.VISIBLE);
             view.findViewById(R.id.unregistered_user_panel).setVisibility(View.GONE);
@@ -213,6 +222,20 @@ public class ProfileFragment extends Fragment {
         if (user==null){
             Toast.makeText(getContext(), "user not found", Toast.LENGTH_SHORT).show();
         }else{
+
+            userLetter.setText(String.valueOf(currentUser.getUsername().toUpperCase().charAt(0)));
+
+
+
+            //((TextView)).setText(story.getUser().getUsername().charAt(0));
+            Drawable background = imageCircle.getBackground();
+            if (background instanceof ShapeDrawable) {
+                ((ShapeDrawable)background).getPaint().setColor(Colors.getColor((int) currentUser.getUsername().toLowerCase().charAt(0)-97));
+            } else if (background instanceof GradientDrawable) {
+                ((GradientDrawable)background).setColor(Colors.getColor((int) currentUser.getUsername().charAt(0)-97));
+            } else if (background instanceof ColorDrawable) {
+                ((ColorDrawable)background).setColor(Colors.getColor((int) currentUser.getUsername().charAt(0)-97));
+            }
             if (checkIfUserAdmin()){
                 adminTab.setVisibility(View.VISIBLE);
             }else{

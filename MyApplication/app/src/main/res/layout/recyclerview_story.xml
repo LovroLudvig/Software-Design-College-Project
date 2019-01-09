@@ -10,17 +10,30 @@
     android:background="@drawable/card_background"
     android:paddingBottom="15dp">
 
-    <ImageView
+    <RelativeLayout
         android:id="@+id/profile_image"
-        android:layout_width="40sp"
-        android:layout_height="40sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="19dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="14dp">
+        <View
+            android:id="@+id/profile_image_circle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/circle"/>
+        <TextView
+            android:id="@+id/profile_image_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="U"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
-        android:scaleType="fitXY"
-        app:srcCompat="@drawable/avatar" />
 
     <TextView
         android:id="@+id/username_story"
@@ -28,8 +41,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="14sp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="23dp"
         android:fontFamily="@font/doppio_one"
         android:text="Username"
         android:textColor="@android:color/black" />
@@ -59,16 +72,7 @@
         android:text="Description of an item in a picture next. I use this to demostrate how will this story look like. Please answer or give me some feedback in whatsapp group or in slack. Also please notice how te text is missing..."
         android:textColor="@android:color/background_dark" />
 
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/username_story"
-        android:layout_alignBottom="@+id/profile_image"
-        android:layout_marginStart="0dp"
-        android:layout_marginBottom="-1dp"
-        android:text="Posted at 14:22"
-        android:textSize="12sp" />
+
 
 </RelativeLayout>
 

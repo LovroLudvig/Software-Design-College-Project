@@ -43,7 +43,6 @@ import retrofit2.Response;
 
 public class SignUpActivity extends BasicActivity {
 
-    private ImageView profile_picture;
     private TextInputEditText email;
     private TextInputLayout email_layout;
     private TextInputEditText username;
@@ -65,7 +64,6 @@ public class SignUpActivity extends BasicActivity {
         getWindow().setBackgroundDrawableResource(R.drawable.theme1) ;
         setContentView(R.layout.activity_register);
 
-        profile_picture = findViewById(R.id.profilePicture);
         email = findViewById(R.id.email_input);
         username = findViewById(R.id.username_input);
         password = findViewById(R.id.password_input);
@@ -88,43 +86,6 @@ public class SignUpActivity extends BasicActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed();
-            }
-        });
-
-        profile_picture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String[] options = {"From gallery","Random image"};
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
-                builder.setTitle("Choose your profile image");
-                builder.setCancelable(true);
-                builder.setIcon(R.drawable.ic_image_black_24dp);
-                builder.setItems(options, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(which == 0){
-
-                            if(ContextCompat.checkSelfPermission(SignUpActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                                    && ContextCompat.checkSelfPermission(SignUpActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED ){
-                                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-                            }else{
-                                requestPermissionForImage();
-                            }
-
-
-                        }else{
-                            Random rand = new Random();
-                            int n = rand.nextInt(2)+1;
-                            if(n == 1){
-                                profile_picture.setImageResource(R.drawable.random_picture);
-                            }else{
-                                profile_picture.setImageResource(R.drawable.random_picture1);
-                            }
-                        }
-                    }
-                });
-                builder.show();
             }
         });
 
@@ -170,27 +131,9 @@ public class SignUpActivity extends BasicActivity {
         alert.show();
     }
 
-    private void requestPermissionForImage(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_FOR_GALLERY);
-        }
-    }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK){
-            Uri selectedImage = data.getData();
-            Bitmap bitmap;
-            try{
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),selectedImage);
-                profile_picture.setImageBitmap(bitmap);
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-        }
-    }
+
 
 
 

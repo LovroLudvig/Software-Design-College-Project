@@ -1,15 +1,23 @@
 package com.example.lovro.myapplication.adapters;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.media.Image;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lovro.myapplication.R;
+import com.example.lovro.myapplication.domain.Colors;
 import com.example.lovro.myapplication.domain.Offer;
 import com.example.lovro.myapplication.domain.Story;
 import com.squareup.picasso.Picasso;
@@ -41,6 +49,20 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> 
         TextView storyDesc = viewHolder.itemView.findViewById(R.id.story_desc);
         //ImageView profileImage = viewHolder.itemView.findViewById(R.id.profile_image);
         TextView textView = viewHolder.itemView.findViewById(R.id.username_story);
+        TextView userLetter=viewHolder.itemView.findViewById(R.id.profile_image_text);
+        userLetter.setText(String.valueOf(story.getUser().getUsername().toUpperCase().charAt(0)));
+
+
+
+        //((TextView)).setText(story.getUser().getUsername().charAt(0));
+        Drawable background = viewHolder.itemView.findViewById(R.id.profile_image_circle).getBackground();
+        if (background instanceof ShapeDrawable) {
+            ((ShapeDrawable)background).getPaint().setColor(Colors.getColor((int) story.getUser().getUsername().toLowerCase().charAt(0)-97));
+        } else if (background instanceof GradientDrawable) {
+            ((GradientDrawable)background).setColor(Colors.getColor((int) story.getUser().getUsername().charAt(0)-97));
+        } else if (background instanceof ColorDrawable) {
+            ((ColorDrawable)background).setColor(Colors.getColor((int) story.getUser().getUsername().charAt(0)-97));
+        }
 
         Picasso.get().load(story.getImageUrl()).into(imageView);
         storyDesc.setText(story.getText());
