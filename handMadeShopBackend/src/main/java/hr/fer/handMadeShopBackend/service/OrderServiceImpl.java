@@ -51,6 +51,11 @@ public class OrderServiceImpl implements OrderService {
         if(isAllowed) {
             OrderStatus status = orderStatusRepository.findByName(Constants.ORDER_STATUS_ALLOWED);
             order.setStatus(status);
+
+            // this line adds the style to the list of available styles for that advetisement
+            // if admin approves the order
+            order.getAdvertisement().getStyles().add(order.getStyle());
+
             return orderRepository.save(order);
         } else {
             orderRepository.delete(order);

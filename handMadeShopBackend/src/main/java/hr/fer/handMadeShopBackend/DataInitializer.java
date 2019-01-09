@@ -80,7 +80,7 @@ public class DataInitializer {
         orderStatusService.saveOrderStatusWithName(Constants.ORDER_STATUS_IN_EVALUATION);
 
         createUsers();
-        createFakeAds("Šaht", "Bakrena žica", "Ljuska od jaja", "Ruska nevjesta", "Prazna kutija cigareta");
+        createFakeAds();
         createStories();
 
 
@@ -105,37 +105,79 @@ public class DataInitializer {
         }
     }
 
-    private void createFakeAds(String... names) {
-    	for(String name: names) {
+    private void createFakeAds() {
+        String[] descriptions = new String[] {
+            "This is one of the types of manhole you can possibly find on todays market. You can find all possible dimension below.",
+            "The best possible deal for various copper wires and copper products.",
+            "Premium egg shells. Gotten from organic farms in Norway.",
+            "Mail order bride from egzotic Russia. For more details add me on snapchat.",
+            "Empty cigarette box. Only for collectors."
+        };
+
+        String[] imageUrls = new String[] {
+            "https://hiddencityphila.org/wp-content/uploads/2018/01/PECO-manhole-cover-3.jpg",
+            "https://5.imimg.com/data5/VQ/NH/MY-2555326/magnet-copper-wire-500x500.jpg",
+            "https://i1.wp.com/thecostaricanews.com/wp-content/uploads/2017/09/eggshells.jpg?fit=1200%2C1550&ssl=1",
+            "https://static.standard.co.uk/s3fs-public/thumbnails/image/2018/08/28/11/upsetbride2808a.jpg?w968",
+            "https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/cigarette_packet_empty.png"
+        };
+
+        String[] adNames = new String[] {
+            "Manhole",
+            "Copper wire - 10 m",
+            "Premium egg shells - 12 pieces",
+            "Russian bride",
+            "Empty cigarrete box"
+        };
+
+        double[] prices = new double[] { 39.99, 14.99, 2.99, 999.99, 1.99 };
+
+        String[] specifications = new String[] {
+            "Tool used for sewer opennings",
+            "Electricity conductor",
+            "Healthy fertlizer",
+            "Good life, good wife",
+            "Garbage"
+        };
+
+        String[] dimensionNames = new String[] {
+            "big", "bigger",
+            "child size",
+            "bag size",
+            "medium"
+        };
+
+        String[] styleNames = new String[] {
+            "Jonski",
+            "Antistil"
+        };
+
+    	for(int i = 0; i < descriptions.length; i++) {
     		Advertisement ad1 = new Advertisement();
-            ad1.setDescription("Some description for " + name);
-            ad1.setName(name);
-            ad1.setPrice(1000.0);
-            ad1.setSpecification("Unspecified");
-            ad1.setImageURL("https://cdn.shopify.com/s/files/1/0095/4332/t/30/assets/no-image.svg?3412253793887835423");
+            ad1.setDescription(descriptions[i]);
+            ad1.setName(adNames[i]);
+            ad1.setPrice(prices[i]);
+            ad1.setSpecification(specifications[i]);
+            ad1.setImageURL(imageUrls[i]);
             
             List<Dimension> dimensions = new ArrayList<Dimension>();
-            Dimension dim1 = new Dimension();
-            Dimension dim2 = new Dimension();
-            dim1.setDescription("n/a");
-            dim2.setDescription("n/a");
-            dimensions.add(dim1);
-            dimensions.add(dim2);
-            dimensionService.save(dim1);
-            dimensionService.save(dim2);
+            for(String d : dimensionNames) {
+                Dimension dim = new Dimension();
+                dim.setDescription(d);
+                dimensions.add(dim);
+                dimensionService.save(dim);
+            }
             ad1.setDimensions(dimensions);
             
             List<Style> styles = new ArrayList<Style>();
-            Style stil1 = new Style();
-            Style stil2 = new Style();
-            stil1.setDescription("Jonski");
-            stil1.setPrice(100.0);
-            stil2.setDescription("Antistil");
-            stil2.setPrice(150.0);
-            styleService.save(stil1);
-            styleService.save(stil2);
-            styles.add(stil1);
-            styles.add(stil2);
+            for(String styleName : styleNames) {
+                Style style = new Style();
+                style.setDescription(styleName);
+                boolean less = Math.random() < 0.5;
+                style.setPrice(less ? 100.0 : 150.0);
+                styleService.save(style);
+                styles.add(style);
+            }
             ad1.setStyles(styles);
             
             adService.save(ad1);
