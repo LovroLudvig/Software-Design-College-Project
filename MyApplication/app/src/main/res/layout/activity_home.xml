@@ -15,24 +15,26 @@
         android:background="@color/AppColor"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
         <FrameLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
                 android:layout_marginRight="15dp"
+                android:padding="5dp"
                 android:src="@drawable/app_logo_text" />
+
             <ImageView
                 android:id="@+id/logout_image"
-                android:clickable="true"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="right|center"
                 android:layout_marginRight="10dp"
-                android:src="@drawable/ic_exit_to_app_black_24dp"/>
+                android:clickable="true"
+                android:src="@drawable/ic_exit_to_app_black_24dp" />
 
 
         </FrameLayout>

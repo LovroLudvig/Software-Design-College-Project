@@ -17,8 +17,9 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginRight="100dp"
             android:padding="5dp"
-            android:layout_marginRight="15dp"
             android:src="@drawable/app_logo_text" />
     </android.support.v7.widget.Toolbar>
 
@@ -100,7 +101,7 @@
                         android:layout_marginStart="0dp"
                         android:layout_toEndOf="@+id/offer_price"
                         android:paddingLeft="3sp"
-                        android:text="HRK"
+                        android:text="EUR"
                         android:textColor="@android:color/background_dark"
                         android:textSize="23sp"
                         android:textStyle="bold" />
@@ -316,6 +317,18 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <ImageView
+        android:id="@+id/back_up"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="8dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
 
 
 </RelativeLayout>

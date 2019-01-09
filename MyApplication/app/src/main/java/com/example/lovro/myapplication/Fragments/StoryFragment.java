@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -43,6 +44,7 @@ public class StoryFragment extends Fragment {
     private ApiService apiService = InitApiService.apiService;
     private Call<List<Story>> getStories;
     private StoryAdapter storyAdapter;
+    private FloatingActionButton fab;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,6 +65,7 @@ public class StoryFragment extends Fragment {
         swipeRefreshLayout = view.findViewById(R.id.swipeLayoutStory);
         progressBar = view.findViewById(R.id.offers_progressbarStory);
         progressBar.setVisibility(View.VISIBLE);
+        fab = view.findViewById(R.id.fab);
 
         initRecylerView();
         initStoryAdapter(storyList);
@@ -157,6 +160,12 @@ public class StoryFragment extends Fragment {
             @Override
             public void onShowClick(Story story) {
                 //TODO otvoriti story details
+            }
+        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO otvoriti add story
             }
         });
     }

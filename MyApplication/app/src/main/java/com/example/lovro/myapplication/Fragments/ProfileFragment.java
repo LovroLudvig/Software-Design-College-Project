@@ -157,6 +157,7 @@ public class ProfileFragment extends Fragment {
 
                 Intent i = new Intent(getActivity(),EditProfileActivity.class);
                 i.putExtra("UserCurrent",userAsString);
+                i.putExtra("purchase",false);
                 startActivityForResult(i,1);
             }
         });

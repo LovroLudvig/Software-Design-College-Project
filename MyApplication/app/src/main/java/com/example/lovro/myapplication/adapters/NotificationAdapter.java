@@ -42,7 +42,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         holder.notifText.setText(notification.getText());
         holder.userName.setText(notification.getUserWhoCaused());
-        holder.notifDate.setText(notification.getDate());
 
         //TODO REMOVE MOCK Always the same value (mocked)
         //holder.userFoto.setImageResource(R.drawable.app_logo);
@@ -79,7 +78,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             userFoto = itemView.findViewById(R.id.notif_picture);
             userName = itemView.findViewById(R.id.notif_userName);
             notifText = itemView.findViewById(R.id.notif_text);
-            notifDate = itemView.findViewById(R.id.notif_date);
 
         }
     }

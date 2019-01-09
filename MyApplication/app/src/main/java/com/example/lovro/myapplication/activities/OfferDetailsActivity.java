@@ -1,5 +1,6 @@
 package com.example.lovro.myapplication.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -32,6 +35,8 @@ import com.example.lovro.myapplication.network.ApiService;
 import com.example.lovro.myapplication.network.InitApiService;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,7 +65,9 @@ public class OfferDetailsActivity extends BasicActivity {
     private String user;
     private Call<User> callLogin;
     private Call<Order> buy_offer;
+    private Call<Order> orderCall;
     private ApiService apiService = InitApiService.apiService;
+    private ImageView back_arrow;
 
 
     @Override
@@ -85,6 +92,7 @@ public class OfferDetailsActivity extends BasicActivity {
         spinner = findViewById(R.id.spinner);
         new_style = findViewById(R.id.ask_for_own_style);
         spinner2 = findViewById(R.id.spinner2);
+        back_arrow = findViewById(R.id.back_up);
 
 
         //data setup
@@ -155,7 +163,7 @@ public class OfferDetailsActivity extends BasicActivity {
         buy_now.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LayoutInflater inflater= LayoutInflater.from(OfferDetailsActivity.this);
+                final LayoutInflater inflater= LayoutInflater.from(OfferDetailsActivity.this);
                 View view=inflater.inflate(R.layout.checkout_layout, null);
                 TextView textView = view.findViewById(R.id.price_tag);
                 textView.setText(getPrice());
@@ -170,7 +178,7 @@ public class OfferDetailsActivity extends BasicActivity {
                             if(isUserLoggedIn()){
                                 getUserFromLogin();
                             }else{
-                                //TODO add new screen for adding info
+                                //TODO for unregistered users
                             }
                         }
                     }
@@ -191,10 +199,108 @@ public class OfferDetailsActivity extends BasicActivity {
         new_style.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO dodati novi activity za narucivanje stila
+                if(isUserLoggedIn()){
+                    LayoutInflater inflater= LayoutInflater.from(OfferDetailsActivity.this);
+                    View view=inflater.inflate(R.layout.activity_suggest_style, null);
+                    final EditText textView = view.findViewById(R.id.editText3);
+
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(OfferDetailsActivity.this);
+                    alertDialog.setIcon(R.drawable.ic_style_black_24dp);
+                    alertDialog.setView(view);
+                    alertDialog.setTitle("Order details");
+                    alertDialog.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            if(textView.getText().toString().length() > 0){
+                                if(isInternetAvailable()){
+                                    get_my_style(textView.getText().toString());
+                                }else{
+                                    showError("No internet connection!");
+                                }
+                            }else{
+                                Toast.makeText(OfferDetailsActivity.this,"Style name can't be empty!",Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
+
+                    alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog alert = alertDialog.create();
+                    alert.show();
+                }else{
+                    Toast.makeText(OfferDetailsActivity.this, "Style order is only for registered users.", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
+        back_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+    }
+
+    private void get_my_style(final String style_name){
+        show_loading("Getting you details...");
+        callLogin= apiService.getUserByUsername2(getUserAuth(),getSharedPreferences("UserData", MODE_PRIVATE).getString("username", ""));
+        callLogin.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                stop_loading();
+                if(response.isSuccessful()){
+                    order_style(response.body(),style_name);
+                }else{
+                    try {
+                        showError(response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                stop_loading();
+                showError(t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void order_style(User user,String style_name){
+        show_loading("Sending an offer...");
+        orderCall = apiService.order_style(getUserAuth(),currentOffer.getId().toString(),"0",style_name,user);
+        orderCall.enqueue(new Callback<Order>() {
+            @Override
+            public void onResponse(Call<Order> call, Response<Order> response) {
+                if(response.isSuccessful()){
+                    stop_loading();
+                    Toast.makeText(OfferDetailsActivity.this,"The order has been sent!",Toast.LENGTH_LONG).show();
+                }else{
+                    stop_loading();
+                    try {
+                        showError(response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Order> call, Throwable t) {
+                stop_loading();
+                showError(t.getMessage());
+                t.printStackTrace();
+            }
+        });
     }
 
     private String getPrice(){
@@ -217,7 +323,11 @@ public class OfferDetailsActivity extends BasicActivity {
                     if((response.body().getCardNumber() != null)){
                         order_item(response.body());
                     }else{
-                        //TODO add fill your information
+                        Gson gson = new Gson();
+                        String userAsString = gson.toJson(response.body());
+                        Intent intent = new Intent(OfferDetailsActivity.this,EditProfileActivity.class);
+                        intent.putExtra("UserCurrent",userAsString);
+                        startActivityForResult(intent,1997);
                         Toast.makeText(OfferDetailsActivity.this, "Please fill in your details in profile tab", Toast.LENGTH_SHORT).show();
                     }
                 }else{
@@ -236,6 +346,15 @@ public class OfferDetailsActivity extends BasicActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(resultCode == Activity.RESULT_OK){
+            if(requestCode == 1997){
+                getUserFromLogin();
+            }
+        }
     }
 
     protected void showError(String message){
@@ -285,7 +404,15 @@ public class OfferDetailsActivity extends BasicActivity {
                 if(response.isSuccessful()){
                     stop_loading();
                     Toast.makeText(getApplicationContext(),"The purchase has been successful!",Toast.LENGTH_LONG).show();
-                    //TODO add screen about purchase info
+
+                    Gson gson = new Gson();
+                    String userAsString = gson.toJson(user);
+                    String orderAsString = gson.toJson(response.body());
+
+                    Intent intent = new Intent(OfferDetailsActivity.this,PurchaseActivity.class);
+                    intent.putExtra("user",userAsString);
+                    intent.putExtra("order",orderAsString);
+                    startActivity(intent);
                     finish();
                 }else{
                     stop_loading();
