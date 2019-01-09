@@ -216,6 +216,7 @@ public class OfferDetailsActivity extends BasicActivity {
                         order_item(response.body());
                     }else{
                         //TODO add fill your information
+                        Toast.makeText(OfferDetailsActivity.this, "Please fill in your details in profile tab", Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     try {
