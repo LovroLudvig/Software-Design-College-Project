@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="@color/AppCOlorLight"
+    android:background="@drawable/card_background"
     android:padding="20dp">
 
     <EditText
@@ -20,17 +20,25 @@
             android:id="@+id/block_button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:background="@color/AppColor"
             android:padding="10dp"
+            style="@android:style/Widget.Material.Light.Button"
+            android:background="@drawable/round_button3"
+            android:textColor="@color/AppColor"
+            android:fontFamily="@font/doppio_one"
             android:text="block user"/>
         <Button
             android:id="@+id/cancel_button"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:background="@color/AppColor"
+
             android:layout_marginLeft="10dp"
             android:padding="10dp"
+            style="@android:style/Widget.Material.Light.Button"
+            android:background="@drawable/round_button3"
+            android:textColor="@color/AppColor"
+            android:fontFamily="@font/doppio_one"
             android:text="cancel"/>
+
 
     </LinearLayout>
 
