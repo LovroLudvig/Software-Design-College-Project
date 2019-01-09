@@ -168,6 +168,7 @@
                     android:textStyle="bold"
                     android:layout_gravity="center"/>
                 <TextView
+                    android:id="@+id/block_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="+Add user to black list"

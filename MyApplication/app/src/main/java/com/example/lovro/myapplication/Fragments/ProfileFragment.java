@@ -1,6 +1,7 @@
 package com.example.lovro.myapplication.Fragments;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,6 +59,7 @@ public class ProfileFragment extends Fragment {
     private User currentUser;
     private Button joinNowButton;
     private View adminTab;
+    private View blockButton;
 
 
     @Override
@@ -76,6 +79,7 @@ public class ProfileFragment extends Fragment {
             locationText=view.findViewById(R.id.location_text);
             emailText=view.findViewById(R.id.email_text);
             cardText=view.findViewById(R.id.card_text);
+            blockButton=view.findViewById(R.id.block_button);
 
             view.findViewById(R.id.registered_user_panel).setVisibility(View.VISIBLE);
             view.findViewById(R.id.unregistered_user_panel).setVisibility(View.GONE);
@@ -123,6 +127,19 @@ public class ProfileFragment extends Fragment {
     }
 
     private void initListeners() {
+        blockButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.black_list_user);
+
+                Button okButton = dialog.findViewById(R.id.block_button);
+                Button cancelButton = dialog.findViewById(R.id.cancel_button);
+                EditText editText =dialog.findViewById(R.id.username_editText);
+
+                dialog.show();
+            }
+        });
         editProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
