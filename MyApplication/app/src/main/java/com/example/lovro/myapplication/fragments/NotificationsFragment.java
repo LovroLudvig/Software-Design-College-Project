@@ -69,7 +69,7 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(false);
-                getUserAndCheckForNorifications();
+                getUserAndCheckForNotifications();
             }
         });
         if (userIsRegistered()){
@@ -77,7 +77,7 @@ public class NotificationsFragment extends Fragment {
             initNotificationAdapter(notificationList);
             view.findViewById(R.id.registered_user_panel).setVisibility(View.VISIBLE);
             view.findViewById(R.id.unregistered_user_panel).setVisibility(View.GONE);
-            getUserAndCheckForNorifications();
+            getUserAndCheckForNotifications();
         }else{
             view.findViewById(R.id.registered_user_panel).setVisibility(View.GONE);
             view.findViewById(R.id.unregistered_user_panel).setVisibility(View.VISIBLE);
@@ -87,7 +87,7 @@ public class NotificationsFragment extends Fragment {
 
     }
 
-    private void getUserAndCheckForNorifications() {
+    private void getUserAndCheckForNotifications() {
         loadUserFromAPI();
     }
 
@@ -131,6 +131,7 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
+                    progressBar.setVisibility(View.GONE);
                     checkForNotifications(response.body());
                 }else{
                     progressBar.setVisibility(View.GONE);
