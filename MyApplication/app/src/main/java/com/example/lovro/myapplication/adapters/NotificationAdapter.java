@@ -1,5 +1,6 @@
 package com.example.lovro.myapplication.adapters;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -36,6 +37,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private Context context;
     private RelativeLayout noNotificationsPanel;
     private NotificationsFragment.OnStyleClick onStyleClick;
+    private ProgressDialog progressDialog;
 
     public NotificationAdapter(List<Notification> notificationStyleSuggests, String auth, Context context, RelativeLayout no_notifications_panel, NotificationsFragment.OnStyleClick onStyleClick){
         this.notificationStyleSuggests = notificationStyleSuggests;
@@ -70,10 +72,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     if (holder.priceAdmin.getText().toString().equals("")){
                         Toast.makeText(context, "Please enter price", Toast.LENGTH_SHORT).show();
                     }else {
+                        show_loading("Loading...");
                         Call<ResponseBody> manageOrder = apiService.manageOrder(auth, String.valueOf(notif.getOrder().getId()), "true", holder.priceAdmin.getText().toString());
                         manageOrder.enqueue(new Callback<ResponseBody>() {
                             @Override
                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                stop_loading();
                                 if(response.isSuccessful()){
                                     removeNotif(notification);
                                     onStyleClick.hideKeyboardAndTriggerEvent();
@@ -93,6 +97,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
                             @Override
                             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                stop_loading();
                                 Toast.makeText(context,"Error loading orders", Toast.LENGTH_LONG).show();
                                 t.printStackTrace();
                             }
@@ -103,10 +108,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.denyAdmin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    show_loading("Loading...");
                     Call<ResponseBody> manageOrder = apiService.manageOrder(auth, String.valueOf(notif.getOrder().getId()), "false", "0");
                     manageOrder.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            stop_loading();
                             if(response.isSuccessful()){
                                 removeNotif(notification);
                                 onStyleClick.hideKeyboardAndTriggerEvent();
@@ -126,6 +133,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            stop_loading();
                             Toast.makeText(context,"Error loading orders", Toast.LENGTH_LONG).show();
                             t.printStackTrace();
                         }
@@ -170,6 +178,16 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public int getItemCount() {
         return notificationStyleSuggests.size();
+    }
+
+    public void show_loading(String message){
+        progressDialog = ProgressDialog.show(context,"",message,true,false);
+    }
+
+    public void stop_loading(){
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
