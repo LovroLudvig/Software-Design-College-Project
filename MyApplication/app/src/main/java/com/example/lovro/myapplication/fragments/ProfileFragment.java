@@ -146,7 +146,7 @@ public class ProfileFragment extends Fragment {
                 Button cancelButton = dialog.findViewById(R.id.cancel_button);
                 EditText editText =dialog.findViewById(R.id.username_editText);
 
-                
+
 
                 dialog.show();
             }
