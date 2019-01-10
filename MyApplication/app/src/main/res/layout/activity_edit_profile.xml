@@ -85,6 +85,7 @@
                         <EditText
                             android:id="@+id/name_editText"
                             android:layout_width="match_parent"
+                            android:inputType="textCapSentences"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
                     <LinearLayout
@@ -150,6 +151,7 @@
                             android:textSize="16sp"/>
                         <EditText
                             android:id="@+id/town_editText"
+                            android:inputType="textCapSentences"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
@@ -181,6 +183,7 @@
                             android:textSize="16sp"/>
                         <EditText
                             android:id="@+id/address_editText"
+                            android:inputType="textCapSentences"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>

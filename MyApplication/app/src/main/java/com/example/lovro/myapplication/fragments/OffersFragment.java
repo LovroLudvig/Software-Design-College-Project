@@ -1,7 +1,5 @@
-package com.example.lovro.myapplication.Fragments;
+package com.example.lovro.myapplication.fragments;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,7 +7,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,15 +22,17 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
-import com.example.lovro.myapplication.activities.HomeActivity;
 import com.example.lovro.myapplication.activities.OfferDetailsActivity;
 import com.example.lovro.myapplication.adapters.OfferAdapter;
 import com.example.lovro.myapplication.domain.Offer;
+import com.example.lovro.myapplication.events.StyleChangeEvent;
 import com.example.lovro.myapplication.network.ApiService;
-import com.example.lovro.myapplication.network.GenericResponse;
 import com.example.lovro.myapplication.network.InitApiService;
 import com.google.gson.Gson;
-import com.squareup.moshi.Json;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -190,9 +189,15 @@ public class OffersFragment extends Fragment {
                 .show();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onStyleChangeEvent(StyleChangeEvent event) {
+        loadOffers(getUserAuth());
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
 
     }
 

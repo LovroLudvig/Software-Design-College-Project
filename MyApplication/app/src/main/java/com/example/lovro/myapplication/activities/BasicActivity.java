@@ -14,7 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 public abstract class BasicActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
-    protected void hideKeyboard(){
+    public void hideKeyboard(){
         View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -22,7 +22,7 @@ public abstract class BasicActivity extends AppCompatActivity {
         }
     }
 
-    protected boolean isInternetAvailable() {
+    public boolean isInternetAvailable() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivityManager == null) {
             return false;
@@ -32,17 +32,17 @@ public abstract class BasicActivity extends AppCompatActivity {
         return networkInfo != null && networkInfo.isConnected();
     }
 
-    protected void show_loading(String message){
+    public void show_loading(String message){
         progressDialog = ProgressDialog.show(this,"",message,true,false);
     }
 
-    protected void stop_loading(){
+    public void stop_loading(){
         if(progressDialog != null){
             progressDialog.dismiss();
         }
     }
 
-    protected void showError(String message){
+    public void showError(String message){
         new AlertDialog.Builder(this)
                 .setTitle("")
                 .setMessage(message)
@@ -51,7 +51,7 @@ public abstract class BasicActivity extends AppCompatActivity {
                 .show();
     }
 
-    protected String getUserAuth(){
+    public String getUserAuth(){
         SharedPreferences prefs = this.getSharedPreferences("UserData", MODE_PRIVATE);
         String username = prefs.getString("username","");
         String pass = prefs.getString("password","");

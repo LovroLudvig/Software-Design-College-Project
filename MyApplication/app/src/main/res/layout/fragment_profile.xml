@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/AppCOlorLight"
-    tools:context=".Fragments.ProfileFragment">
+    tools:context=".fragments.ProfileFragment">
     <RelativeLayout
         android:id="@+id/unregistered_user_panel"
         android:layout_width="wrap_content"

@@ -31,11 +31,14 @@ import com.example.lovro.myapplication.domain.Offer;
 import com.example.lovro.myapplication.domain.Order;
 import com.example.lovro.myapplication.domain.Style;
 import com.example.lovro.myapplication.domain.User;
+import com.example.lovro.myapplication.events.EditProfileEvent;
+import com.example.lovro.myapplication.events.StyleChangeEvent;
 import com.example.lovro.myapplication.network.ApiService;
 import com.example.lovro.myapplication.network.InitApiService;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import org.greenrobot.eventbus.EventBus;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
@@ -353,29 +356,13 @@ public class OfferDetailsActivity extends BasicActivity {
         if(resultCode == Activity.RESULT_OK){
             if(requestCode == 1997){
                 getUserFromLogin();
+                EventBus bus = EventBus.getDefault();
+                bus.post(new EditProfileEvent());
             }
         }
     }
 
-    protected void showError(String message){
-        new AlertDialog.Builder(this)
-                .setTitle("")
-                .setMessage(message)
-                .setPositiveButton("OK",null)
-                .create()
-                .show();
-    }
 
-
-    protected boolean isInternetAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (connectivityManager == null) {
-            return false;
-        }
-
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnected();
-    }
 
     private boolean isUserLoggedIn(){
         SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
