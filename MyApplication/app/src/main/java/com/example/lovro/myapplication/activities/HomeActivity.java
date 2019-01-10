@@ -7,19 +7,18 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.lovro.myapplication.Fragments.NotificationsFragment;
-import com.example.lovro.myapplication.Fragments.OffersFragment;
-import com.example.lovro.myapplication.Fragments.ProfileFragment;
-import com.example.lovro.myapplication.Fragments.StoryFragment;
+import com.example.lovro.myapplication.fragments.NotificationsFragment;
+import com.example.lovro.myapplication.fragments.OffersFragment;
+import com.example.lovro.myapplication.fragments.ProfileFragment;
+import com.example.lovro.myapplication.fragments.StoryFragment;
 import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.adapters.SectionsPagerAdapter;
 
-public class HomeActivity extends AppCompatActivity implements ProfileFragment.OnFragmentInteractionListener, NotificationsFragment.OnFragmentInteractionListener, StoryFragment.OnFragmentInteractionListener, OffersFragment.OnFragmentInteractionListener {
+public class HomeActivity extends BasicActivity implements ProfileFragment.OnFragmentInteractionListener, StoryFragment.OnFragmentInteractionListener, OffersFragment.OnFragmentInteractionListener {
 
     private int backButtonCount=0;
     private TabLayout tabLayout;
@@ -99,6 +98,7 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.O
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                hideKeyboard();
                 if (tab.getPosition()==0){
                     tabLayout.getTabAt(0).setIcon(R.drawable.story_btn);
                 }else if (tab.getPosition()==1){
@@ -170,4 +170,5 @@ public class HomeActivity extends AppCompatActivity implements ProfileFragment.O
         }
         return false;
     }
+
 }

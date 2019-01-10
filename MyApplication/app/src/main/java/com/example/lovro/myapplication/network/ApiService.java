@@ -49,4 +49,10 @@ public interface ApiService {
     @POST("/orders/orderDecoration/{advertisementId}")
     Call<Order> order_style(@Header("Authorization") String auth,@Path("advertisementId") String offerId, @Query("styleId") String styleId,@Query("styleName") String styleName,@Body User user);
 
+    @GET("/orders")
+    Call<List<Order>> getAllOrders(@Header("Authorization") String auth);
+
+    @POST("/orders/manage")
+    Call<ResponseBody> manageOrder(@Header("Authorization") String auth,@Query("orderId") String orderId,@Query("isAllowed") String isAllowed,@Query("price") String price);
+
 }

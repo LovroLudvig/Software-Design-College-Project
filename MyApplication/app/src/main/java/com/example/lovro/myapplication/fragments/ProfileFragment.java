@@ -1,4 +1,4 @@
-package com.example.lovro.myapplication.Fragments;
+package com.example.lovro.myapplication.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -27,21 +27,21 @@ import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.activities.EditProfileActivity;
-import com.example.lovro.myapplication.activities.OfferDetailsActivity;
 import com.example.lovro.myapplication.activities.SignUpActivity;
 import com.example.lovro.myapplication.domain.Colors;
-import com.example.lovro.myapplication.domain.Offer;
 import com.example.lovro.myapplication.domain.Role;
 import com.example.lovro.myapplication.domain.User;
-import com.example.lovro.myapplication.domain.UserForRegister;
-import com.example.lovro.myapplication.domain.UserProfile;
+import com.example.lovro.myapplication.events.EditProfileEvent;
+import com.example.lovro.myapplication.events.StyleChangeEvent;
 import com.example.lovro.myapplication.network.ApiService;
-import com.example.lovro.myapplication.network.GenericResponse;
 import com.example.lovro.myapplication.network.InitApiService;
 import com.google.gson.Gson;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.IOException;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -145,6 +145,8 @@ public class ProfileFragment extends Fragment {
                 Button okButton = dialog.findViewById(R.id.block_button);
                 Button cancelButton = dialog.findViewById(R.id.cancel_button);
                 EditText editText =dialog.findViewById(R.id.username_editText);
+
+                
 
                 dialog.show();
             }
@@ -290,6 +292,11 @@ public class ProfileFragment extends Fragment {
         return false;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEditProfileEvent(EditProfileEvent event) {
+        loadUserFromAPI();
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -299,6 +306,12 @@ public class ProfileFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
     }
 
     @Override

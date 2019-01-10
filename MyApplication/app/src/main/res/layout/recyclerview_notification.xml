@@ -3,62 +3,185 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/card_background"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:clickable="true"
-    android:padding="10dp"
+    android:padding="20dp"
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:layout_marginBottom="5dp">
-
-    <ImageView
-        android:id="@+id/notif_picture"
-        android:layout_width="50sp"
-        android:layout_height="50sp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="5sp"
-        android:layout_marginTop="5sp"
-        android:src= "@drawable/notification"
-        android:scaleType="fitXY"
-        />
-
-    <TextView
-        android:id="@+id/notif_userName"
-        android:layout_width="127dp"
-        android:layout_height="44dp"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="25sp"
-        android:layout_marginTop="0sp"
-        android:layout_marginEnd="25sp"
-        android:layout_toEndOf="@+id/notif_picture"
-        android:text="Craftery admin"
-        android:textColor="@color/AppColor"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:id="@+id/notif_text"
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/story_accepted"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/notif_userName"
-        android:layout_alignStart="@+id/notif_picture"
-        android:layout_alignTop="@id/notif_userName"
-        android:layout_marginStart="75dp"
-        android:paddingTop="25sp"
-        android:text="Accepted your offer"
-        android:textColor="@android:color/background_dark"
-        android:textSize="15sp" />
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/notif_picture"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="5sp"
+            android:src= "@drawable/notification"
+            android:scaleType="fitXY"
+            />
+
+        <TextView
+            android:id="@+id/notif_userName"
+            android:layout_width="127dp"
+            android:layout_height="44dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="25sp"
+            android:layout_marginTop="0sp"
+            android:layout_marginEnd="25sp"
+            android:layout_toEndOf="@+id/notif_picture"
+            android:text="Craftery admin"
+            android:textColor="@color/AppColor"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/notif_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/notif_userName"
+            android:layout_alignStart="@+id/notif_picture"
+            android:layout_alignTop="@id/notif_userName"
+            android:layout_marginStart="75dp"
+            android:paddingTop="25sp"
+            android:text="Accepted your story"
+            android:textColor="@android:color/background_dark"
+            android:textSize="15sp" />
 
 
-    <TextView
-        android:id="@+id/notif_seeMore"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/notif_seeMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/notif_picture"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="1dp"
+            android:text="See more"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/admin_style_notification"
+        android:visibility="gone"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/notif_picture"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="1dp"
-        android:text="See more"
-        android:textSize="12sp" />
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src= "@drawable/notification"
+                android:scaleType="fitXY"
+                />
+
+            <TextView
+                android:id="@+id/notif_userName_admin"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="username"
+                android:textColor="@color/AppColor"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+
+                android:text="suggested new style"
+                android:textColor="@android:color/background_dark"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/syle_name_admin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="style name"
+                android:textColor="@android:color/background_dark"
+                android:textSize="15sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="for"
+                android:textColor="@android:color/background_dark"
+                android:textSize="15sp"/>
+            <TextView
+                android:id="@+id/ad_name_admin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="advertisement name"
+                android:textColor="@android:color/background_dark"
+                android:textSize="15sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="0px"
+            android:layout_height="0px"/>
+
+        <EditText
+            android:id="@+id/price_admin"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Price (in EUR)"
+            android:layout_marginBottom="10dp"
+            android:inputType="number"/>
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                style="@android:style/Widget.Material.Light.Button"
+                android:background="@drawable/round_button4"
+                android:fontFamily="@font/doppio_one"
+                android:id="@+id/accept_admin"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Accept"/>
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                style="@android:style/Widget.Material.Light.Button"
+                android:background="@drawable/round_button4"
+                android:fontFamily="@font/doppio_one"
+                android:id="@+id/deny_admin"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deny"/>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+
 
 </RelativeLayout>

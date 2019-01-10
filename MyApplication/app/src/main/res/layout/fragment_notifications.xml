@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/AppCOlorLight"
     android:gravity="center"
-    tools:context=".Fragments.NotificationsFragment">
+    tools:context=".fragments.NotificationsFragment">
     <RelativeLayout
         android:id="@+id/registered_user_panel"
         android:layout_width="match_parent"
@@ -28,6 +28,7 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="75sp"
             android:layout_height="75sp"
+            android:visibility="gone"
             android:layout_centerInParent="true" />
 
     </RelativeLayout>
@@ -57,6 +58,29 @@
                 android:layout_height="wrap_content"
                 android:text="Swipe right to join!"
                 android:textColor="@color/AppColor"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/no_notifications_panel"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+            <TextView
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No new notifications"
+                android:textStyle="bold"
+                android:layout_centerInParent="true"/>
+
 
         </LinearLayout>
 

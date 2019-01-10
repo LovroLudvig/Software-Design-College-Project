@@ -1,4 +1,4 @@
-package com.example.lovro.myapplication.Fragments;
+package com.example.lovro.myapplication.fragments;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -19,9 +19,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.lovro.myapplication.R;
-import com.example.lovro.myapplication.adapters.OfferAdapter;
 import com.example.lovro.myapplication.adapters.StoryAdapter;
-import com.example.lovro.myapplication.domain.Offer;
 import com.example.lovro.myapplication.domain.Story;
 import com.example.lovro.myapplication.network.ApiService;
 import com.example.lovro.myapplication.network.InitApiService;
