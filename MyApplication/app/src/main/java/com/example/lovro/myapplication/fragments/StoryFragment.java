@@ -1,6 +1,7 @@
 package com.example.lovro.myapplication.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -19,10 +20,12 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.lovro.myapplication.R;
+import com.example.lovro.myapplication.activities.StoryDetailsActivity;
 import com.example.lovro.myapplication.adapters.StoryAdapter;
 import com.example.lovro.myapplication.domain.Story;
 import com.example.lovro.myapplication.network.ApiService;
 import com.example.lovro.myapplication.network.InitApiService;
+import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -157,7 +160,13 @@ public class StoryFragment extends Fragment {
         storyAdapter.setListener(new StoryAdapter.OnShowClickListener() {
             @Override
             public void onShowClick(Story story) {
-                //TODO otvoriti story details
+                Gson gson = new Gson();
+                String storyAsString = gson.toJson(story);
+                Intent intent = new Intent(getActivity(),StoryDetailsActivity.class);
+                intent.putExtra("story",storyAsString);
+                startActivity(intent);
+
+                //TODO poslati pricu
             }
         });
         fab.setOnClickListener(new View.OnClickListener() {

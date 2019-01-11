@@ -26,11 +26,12 @@ public class HomeActivity extends BasicActivity implements ProfileFragment.OnFra
 
     //OVDJE MOZEMO PISATI STA GOD DA NAM PADNE NA PAMET DA JE JOS POTREBNO ZA APLIKACIJU
 
-    //TODO: IMPLEMENTIRATI PREDLAGANJE STILA ZE OFFER (KAD NEREGISTRIRANI KORISNIK PRITISNE NA BUTTON ZA DODAVANJE STILA MORA DOBITI TOAST DA SE TREBA REGISTRIRATI ZA TO)
-    //TODO: NOTIFIKACIJE, POSEBNO ADMINISTRATORU, POSEBNO REGISTRIRANOM KORISNIKU ------------------> REZERVIRA LOVRO
-    //TODO: U PROFILE TAB DODATI POSEBAN CARD KOJI CE VIDJETI SAMO ADMIN NA KOJEM MOZE BLOKIRATI USERE I RADITI NEKE DRUGE STVARI KOJE ADMIN SAMO MOZE (AKO TAKE STVARI JOS POSTOJE UOPCE) --------> REZERVIRA LOVRO
+    //DONE: IMPLEMENTIRATI PREDLAGANJE STILA ZE OFFER (KAD NEREGISTRIRANI KORISNIK PRITISNE NA BUTTON ZA DODAVANJE STILA MORA DOBITI TOAST DA SE TREBA REGISTRIRATI ZA TO)
+    //DONE: NOTIFIKACIJE, POSEBNO ADMINISTRATORU, POSEBNO REGISTRIRANOM KORISNIKU ------------------> REZERVIRA LOVRO
+    //DONE: U PROFILE TAB DODATI POSEBAN CARD KOJI CE VIDJETI SAMO ADMIN NA KOJEM MOZE BLOKIRATI USERE I RADITI NEKE DRUGE STVARI KOJE ADMIN SAMO MOZE (AKO TAKE STVARI JOS POSTOJE UOPCE) --------> REZERVIRA LOVRO
     //TODO: IMPLEMENTACIJA PREDLAGANJA STORYA SA SLIKOM I VIDEOM (KAD NEREGISTRIRANI KORISNIK PRITISNE NA FLOATING BUTTON ZA DODAVANJE MORA DOBITI TOAST DA SE TREBA REGISTRIRATI ZA TO)
     //TODO: IMPLEMENTACIJA OBJAVLJIVANJA OFFERA, OVO MOZE SAMO ADMIN (FLOATING BUTTON KOJI CE VIDJETI SAMO ADMINISTRATORI)
+    //TODO: FIX RAM ERROR
 
     //STA GOD TI PADNE NA PAMET DA JOS TREBA NAPRAVITI NAPISI GORE I MOZES OZNACIT STO CES TI NAPRAVITI
 
@@ -78,6 +79,7 @@ public class HomeActivity extends BasicActivity implements ProfileFragment.OnFra
                                 SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
                                 SharedPreferences.Editor editor = prefs.edit();
                                 editor.putBoolean("saved",false);
+                                editor.putBoolean("admin",false);
                                 editor.apply();
                                 Intent i = new Intent(HomeActivity.this, LoginActivity.class);
                                 startActivity(i);
@@ -171,4 +173,23 @@ public class HomeActivity extends BasicActivity implements ProfileFragment.OnFra
         return false;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }

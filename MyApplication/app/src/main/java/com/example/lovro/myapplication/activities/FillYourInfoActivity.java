@@ -88,7 +88,7 @@ public class FillYourInfoActivity extends BasicActivity {
             @Override
             public void onClick(View v) {
                 if(checkFields()){
-                    currentUser = new User(emailEditText.getText().toString(),null,usernameEditText.getText().toString(),nameEditText.getText().toString(),cardPicker.getSelectedItem().toString()+" "+cardEditText.getText().toString(),addressEditText.getText().toString(),null,null,new Town(townEditText.getText().toString(),Integer.parseInt(poscalCodeEditText.getText().toString())));
+                    currentUser = new User(emailEditText.getText().toString(),"pass",usernameEditText.getText().toString(),nameEditText.getText().toString(),cardPicker.getSelectedItem().toString()+" "+cardEditText.getText().toString(),addressEditText.getText().toString(),null,null,new Town(townEditText.getText().toString(),Integer.parseInt(poscalCodeEditText.getText().toString())));
                     order_item(currentUser);
                 }else{
                     Toast.makeText(FillYourInfoActivity.this, "Please fill in all the fields", Toast.LENGTH_SHORT).show();

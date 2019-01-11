@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
+import com.example.lovro.myapplication.domain.Role;
 import com.example.lovro.myapplication.domain.User;
 import com.example.lovro.myapplication.network.ApiService;
 import com.example.lovro.myapplication.network.InitApiService;
@@ -89,15 +90,29 @@ public class SignInActivity extends BasicActivity {
         }
     }
 
+    private boolean checkIfUserAdmin(User user) {
+        for (Role role:user.getRoles()){
+            if (role.getId()==4){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 
-    private void saveUserInMemory(){
+
+    private void saveUserInMemory(User user){
         SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("username", username.getText().toString());
         editor.putString("password", password.getText().toString());
         editor.putBoolean("saved",true);
+        if(checkIfUserAdmin(user)){
+            editor.putBoolean("admin",true);
+        }else{
+            editor.putBoolean("admin",false);
+        }
         editor.apply();
     }
 
@@ -110,7 +125,7 @@ public class SignInActivity extends BasicActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 stop_loading();
                 if(response.isSuccessful()){
-                    saveUserInMemory();
+                    saveUserInMemory(response.body());
                     Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
