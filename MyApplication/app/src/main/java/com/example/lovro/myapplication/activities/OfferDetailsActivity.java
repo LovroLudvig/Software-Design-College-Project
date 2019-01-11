@@ -181,7 +181,15 @@ public class OfferDetailsActivity extends BasicActivity {
                             if(isUserLoggedIn()){
                                 getUserFromLogin();
                             }else{
-                                //TODO for unregistered users
+                                Gson gson = new Gson();
+                                String offerAsString = gson.toJson(currentOffer);
+
+                                Intent intent = new Intent(OfferDetailsActivity.this,FillYourInfoActivity.class);
+                                intent.putExtra("Offer",offerAsString);
+                                intent.putExtra("Style",getStyleId());
+                                intent.putExtra("Dimension",getDimensionId());
+                                startActivity(intent);
+                                finish();
                             }
                         }
                     }
