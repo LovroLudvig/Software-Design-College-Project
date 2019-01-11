@@ -32,6 +32,7 @@ public class PurchaseActivity extends BasicActivity {
     private ImageView article_image;
     private ImageView back;
     private TextView price;
+    private TextView credit_type;
     private User user;
     private Order order;
 
@@ -59,12 +60,14 @@ public class PurchaseActivity extends BasicActivity {
         back = findViewById(R.id.order_back_arrow);
         article_image = findViewById(R.id.article_image);
         price = findViewById(R.id.priceeeee);
+        credit_type = findViewById(R.id.credit_type);
 
         initLayout();
         initListener();
     }
 
     private void initLayout(){
+        String[] credit = order.getCardNumber().split(" ");
 
         String token = order.getId().toString();
         String encoded_token = Base64.encodeToString(token.getBytes(),0);
@@ -74,11 +77,12 @@ public class PurchaseActivity extends BasicActivity {
         date.setText(time);
         address.setText(order.getAddress());
         town.setText(order.getTown().getName());
-        //postal.setText(user.getTown().getPostCode());
+        postal.setText(String.valueOf(user.getTown().getPostCode()));
         article_name.setText(order.getOffer().getName());
-        article_style.setText(order.getOffer().getStyles().get(0).getDescription());
-        article_dimension.setText(order.getOffer().getDimensions().get(0).getDescription());
+        article_style.setText(order.getStyle().getDescription());
+        article_dimension.setText(order.getDimension().getDescription());
         price.setText(order.getPrice().toString());
+        credit_type.setText(credit[0]);
         Picasso.get().load(order.getOffer().getImageUrl()).into(article_image);
     }
 
