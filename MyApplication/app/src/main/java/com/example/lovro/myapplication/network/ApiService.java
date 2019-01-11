@@ -61,4 +61,7 @@ public interface ApiService {
     @POST("/stories/manage")
     Call<ResponseBody> manageStory(@Header("Authorization") String auth,@Query("storyId") String storyId,@Query("isAllowed") String isAllowed);
 
+    @POST("/stories/setseen/{storyId}")
+    Call<ResponseBody> setStorySeen(@Header("Authorization") String auth,@Path("storyId") String storyId);
+
 }

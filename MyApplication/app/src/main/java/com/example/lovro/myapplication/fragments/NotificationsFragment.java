@@ -21,6 +21,7 @@ import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.activities.HomeActivity;
 import com.example.lovro.myapplication.adapters.NotificationAdapter;
 import com.example.lovro.myapplication.domain.Notification;
+import com.example.lovro.myapplication.domain.NotificationStoryAccepted;
 import com.example.lovro.myapplication.domain.NotificationStorySuggest;
 import com.example.lovro.myapplication.domain.NotificationStyleSuggest;
 import com.example.lovro.myapplication.domain.Order;
@@ -28,11 +29,13 @@ import com.example.lovro.myapplication.domain.Role;
 import com.example.lovro.myapplication.domain.Story;
 import com.example.lovro.myapplication.domain.User;
 import com.example.lovro.myapplication.events.StyleChangeEvent;
+import com.example.lovro.myapplication.network.ApiService;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -50,6 +53,7 @@ public class NotificationsFragment extends Fragment {
     private ProgressBar progressBar;
     private NotificationAdapter notifAdapter;
     private RelativeLayout no_notifications_panel;
+    private User currentUser;
     private List<Notification> notificationList = new ArrayList<>();
 
 
@@ -128,6 +132,7 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
+                    currentUser=response.body();
                     checkForNotifications(response.body());
                 }else{
                     progressBar.setVisibility(View.GONE);
@@ -184,9 +189,38 @@ public class NotificationsFragment extends Fragment {
             });
 
         }else{
-            progressBar.setVisibility(View.GONE);
+            //progressBar.setVisibility(View.GONE);
             //nije admin, za sad nema notifikacija
-            no_notifications_panel.setVisibility(View.VISIBLE);
+            //no_notifications_panel.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
+            apiService.getAllStories().enqueue(new Callback<List<Story>>() {
+                @Override
+                public void onResponse(Call<List<Story>> call, Response<List<Story>> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if(response.isSuccessful()){
+                        listStoryAcceptedNotifications(response.body());
+                    }else{
+                        if(call.isCanceled()){
+                            //nothing
+                        }else{
+                            try {
+                                showError(response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<List<Story>> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(),"Error loading stories", Toast.LENGTH_LONG).show();
+                    t.printStackTrace();
+
+                }
+            });
         }
 
     }
@@ -202,7 +236,6 @@ public class NotificationsFragment extends Fragment {
         apiService.getStoriesInEvaluation(getUserAuth()).enqueue(new Callback<List<Story>>() {
             @Override
             public void onResponse(Call<List<Story>> call, Response<List<Story>> response) {
-                progressBar.setVisibility(View.GONE);
                 if(response.isSuccessful()){
                     listAdminStoryNotifications(response.body());
                 }else{
@@ -239,11 +272,53 @@ public class NotificationsFragment extends Fragment {
             }
 
         }
+        progressBar.setVisibility(View.VISIBLE);
+        apiService.getAllStories().enqueue(new Callback<List<Story>>() {
+            @Override
+            public void onResponse(Call<List<Story>> call, Response<List<Story>> response) {
+                progressBar.setVisibility(View.GONE);
+                if(response.isSuccessful()){
+                    listStoryAcceptedNotifications(response.body());
+                }else{
+                    if(call.isCanceled()){
+                        //nothing
+                    }else{
+                        try {
+                            showError(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Story>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getActivity(),"Error loading stories", Toast.LENGTH_LONG).show();
+                t.printStackTrace();
+
+            }
+        });
+
+
+    }
+
+    private void listStoryAcceptedNotifications(List<Story> stories) {
+        for (Story story:stories){
+            if (story.getUser().getUsername().equals(currentUser.getUsername()) && story.getStatus().getId()==5){
+                if(!(notificationList.contains(new NotificationStoryAccepted(story)))){
+                    notificationList.add(new NotificationStoryAccepted(story));
+                }
+            }
+        }
+
         if (notificationList.size()==0) {
             no_notifications_panel.setVisibility(View.VISIBLE);
         }
+        Collections.shuffle(notificationList);
         notifAdapter.setNotifs(notificationList);
-
     }
 
 

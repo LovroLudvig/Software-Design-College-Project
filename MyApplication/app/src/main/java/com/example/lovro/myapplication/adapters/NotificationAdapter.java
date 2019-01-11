@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.example.lovro.myapplication.domain.NotificationStoryAccepted;
 import com.example.lovro.myapplication.domain.NotificationStorySuggest;
 import com.example.lovro.myapplication.fragments.NotificationsFragment;
 import com.example.lovro.myapplication.R;
@@ -148,8 +149,48 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             });
 
 
+        }else if (notification instanceof NotificationStoryAccepted){
+            final NotificationStoryAccepted notif=(NotificationStoryAccepted) notification;
+            holder.storyAllowedPanel.setVisibility(View.VISIBLE);
+            holder.notifSeenButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setNotificationToSeen(holder,notif,notification);
+                }
+            });
         }
 
+    }
+
+    private void setNotificationToSeen(ViewHolder holder, NotificationStoryAccepted notif, final Notification notification) {
+        show_loading("Loading...");
+        apiService.setStorySeen(auth, String.valueOf(notif.getStory().getId())).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                stop_loading();
+                if(response.isSuccessful()){
+                    removeNotif(notification);
+                    Toast.makeText(context, "Notification removed", Toast.LENGTH_SHORT).show();
+                }else{
+                    if(call.isCanceled()){
+                        //nothing
+                    }else{
+                        try {
+                            showError(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                stop_loading();
+                Toast.makeText(context,"Error", Toast.LENGTH_LONG).show();
+                t.printStackTrace();
+            }
+        });
     }
 
     private void denyStory(ViewHolder holder, NotificationStorySuggest notif, final Notification notification) {
