@@ -76,7 +76,7 @@ public class NotificationsFragment extends Fragment {
                 notifAdapter.setNotifs(notificationList);
 
                 getUserAndCheckForNotifications();
-
+                progressBar.setVisibility(View.GONE);
             }
         });
         if (userIsRegistered()){
@@ -138,7 +138,6 @@ public class NotificationsFragment extends Fragment {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
-                    progressBar.setVisibility(View.GONE);
                     checkForNotifications(response.body());
                 }else{
                     progressBar.setVisibility(View.GONE);
@@ -196,6 +195,7 @@ public class NotificationsFragment extends Fragment {
             });
 
         }else{
+            progressBar.setVisibility(View.GONE);
             //nije admin, za sad nema notifikacija
             no_notifications_panel.setVisibility(View.VISIBLE);
         }
