@@ -1,5 +1,6 @@
 package com.example.lovro.myapplication.fragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -51,6 +53,7 @@ public class OffersFragment extends Fragment {
     private List<Offer> offerList = new ArrayList<>();
     private Call<List<Offer>> getOffers;
     private ProgressBar progressBar;
+    private FloatingActionButton floatingActionButton;
     private ApiService apiService = InitApiService.apiService;
     private OfferAdapter offerAdapter;
 
@@ -61,6 +64,7 @@ public class OffersFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_offers, container, false);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -68,6 +72,11 @@ public class OffersFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerview_offers);
         swipeRefreshLayout = view.findViewById(R.id.swipeLayout);
         progressBar = view.findViewById(R.id.offers_progressbar);
+        floatingActionButton = view.findViewById(R.id.offer_add);
+
+        if(!userIsAdmin()){
+            floatingActionButton.setVisibility(View.GONE);
+        }
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -84,6 +93,11 @@ public class OffersFragment extends Fragment {
         }else{
             showError("No internet connection!");
         }
+    }
+
+    private boolean userIsAdmin(){
+        SharedPreferences preferences = this.getActivity().getSharedPreferences("UserData", MODE_PRIVATE);
+        return preferences.getBoolean("admin",false);
     }
 
     private void initListeners(){
