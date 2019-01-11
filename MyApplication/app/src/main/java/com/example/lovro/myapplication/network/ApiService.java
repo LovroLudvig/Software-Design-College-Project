@@ -64,4 +64,7 @@ public interface ApiService {
     @POST("/stories/setseen/{storyId}")
     Call<ResponseBody> setStorySeen(@Header("Authorization") String auth,@Path("storyId") String storyId);
 
+    @POST("/user/forbid/{username}")
+    Call<ResponseBody> forbidUser(@Header("Authorization") String auth,@Path("username") String username);
+
 }

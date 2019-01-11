@@ -2,6 +2,7 @@ package com.example.lovro.myapplication.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,6 +44,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -67,6 +69,7 @@ public class ProfileFragment extends Fragment {
     private View blockButton;
     private TextView userLetter;
     private View imageCircle;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -144,7 +147,56 @@ public class ProfileFragment extends Fragment {
 
                 Button okButton = dialog.findViewById(R.id.block_button);
                 Button cancelButton = dialog.findViewById(R.id.cancel_button);
-                EditText editText =dialog.findViewById(R.id.username_editText);
+                final EditText editText =dialog.findViewById(R.id.username_editText);
+
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                okButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (editText.getText().toString().equals("")){
+                            Toast.makeText(getContext(), "Please enter username", Toast.LENGTH_SHORT).show();
+                        }else{
+                            show_loading("Loading...");
+                            apiService.forbidUser(getUserAuth(), editText.getText().toString()).enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    stop_loading();
+                                    if(response.isSuccessful()){
+                                        Toast.makeText(getContext(), editText.getText().toString()+" blocked from accessing application", Toast.LENGTH_SHORT).show();
+                                        editText.setText("");
+                                    }else{
+                                        progressBar.setVisibility(View.GONE);
+                                        if(call.isCanceled()){
+                                            //nothing
+                                        }else{
+                                            try {
+                                                showError(response.errorBody().string());
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    stop_loading();
+                                    Toast.makeText(getActivity(),"Error loading user", Toast.LENGTH_LONG).show();
+                                    t.printStackTrace();
+
+                                }
+                            });
+                        }
+
+                    }
+                });
 
 
 
@@ -282,6 +334,16 @@ public class ProfileFragment extends Fragment {
                 .setPositiveButton("OK",null)
                 .create()
                 .show();
+    }
+
+    public void show_loading(String message){
+        progressDialog = ProgressDialog.show(getContext(),"",message,true,false);
+    }
+
+    public void stop_loading(){
+        if(progressDialog != null){
+            progressDialog.dismiss();
+        }
     }
 
     private boolean userIsRegistered(){

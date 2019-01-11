@@ -117,7 +117,7 @@ public class SignInActivity extends BasicActivity {
                     finish();
                 }else{
                     if(response.code() == 401){
-                        showError("Wrong email or password!");
+                        showError("Wrong username or password!");
                     }else{
                         showError("Unexpected error occurred. Please try again!");
                     }
