@@ -58,4 +58,7 @@ public interface ApiService {
     @POST("/orders/manage")
     Call<ResponseBody> manageOrder(@Header("Authorization") String auth,@Query("orderId") String orderId,@Query("isAllowed") String isAllowed,@Query("price") String price);
 
+    @POST("/stories/manage")
+    Call<ResponseBody> manageStory(@Header("Authorization") String auth,@Query("storyId") String storyId,@Query("isAllowed") String isAllowed);
+
 }

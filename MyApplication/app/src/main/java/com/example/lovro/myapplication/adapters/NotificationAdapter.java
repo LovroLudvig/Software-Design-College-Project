@@ -36,7 +36,7 @@ import static com.example.lovro.myapplication.network.InitApiService.apiService;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>{
 
-    private List<Notification> notificationStyleSuggests;
+    private List<Notification> notifications;
     private String auth;
     private Context context;
     private RelativeLayout noNotificationsPanel;
@@ -44,7 +44,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private ProgressDialog progressDialog;
 
     public NotificationAdapter(List<Notification> notificationStyleSuggests, String auth, Context context, RelativeLayout no_notifications_panel, NotificationsFragment.OnStyleClick onStyleClick){
-        this.notificationStyleSuggests = notificationStyleSuggests;
+        this.notifications = notificationStyleSuggests;
         this.auth=auth;
         this.context=context;
         this.noNotificationsPanel=no_notifications_panel;
@@ -61,7 +61,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final NotificationAdapter.ViewHolder holder, int position) {
-        final Notification notification = notificationStyleSuggests.get(position);
+        final Notification notification = notifications.get(position);
         holder.setIsRecyclable(false);
 
 
@@ -73,82 +73,21 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.adNameAdmin.setText(notif.getOrder().getOffer().getName());
             holder.styleAdmin.setText(notif.getOrder().getStyle().getDescription());
             holder.notifUsernameAdmin.setText(notif.getOrder().getName());
+
             holder.acceptAdmin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (holder.priceAdmin.getText().toString().equals("")){
-                        Toast.makeText(context, "Please enter price", Toast.LENGTH_SHORT).show();
-                    }else {
-                        show_loading("Loading...");
-                        Call<ResponseBody> manageOrder = apiService.manageOrder(auth, String.valueOf(notif.getOrder().getId()), "true", holder.priceAdmin.getText().toString());
-                        manageOrder.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                stop_loading();
-                                if(response.isSuccessful()){
-                                    removeNotif(notification);
-                                    onStyleClick.hideKeyboardAndTriggerEvent();
-                                    Toast.makeText(context, "Style accepted", Toast.LENGTH_SHORT).show();
-                                }else{
-                                    if(call.isCanceled()){
-                                        //nothing
-                                    }else{
-                                        try {
-                                            showError(response.errorBody().string());
-                                        } catch (IOException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                stop_loading();
-                                Toast.makeText(context,"Error loading orders", Toast.LENGTH_LONG).show();
-                                t.printStackTrace();
-                            }
-                        });
-                    }
+                    acceptStyle(holder, notif,notification);
                 }
             });
             holder.denyAdmin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    show_loading("Loading...");
-                    Call<ResponseBody> manageOrder = apiService.manageOrder(auth, String.valueOf(notif.getOrder().getId()), "false", "0");
-                    manageOrder.enqueue(new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                            stop_loading();
-                            if(response.isSuccessful()){
-                                removeNotif(notification);
-                                onStyleClick.hideKeyboardAndTriggerEvent();
-                                Toast.makeText(context, "Style denied", Toast.LENGTH_SHORT).show();
-                            }else{
-                                if(call.isCanceled()){
-                                    //nothing
-                                }else{
-                                    try {
-                                        showError(response.errorBody().string());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            stop_loading();
-                            Toast.makeText(context,"Error loading orders", Toast.LENGTH_LONG).show();
-                            t.printStackTrace();
-                        }
-                    });
+                    denyStyle(holder,notif,notification);
                 }
             });
         }else if (notification instanceof NotificationStorySuggest){
-            NotificationStorySuggest notif=(NotificationStorySuggest) notification;
+            final NotificationStorySuggest notif=(NotificationStorySuggest) notification;
             holder.adminStyleNotification.setVisibility(View.GONE);
             holder.hiddenPanel.setVisibility(View.GONE);
             holder.showMorePanelText.setText("Show more");
@@ -195,29 +134,174 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 });
 
             }
+            holder.storyAcceptButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    acceptStory(holder, notif, notification);
+                }
+            });
+            holder.storyDenyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    denyStory(holder,notif,notification);
+                }
+            });
 
 
+        }
+
+    }
+
+    private void denyStory(ViewHolder holder, NotificationStorySuggest notif, final Notification notification) {
+        show_loading("Loading...");
+        apiService.manageStory(auth, String.valueOf(notif.getStory().getId()), "false").enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                stop_loading();
+                if(response.isSuccessful()){
+                    removeNotif(notification);
+                    Toast.makeText(context, "Story denied", Toast.LENGTH_SHORT).show();
+                }else{
+                    if(call.isCanceled()){
+                        //nothing
+                    }else{
+                        try {
+                            showError(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                stop_loading();
+                Toast.makeText(context,"Error", Toast.LENGTH_LONG).show();
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void acceptStory(ViewHolder holder, NotificationStorySuggest notif, final Notification notification) {
+        show_loading("Loading...");
+        apiService.manageStory(auth, String.valueOf(notif.getStory().getId()), "true").enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                stop_loading();
+                if(response.isSuccessful()){
+                    removeNotif(notification);
+                    Toast.makeText(context, "Story accepted", Toast.LENGTH_SHORT).show();
+                    //TODO: refresh story fragment here!!!!!!!!!!!!!!!!!!!!!!!!!!
+                }else{
+                    if(call.isCanceled()){
+                        //nothing
+                    }else{
+                        try {
+                            showError(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                stop_loading();
+                Toast.makeText(context,"Error", Toast.LENGTH_LONG).show();
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void denyStyle(ViewHolder holder, NotificationStyleSuggest notif, final Notification notification) {
+        show_loading("Loading...");
+        Call<ResponseBody> manageOrder = apiService.manageOrder(auth, String.valueOf(notif.getOrder().getId()), "false", "0");
+        manageOrder.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                stop_loading();
+                if(response.isSuccessful()){
+                    removeNotif(notification);
+                    onStyleClick.hideKeyboardAndTriggerEvent();
+                    Toast.makeText(context, "Style denied", Toast.LENGTH_SHORT).show();
+                }else{
+                    if(call.isCanceled()){
+                        //nothing
+                    }else{
+                        try {
+                            showError(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                stop_loading();
+                Toast.makeText(context,"Error", Toast.LENGTH_LONG).show();
+                t.printStackTrace();
+            }
+        });
+
+    }
+
+    private void acceptStyle(ViewHolder holder, NotificationStyleSuggest notif, final Notification notification) {
+        if (holder.priceAdmin.getText().toString().equals("")){
+            Toast.makeText(context, "Please enter price", Toast.LENGTH_SHORT).show();
+        }else {
+            show_loading("Loading...");
+            Call<ResponseBody> manageOrder = apiService.manageOrder(auth, String.valueOf(notif.getOrder().getId()), "true", holder.priceAdmin.getText().toString());
+            manageOrder.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    stop_loading();
+                    if(response.isSuccessful()){
+                        removeNotif(notification);
+                        onStyleClick.hideKeyboardAndTriggerEvent();
+                        Toast.makeText(context, "Style accepted", Toast.LENGTH_SHORT).show();
+                    }else{
+                        if(call.isCanceled()){
+                            //nothing
+                        }else{
+                            try {
+                                showError(response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    stop_loading();
+                    Toast.makeText(context,"Error", Toast.LENGTH_LONG).show();
+                    t.printStackTrace();
+                }
+            });
         }
 
     }
 
 
     public void setNotifs(List<Notification> notificationStyleSuggests) {
-        this.notificationStyleSuggests = notificationStyleSuggests;
-        if (this.notificationStyleSuggests.size()!=0){
+        this.notifications = notificationStyleSuggests;
+        if (this.notifications.size()!=0){
             noNotificationsPanel.setVisibility(View.GONE);
         }
         notifyDataSetChanged();
     }
 
     public void removeNotif(Notification notification){
-        for (Notification notif:this.notificationStyleSuggests){
-            if (notif.equals(notification)){
-                this.notificationStyleSuggests.remove(notif);
-                notifyDataSetChanged();
-            }
-        }
-        if (this.notificationStyleSuggests.size()==0){
+        notifications.remove(notification);
+        notifyDataSetChanged();
+        if (this.notifications.size()==0){
             noNotificationsPanel.setVisibility(View.VISIBLE);
         }
     }
@@ -234,7 +318,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public int getItemCount() {
-        return notificationStyleSuggests.size();
+        return notifications.size();
     }
 
     public void show_loading(String message){
@@ -270,6 +354,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         private VideoView storyVideo;
         private LinearLayout videoLayout;
         private ImageView storyVideoPlayButton;
+        private Button storyAcceptButton;
+        private Button storyDenyButton;
+
+
+        private LinearLayout storyAllowedPanel;
+        private View notifSeenButton;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -296,7 +386,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             storyVideo=itemView.findViewById(R.id.storyVideo);
             videoLayout=itemView.findViewById(R.id.videoLayout);
             storyVideoPlayButton=itemView.findViewById(R.id.storyVideoPlayButton);
+            storyAcceptButton=itemView.findViewById(R.id.storyAccept);
+            storyDenyButton=itemView.findViewById(R.id.storyDeny);
 
+
+            storyAllowedPanel=itemView.findViewById(R.id.storyAllowedPanel);
+            notifSeenButton=itemView.findViewById(R.id.notifSeenButton);
         }
     }
 

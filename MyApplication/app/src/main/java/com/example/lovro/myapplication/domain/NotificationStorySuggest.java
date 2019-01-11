@@ -10,4 +10,13 @@ public class NotificationStorySuggest extends Notification{
     public Story getStory() {
         return story;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof NotificationStorySuggest){
+            NotificationStorySuggest help = (NotificationStorySuggest) obj;
+            return help.story.equals(this.story);
+        }
+        return false;
+    }
 }

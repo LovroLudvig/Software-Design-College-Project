@@ -91,4 +91,13 @@ public class Story {
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof  Story){
+            Story help=(Story) obj;
+            return this.id==help.id;
+        }
+        return false;
+    }
 }

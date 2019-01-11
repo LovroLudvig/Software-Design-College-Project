@@ -116,17 +116,6 @@ public class NotificationsFragment extends Fragment {
 
 
 
-
-    private void displayNotifications(List<Notification> notificationStyleSuggestList){
-        progressBar.setVisibility(View.GONE);
-        if(notifAdapter != null){
-            notifAdapter.setNotifs(notificationStyleSuggestList);
-        }else{
-            initNotificationAdapter(notificationStyleSuggestList);
-        }
-    }
-
-
     private void initRecyclerView(){
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
@@ -203,51 +192,55 @@ public class NotificationsFragment extends Fragment {
     }
 
     private void listAdminNotifications(List<Order> orders) {
-
-        if (orders.size()==0){
-            no_notifications_panel.setVisibility(View.VISIBLE);
-        }else{
-            //TODO: IZLISTAJ
-            notificationList=new ArrayList<>();
-            for (Order order:orders){
+        notificationList=new ArrayList<>();
+        for (Order order:orders){
+            if (!(notificationList.contains(new NotificationStyleSuggest(order)))){
                 notificationList.add(new NotificationStyleSuggest(order));
             }
-            progressBar.setVisibility(View.VISIBLE);
-            apiService.getStoriesInEvaluation(getUserAuth()).enqueue(new Callback<List<Story>>() {
-                @Override
-                public void onResponse(Call<List<Story>> call, Response<List<Story>> response) {
-                    progressBar.setVisibility(View.GONE);
-                    if(response.isSuccessful()){
-                        listAdminStoryNotifications(response.body());
+        }
+        progressBar.setVisibility(View.VISIBLE);
+        apiService.getStoriesInEvaluation(getUserAuth()).enqueue(new Callback<List<Story>>() {
+            @Override
+            public void onResponse(Call<List<Story>> call, Response<List<Story>> response) {
+                progressBar.setVisibility(View.GONE);
+                if(response.isSuccessful()){
+                    listAdminStoryNotifications(response.body());
+                }else{
+                    if(call.isCanceled()){
+                        //nothing
                     }else{
-                        if(call.isCanceled()){
-                            //nothing
-                        }else{
-                            try {
-                                showError(response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                        try {
+                            showError(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
-
                 }
 
-                @Override
-                public void onFailure(Call<List<Story>> call, Throwable t) {
-                    progressBar.setVisibility(View.GONE);
-                    Toast.makeText(getActivity(),"Error loading stories", Toast.LENGTH_LONG).show();
-                    t.printStackTrace();
+            }
 
-                }
-            });
-        }
+            @Override
+            public void onFailure(Call<List<Story>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(getActivity(),"Error loading stories", Toast.LENGTH_LONG).show();
+                t.printStackTrace();
+
+            }
+        });
+
+
 
     }
 
     private void listAdminStoryNotifications(List<Story> stories) {
         for (Story story:stories){
-            notificationList.add(new NotificationStorySuggest(story));
+            if (!(notificationList.contains(new NotificationStorySuggest(story)))){
+                notificationList.add(new NotificationStorySuggest(story));
+            }
+
+        }
+        if (notificationList.size()==0) {
+            no_notifications_panel.setVisibility(View.VISIBLE);
         }
         notifAdapter.setNotifs(notificationList);
 
