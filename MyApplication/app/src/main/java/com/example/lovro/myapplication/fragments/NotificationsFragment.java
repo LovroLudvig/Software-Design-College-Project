@@ -25,6 +25,7 @@ import com.example.lovro.myapplication.domain.NotificationStorySuggest;
 import com.example.lovro.myapplication.domain.NotificationStyleSuggest;
 import com.example.lovro.myapplication.domain.Order;
 import com.example.lovro.myapplication.domain.Role;
+import com.example.lovro.myapplication.domain.Story;
 import com.example.lovro.myapplication.domain.User;
 import com.example.lovro.myapplication.events.StyleChangeEvent;
 
@@ -169,7 +170,6 @@ public class NotificationsFragment extends Fragment {
             getOrders.enqueue(new Callback<List<Order>>() {
                 @Override
                 public void onResponse(Call<List<Order>> call, Response<List<Order>> response) {
-                    progressBar.setVisibility(View.GONE);
                     if(response.isSuccessful()){
                         listAdminNotifications(response.body());
                     }else{
@@ -209,15 +209,47 @@ public class NotificationsFragment extends Fragment {
         }else{
             //TODO: IZLISTAJ
             notificationList=new ArrayList<>();
-            notificationList.add(new NotificationStorySuggest());
             for (Order order:orders){
                 notificationList.add(new NotificationStyleSuggest(order));
             }
-            notifAdapter.setNotifs(notificationList);
+            progressBar.setVisibility(View.VISIBLE);
+            apiService.getStoriesInEvaluation(getUserAuth()).enqueue(new Callback<List<Story>>() {
+                @Override
+                public void onResponse(Call<List<Story>> call, Response<List<Story>> response) {
+                    progressBar.setVisibility(View.GONE);
+                    if(response.isSuccessful()){
+                        listAdminStoryNotifications(response.body());
+                    }else{
+                        if(call.isCanceled()){
+                            //nothing
+                        }else{
+                            try {
+                                showError(response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
 
+                }
 
+                @Override
+                public void onFailure(Call<List<Story>> call, Throwable t) {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(),"Error loading stories", Toast.LENGTH_LONG).show();
+                    t.printStackTrace();
 
+                }
+            });
         }
+
+    }
+
+    private void listAdminStoryNotifications(List<Story> stories) {
+        for (Story story:stories){
+            notificationList.add(new NotificationStorySuggest(story));
+        }
+        notifAdapter.setNotifs(notificationList);
 
     }
 

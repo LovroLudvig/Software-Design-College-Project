@@ -15,12 +15,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.example.lovro.myapplication.domain.NotificationStorySuggest;
 import com.example.lovro.myapplication.fragments.NotificationsFragment;
 import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.domain.Notification;
 import com.example.lovro.myapplication.domain.NotificationStyleSuggest;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.List;
@@ -60,6 +62,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     @Override
     public void onBindViewHolder(@NonNull final NotificationAdapter.ViewHolder holder, int position) {
         final Notification notification = notificationStyleSuggests.get(position);
+        holder.setIsRecyclable(false);
 
 
         if (notification instanceof NotificationStyleSuggest){
@@ -145,6 +148,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 }
             });
         }else if (notification instanceof NotificationStorySuggest){
+            NotificationStorySuggest notif=(NotificationStorySuggest) notification;
             holder.adminStyleNotification.setVisibility(View.GONE);
             holder.hiddenPanel.setVisibility(View.GONE);
             holder.showMorePanelText.setText("Show more");
@@ -167,6 +171,32 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
                 }
             });
+            holder.storyUsername.setText(notif.getStory().getUser().getUsername());
+            holder.storyText.setText(notif.getStory().getText());
+            Picasso.get().load(notif.getStory().getImageUrl()).into(holder.storyImage);
+            if (notif.getStory().getVideoUrl()==null){
+                holder.videoLayout.setVisibility(View.GONE);
+                holder.storyVideo.setVideoPath("");
+            }else{
+                holder.videoLayout.setVisibility(View.VISIBLE);
+                holder.storyVideo.setVideoPath(notif.getStory().getVideoUrl());
+                holder.storyVideoPlayButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (holder.storyVideo.isPlaying()){
+                            holder.storyVideo.pause();
+                            holder.storyVideoPlayButton.setImageResource(R.drawable.ic_play_circle_outline_black_24dp);
+                        }else{
+                            holder.storyVideo.start();
+                            holder.storyVideoPlayButton.setImageResource(R.drawable.ic_pause_circle_outline_black_24dp);
+                        }
+
+                    }
+                });
+
+            }
+
+
         }
 
     }
@@ -234,6 +264,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         private LinearLayout hiddenPanel;
         private TextView showMorePanelText;
         private ImageView showMorePanelPic;
+        private TextView storyUsername;
+        private TextView storyText;
+        private ImageView storyImage;
+        private VideoView storyVideo;
+        private LinearLayout videoLayout;
+        private ImageView storyVideoPlayButton;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -254,6 +290,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             hiddenPanel=itemView.findViewById(R.id.hiddenPanel);
             showMorePanelText=itemView.findViewById(R.id.showMorePanelText);
             showMorePanelPic=itemView.findViewById(R.id.showMorePanelPic);
+            storyUsername=itemView.findViewById(R.id.storyUsername);
+            storyText=itemView.findViewById(R.id.storyText);
+            storyImage=itemView.findViewById(R.id.storyImage);
+            storyVideo=itemView.findViewById(R.id.storyVideo);
+            videoLayout=itemView.findViewById(R.id.videoLayout);
+            storyVideoPlayButton=itemView.findViewById(R.id.storyVideoPlayButton);
 
         }
     }

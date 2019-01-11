@@ -46,6 +46,9 @@ public interface ApiService {
     @GET("/stories/all")
     Call<List<Story>> getAllStories();
 
+    @GET("/stories/evaluation")
+    Call<List<Story>> getStoriesInEvaluation(@Header("Authorization") String auth);
+
     @POST("/orders/orderDecoration/{advertisementId}")
     Call<Order> order_style(@Header("Authorization") String auth,@Path("advertisementId") String offerId, @Query("styleId") String styleId,@Query("styleName") String styleName,@Body User user);
 

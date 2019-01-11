@@ -98,7 +98,7 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
 
-                android:text="suggested new style"
+                android:text="suggested a new style"
                 android:textColor="@android:color/background_dark"
                 android:textSize="15sp" />
 
@@ -196,6 +196,7 @@
                 android:layout_height="50dp"
                 android:scaleType="fitXY"/>
             <TextView
+                android:id="@+id/storyUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -217,7 +218,8 @@
         <LinearLayout
             android:visibility="gone"
             android:id="@+id/hiddenPanel"
-            android:layout_width="wrap_content"
+            android:animateLayoutChanges="true"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <LinearLayout
@@ -225,11 +227,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
+                    android:id="@+id/storyText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="This is some story text lalalaslkd laskdsrogjeiwrjgoiwerj giewjrgoijeorig jeiorgjoiewrjgoiwejrgiojewrogijeowirgjioewjrgioer"/>
                 <ImageView
+                    android:id="@+id/storyImage"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:scaleType="centerCrop"
@@ -237,6 +241,7 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/videoLayout"
                 android:layout_width="match_parent"
                 android:layout_margin="10dp"
                 android:layout_height="wrap_content"
@@ -248,11 +253,19 @@
                     android:textStyle="bold"
                     android:textColor="#000"
                     android:text="Video:"/>
+                <VideoView
+                    android:id="@+id/storyVideo"
+                    android:layout_gravity="center"
+                    android:layout_width="400dp"
+                    android:layout_height="150dp" />
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/random_picture1"/>
+                    android:id="@+id/storyVideoPlayButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_play_circle_outline_black_24dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:clickable="true"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_marginTop="10dp"
@@ -267,7 +280,7 @@
                     android:layout_height="wrap_content"
                     android:text="accept"/>
                 <Space
-                    android:layout_width="10dp"
+                    android:layout_width="20dp"
                     android:layout_height="wrap_content" />
                 <Button
                     style="@android:style/Widget.Material.Light.Button"
