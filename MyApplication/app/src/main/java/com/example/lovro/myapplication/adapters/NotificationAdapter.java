@@ -10,11 +10,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lovro.myapplication.domain.NotificationStorySuggest;
 import com.example.lovro.myapplication.fragments.NotificationsFragment;
 import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.domain.Notification;
@@ -61,8 +63,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
 
         if (notification instanceof NotificationStyleSuggest){
-            holder.adminStyleNotification.setVisibility(View.VISIBLE);
             final NotificationStyleSuggest notif=(NotificationStyleSuggest) notification;
+            holder.adminStyleNotification.setVisibility(View.VISIBLE);
+            holder.suggestedStoryNotification.setVisibility(View.GONE);
+            holder.priceAdmin.setText("");
             holder.adNameAdmin.setText(notif.getOrder().getOffer().getName());
             holder.styleAdmin.setText(notif.getOrder().getStyle().getDescription());
             holder.notifUsernameAdmin.setText(notif.getOrder().getName());
@@ -140,6 +144,29 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     });
                 }
             });
+        }else if (notification instanceof NotificationStorySuggest){
+            holder.adminStyleNotification.setVisibility(View.GONE);
+            holder.hiddenPanel.setVisibility(View.GONE);
+            holder.showMorePanelText.setText("Show more");
+            holder.showMorePanelPic.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
+            holder.suggestedStoryNotification.setVisibility(View.VISIBLE);
+            holder.showMorePanel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (holder.showMorePanelText.getText().toString().equals("Show less")){
+                        holder.hiddenPanel.setVisibility(View.GONE);
+                        holder.showMorePanelText.setText("Show more");
+                        holder.showMorePanelPic.setImageResource(R.drawable.ic_keyboard_arrow_down_black_24dp);
+
+                    }else{
+                        holder.hiddenPanel.setVisibility(View.VISIBLE);
+                        holder.showMorePanelText.setText("Show less");
+                        holder.showMorePanelPic.setImageResource(R.drawable.ic_keyboard_arrow_up_black_24dp);
+
+                    }
+
+                }
+            });
         }
 
     }
@@ -201,6 +228,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         private TextView notifUsernameAdmin;
         private LinearLayout adminStyleNotification;
 
+
+        private LinearLayout suggestedStoryNotification;
+        private LinearLayout showMorePanel;
+        private LinearLayout hiddenPanel;
+        private TextView showMorePanelText;
+        private ImageView showMorePanelPic;
+
         public ViewHolder(View itemView){
             super(itemView);
             this.itemView = itemView;
@@ -213,6 +247,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             styleAdmin = itemView.findViewById(R.id.syle_name_admin);
             notifUsernameAdmin = itemView.findViewById(R.id.notif_userName_admin);
             adminStyleNotification=itemView.findViewById(R.id.admin_style_notification);
+
+
+            suggestedStoryNotification=itemView.findViewById(R.id.suggestedStoryNotification);
+            showMorePanel=itemView.findViewById(R.id.showMorePanel);
+            hiddenPanel=itemView.findViewById(R.id.hiddenPanel);
+            showMorePanelText=itemView.findViewById(R.id.showMorePanelText);
+            showMorePanelPic=itemView.findViewById(R.id.showMorePanelPic);
 
         }
     }

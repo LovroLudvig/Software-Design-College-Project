@@ -21,6 +21,7 @@ import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.activities.HomeActivity;
 import com.example.lovro.myapplication.adapters.NotificationAdapter;
 import com.example.lovro.myapplication.domain.Notification;
+import com.example.lovro.myapplication.domain.NotificationStorySuggest;
 import com.example.lovro.myapplication.domain.NotificationStyleSuggest;
 import com.example.lovro.myapplication.domain.Order;
 import com.example.lovro.myapplication.domain.Role;
@@ -70,6 +71,9 @@ public class NotificationsFragment extends Fragment {
             public void onRefresh() {
                 swipeRefreshLayout.setRefreshing(false);
                 getUserAndCheckForNorifications();
+                initRecyclerView();
+                notificationList=new ArrayList<>();
+                notifAdapter.setNotifs(notificationList);
             }
         });
         if (userIsRegistered()){
@@ -200,11 +204,13 @@ public class NotificationsFragment extends Fragment {
             no_notifications_panel.setVisibility(View.VISIBLE);
         }else{
             //TODO: IZLISTAJ
+            notificationList=new ArrayList<>();
+            notificationList.add(new NotificationStorySuggest());
             for (Order order:orders){
-                notificationList=new ArrayList<>();
                 notificationList.add(new NotificationStyleSuggest(order));
-                notifAdapter.setNotifs(notificationList);
             }
+            notifAdapter.setNotifs(notificationList);
+
 
 
         }
