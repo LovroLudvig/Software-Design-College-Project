@@ -6,6 +6,8 @@ import hr.fer.handMadeShopBackend.service.StoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -28,7 +30,9 @@ public class StoryController {
 
     @GetMapping("/all")
     public List<Story> listAllStories() {
-        return storyService.listAllStories();
+        List<Story> stories = storyService.listAllStories();
+        Collections.reverse(stories);
+        return stories;
     }
 
     @PostMapping("/myrecommended")

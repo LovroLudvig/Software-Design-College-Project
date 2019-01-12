@@ -1,5 +1,6 @@
 package hr.fer.handMadeShopBackend.rest;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,9 @@ public class AdConroller {
 	
 	@GetMapping("/all")
 	public List<Advertisement> getAllAds() {
-	    return adService.fetchAll(); 
+	    List<Advertisement> ads = adService.fetchAll();
+		Collections.reverse(ads);
+    	return ads;
 	}
 }
 

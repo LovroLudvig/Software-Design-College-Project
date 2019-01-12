@@ -75,7 +75,10 @@ public class OrderServiceImpl implements OrderService {
         adOrder.setName(user.getName());
         adOrder.setLastName(user.getLastName());
         adOrder.setCardNumber(user.getCardNumber());
-        adOrder.setTown(user.getTown());
+
+        Town town = checkTown(user.getTown());
+        adOrder.setTown(town);
+
         adOrder.setAddress(user.getAddress());
 
         AdOrder o = orderRepository.save(adOrder);

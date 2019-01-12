@@ -56,8 +56,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/transactions/all").hasRole(Constants.ROLE_ADMIN)
                 .antMatchers("/advertisement/publish").hasRole(Constants.ROLE_ADMIN)
                 .antMatchers("/stories/recommend", "/stories/myrecommended", "/stories/setseen/**").authenticated()
-                .antMatchers("/stories/publish", "/stories/manage").hasRole(Constants.ROLE_ADMIN)
-                .antMatchers("/media/story/image/upload/**", "media/story/video/upload/**").authenticated()
+                .antMatchers("/stories/publish", "/stories/manage", "/stories/evaluation").hasRole(Constants.ROLE_ADMIN)
+                .antMatchers("/media/story/image/upload/**", "/media/story/video/upload/**").authenticated()
                 .antMatchers("/media/advertisement/image/upload/**").hasRole(Constants.ROLE_ADMIN)
                 .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//We don't need sessions to be created.
