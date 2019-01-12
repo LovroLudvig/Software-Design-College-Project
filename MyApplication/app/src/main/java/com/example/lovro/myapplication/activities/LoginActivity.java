@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,9 +23,9 @@ public class LoginActivity extends AppCompatActivity {
 
     //Variable definition
     private Button guest_login;
-    private Button email_login;
+    private TextView email_login;
     private TextView terms_of_service;
-    private TextView sign_in;
+    private Button sign_in;
     private int backButtonCount=0;
 
     @Override

@@ -47,7 +47,7 @@
         android:textIsSelectable="false" />
 
     <Button
-        android:id="@+id/email_login"
+        android:id="@+id/sign_in"
         style="@android:style/Widget.Material.Light.Button"
         android:layout_width="270sp"
         android:layout_height="33dp"
@@ -56,7 +56,7 @@
         android:layout_marginTop="18dp"
         android:background="@drawable/round_button2"
         android:fontFamily="@font/doppio_one"
-        android:text="Sign up with E-mail"
+        android:text="Sign in"
         android:textColor="#ffffff" />
 
     <TextView
@@ -68,19 +68,19 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="399dp"
         android:fontFamily="@font/doppio_one"
-        android:text="Already have an account?"
+        android:text="Don't have an account?"
         android:textColor="@color/White"
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/sign_in"
+        android:id="@+id/email_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
         android:clickable="true"
         android:padding="10dp"
-        android:text="Sign in."
+        android:text="Sign up!"
         android:textColor="#99ebff"
         android:textStyle="bold|italic" />
 

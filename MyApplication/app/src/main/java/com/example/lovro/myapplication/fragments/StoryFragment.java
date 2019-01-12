@@ -162,7 +162,7 @@ public class StoryFragment extends Fragment {
                     Intent suggestStory = new Intent(getActivity(),SuggestStoryActivity.class);
                     startActivity(suggestStory);
                 }else{
-                    Toast.makeText(getContext(), "Only registered users can suggest a story", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Please register for this feature", Toast.LENGTH_SHORT).show();
                 }
             }
         });
