@@ -1,6 +1,7 @@
 package com.example.lovro.myapplication.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -82,7 +83,7 @@ public class OffersFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent offer_details = new Intent(getActivity(),AddOfferActivity.class);
-                    startActivity(offer_details);
+                    startActivityForResult(offer_details,1);
                 }
             });
         }
@@ -210,6 +211,18 @@ public class OffersFragment extends Fragment {
                 .setPositiveButton("OK",null)
                 .create()
                 .show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                loadOffers(getUserAuth());
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
