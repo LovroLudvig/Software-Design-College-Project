@@ -115,5 +115,12 @@ public class Offer {
             return false;
         }
     }
+
+    public void addStyle(Style style){
+        this.styles.add(style);
+    }
+    public void addDimension(Dimension dim){
+        this.dimensions.add(dim);
+    }
 }
 
