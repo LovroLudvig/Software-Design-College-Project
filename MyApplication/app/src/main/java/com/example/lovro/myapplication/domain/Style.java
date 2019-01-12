@@ -19,6 +19,11 @@ public class Style {
         this.price = price;
     }
 
+    public Style(String description, Double price) {
+        this.description = description;
+        this.price = price;
+    }
+
     public String getDescription() {
         return description;
     }

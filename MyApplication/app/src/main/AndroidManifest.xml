@@ -14,6 +14,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/RegisterTheme">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.android.crafteryFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
         <activity
             android:name=".activities.StoryDetailsActivity"
             android:screenOrientation="portrait"
@@ -41,9 +50,9 @@
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".activities.SignUpActivity"
+            android:parentActivityName=".activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"
-            android:parentActivityName=".activities.LoginActivity"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
             android:name=".activities.LoginActivity"
@@ -73,7 +82,8 @@
         <activity
             android:name=".activities.HomeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.EditProfileActivity"></activity>
+        <activity android:name=".activities.EditProfileActivity" />
+        <activity android:name=".activities.AddOfferActivity"></activity>
     </application>
 
 </manifest>

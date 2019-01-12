@@ -24,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
+import com.example.lovro.myapplication.activities.AddOfferActivity;
 import com.example.lovro.myapplication.activities.OfferDetailsActivity;
 import com.example.lovro.myapplication.adapters.OfferAdapter;
 import com.example.lovro.myapplication.domain.Offer;
@@ -76,6 +77,14 @@ public class OffersFragment extends Fragment {
 
         if(!userIsAdmin()){
             floatingActionButton.setVisibility(View.GONE);
+        }else{
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent offer_details = new Intent(getActivity(),AddOfferActivity.class);
+                    startActivity(offer_details);
+                }
+            });
         }
 
         progressBar.setVisibility(View.VISIBLE);
