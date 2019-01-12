@@ -3,9 +3,11 @@ package com.example.lovro.myapplication.activities;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.DragEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.adapters.SectionsPagerAdapter;
@@ -19,6 +21,9 @@ public class StoryDetailsActivity extends AppCompatActivity {
     private Story currentStory;
     private Button slide_number;
     private ViewPager viewPager;
+    private TextView username;
+    private TextView status;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,13 @@ public class StoryDetailsActivity extends AppCompatActivity {
         String storyAsString = getIntent().getStringExtra("story");
         currentStory = gson.fromJson(storyAsString,Story.class);
         slide_number = findViewById(R.id.slide_number);
+        username = findViewById(R.id.story_username);
+        status = findViewById(R.id.story_status);
+        username.setText(currentStory.getUser().getUsername());
+        status.setText(currentStory.getText());
+        recyclerView = findViewById(R.id.comment_recycler_view);
+
+
 
 
         setupViewPager();
