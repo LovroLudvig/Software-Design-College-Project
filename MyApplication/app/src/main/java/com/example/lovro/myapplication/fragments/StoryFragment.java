@@ -165,8 +165,6 @@ public class StoryFragment extends Fragment {
                 Intent intent = new Intent(getActivity(),StoryDetailsActivity.class);
                 intent.putExtra("story",storyAsString);
                 startActivity(intent);
-
-                //TODO poslati pricu
             }
         });
         fab.setOnClickListener(new View.OnClickListener() {
@@ -184,7 +182,6 @@ public class StoryFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
