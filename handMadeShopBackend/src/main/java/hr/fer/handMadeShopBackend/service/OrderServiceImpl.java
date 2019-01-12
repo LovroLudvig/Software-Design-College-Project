@@ -38,6 +38,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public AdOrder manageOrder(Long orderId, boolean isAllowed, Double price) {
+        if(isAllowed && price == null) {
+            throw new IllegalArgumentException("The price must be provided if you wish to allow the order. " +
+                    "If you wish to reject the order you don't have to provide a price.");
+        }
+
         Optional<AdOrder> opt = orderRepository.findById(orderId);
         if(!opt.isPresent()) {
             throw new IllegalArgumentException("The order does not exist.");
@@ -75,7 +80,10 @@ public class OrderServiceImpl implements OrderService {
         adOrder.setName(user.getName());
         adOrder.setLastName(user.getLastName());
         adOrder.setCardNumber(user.getCardNumber());
-        adOrder.setTown(user.getTown());
+
+        Town town = checkTown(user.getTown());
+        adOrder.setTown(town);
+
         adOrder.setAddress(user.getAddress());
 
         AdOrder o = orderRepository.save(adOrder);
