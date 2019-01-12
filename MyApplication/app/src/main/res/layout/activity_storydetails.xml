@@ -25,12 +25,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        android:layout_marginTop="-0dp">
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/imageAndVideo"
@@ -61,11 +62,10 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@+id/imageAndVideo"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="1dp"
-                android:background="@drawable/card_background">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/card_background"
+                android:paddingBottom="20dp">
 
                 <ImageView
                     android:id="@+id/imageView"
@@ -73,44 +73,35 @@
                     android:layout_height="30dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginTop="13dp"
                     app:srcCompat="@drawable/circle" />
 
                 <TextView
                     android:id="@+id/story_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/imageView"
                     android:layout_alignParentStart="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="37dp"
-                    android:layout_marginBottom="14dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginBottom="4dp"
                     android:fontFamily="@font/doppio_one"
                     android:text="Username"
                     android:textColor="@android:color/background_dark"
                     android:textSize="16sp" />
-            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/textView24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="0dp"
-                android:fontFamily="@font/doppio_one"
-                android:text="Status"
-                android:textColor="@android:color/background_dark"
-                android:textSize="20sp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:background="@drawable/card_background"
-                android:paddingBottom="20dp">
+                <ImageView
+                    android:id="@+id/imageView13"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="55dp"
+                    android:layout_marginRight="10dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    app:srcCompat="@color/AppGrey"></ImageView>
 
                 <TextView
                     android:id="@+id/story_status"
@@ -120,7 +111,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="18dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="65dp"
                     android:layout_marginEnd="18dp"
                     android:fontFamily="@font/doppio_one"
                     android:text="This field is meant for peoples statuses and their boring shit they post when they buy something from this site."
@@ -141,11 +132,11 @@
                     android:fontFamily="@font/doppio_one"
                     android:text="Comments"
                     android:textColor="@android:color/background_dark"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:id="@+id/imageView4"
-                    android:layout_width="30dp"
+                    android:layout_width="20dp"
                     android:layout_height="30dp"
                     android:layout_marginLeft="5dp"
                     android:layout_weight="0"
@@ -158,9 +149,9 @@
                 android:id="@+id/comment_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="1dp"
                 android:background="@drawable/card_background"
-                android:paddingBottom="40dp"/>
+                android:paddingBottom="40dp" />
 
 
         </LinearLayout>
