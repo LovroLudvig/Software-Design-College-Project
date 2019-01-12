@@ -75,6 +75,13 @@ public interface ApiService {
 
     @POST("/media/advertisement/image/upload/{advertisementId}")
     @Multipart
-    Call<ResponseBody   > uploadAdvertisementImage(@Header("Authorization") String auth,@Path("advertisementId") String username, @Part("file\"; filename=\"image.jpg\"") RequestBody request);
+    Call<ResponseBody> uploadAdvertisementImage(@Header("Authorization") String auth,@Path("advertisementId") String advertisementId, @Part("file\"; filename=\"image.jpg\"") RequestBody request);
+
+    @POST("/stories/recommend")
+    Call<Story> suggestStory(@Header("Authorization") String auth, @Body Story story);
+
+    @POST("/media/story/image/upload/{storyId}")
+    @Multipart
+    Call<ResponseBody> uploadStoryImage(@Header("Authorization") String auth,@Path("storyId") String storyId, @Part("file\"; filename=\"image.jpg\"") RequestBody request);
 
 }

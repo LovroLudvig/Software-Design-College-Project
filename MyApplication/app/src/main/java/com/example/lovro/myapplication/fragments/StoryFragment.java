@@ -2,6 +2,7 @@ package com.example.lovro.myapplication.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -18,9 +19,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
+import com.example.lovro.myapplication.activities.AddOfferActivity;
 import com.example.lovro.myapplication.activities.StoryDetailsActivity;
+import com.example.lovro.myapplication.activities.SuggestStoryActivity;
 import com.example.lovro.myapplication.adapters.StoryAdapter;
 import com.example.lovro.myapplication.domain.Story;
 import com.example.lovro.myapplication.network.ApiService;
@@ -34,6 +38,8 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class StoryFragment extends Fragment {
@@ -149,6 +155,17 @@ public class StoryFragment extends Fragment {
     }
 
     private void initListeners(){
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userIsRegistered()){
+                    Intent suggestStory = new Intent(getActivity(),SuggestStoryActivity.class);
+                    startActivity(suggestStory);
+                }else{
+                    Toast.makeText(getContext(), "Only registered users can suggest a story", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -167,12 +184,14 @@ public class StoryFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO otvoriti add story
-            }
-        });
+    }
+
+    private boolean userIsRegistered(){
+        SharedPreferences prefs = getActivity().getSharedPreferences("UserData", MODE_PRIVATE);
+        if(prefs.getBoolean("saved",false)){
+            return true;
+        }
+        return false;
     }
 
 

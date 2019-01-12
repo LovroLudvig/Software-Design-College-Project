@@ -36,6 +36,11 @@ public class Story {
         this.id = id;
     }
 
+    public Story(String text, User user) {
+        this.text = text;
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }

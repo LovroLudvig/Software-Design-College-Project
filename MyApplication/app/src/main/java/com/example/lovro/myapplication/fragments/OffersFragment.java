@@ -82,8 +82,8 @@ public class OffersFragment extends Fragment {
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent offer_details = new Intent(getActivity(),AddOfferActivity.class);
-                    startActivityForResult(offer_details,1);
+                    Intent addOffer = new Intent(getActivity(),AddOfferActivity.class);
+                    startActivityForResult(addOffer,1);
                 }
             });
         }

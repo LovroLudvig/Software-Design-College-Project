@@ -21,8 +21,9 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
+
         <activity
             android:name=".activities.StoryDetailsActivity"
             android:screenOrientation="portrait"
@@ -83,7 +84,8 @@
             android:name=".activities.HomeActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.EditProfileActivity" />
-        <activity android:name=".activities.AddOfferActivity"></activity>
+        <activity android:name=".activities.AddOfferActivity" />
+        <activity android:name=".activities.SuggestStoryActivity"></activity>
     </application>
 
 </manifest>
