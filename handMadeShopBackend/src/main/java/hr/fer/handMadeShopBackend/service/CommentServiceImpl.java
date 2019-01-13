@@ -26,10 +26,8 @@ public class CommentServiceImpl implements CommentService{
 	 @Autowired
 	 private UserRepository userRepo;
 
-
-
 	@Override
-	public Comment postComment(Comment comment, String username, Long storyId) {
+	public List<Comment> postComment(Comment comment, String username, Long storyId) {
 		User user = null;
 		if( username != null) {
 			user = userRepo.findByUsername(username);
@@ -45,9 +43,9 @@ public class CommentServiceImpl implements CommentService{
 		List<Comment> commentsList = story.getComments();
 		commentsList.add(comment);
 		story.setComments(commentsList);
-		storyRepo.save(story);
+		story = storyRepo.save(story);
 
-		return comment;
+		return story.getComments();
 	}
 
 }

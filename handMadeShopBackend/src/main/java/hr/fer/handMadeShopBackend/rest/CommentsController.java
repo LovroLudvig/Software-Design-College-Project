@@ -16,6 +16,8 @@ import hr.fer.handMadeShopBackend.domain.Comment;
 import hr.fer.handMadeShopBackend.service.CommentService;
 import hr.fer.handMadeShopBackend.service.StoryService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/comments")
 @Lazy
@@ -26,9 +28,9 @@ public class CommentsController {
     
     @PostMapping("/post/{storyId}")
     @ResponseStatus(HttpStatus.OK)
-    public Comment register(@PathVariable("storyId") Long storyId,
-                            @RequestBody Comment comment,
-                            @RequestParam(value = "username", required = false) String username) {
+    public List<Comment> register(@PathVariable("storyId") Long storyId,
+                                 @RequestBody Comment comment,
+                                 @RequestParam(value = "username", required = false) String username) {
         return commentService.postComment(comment, username, storyId);
     }
 
