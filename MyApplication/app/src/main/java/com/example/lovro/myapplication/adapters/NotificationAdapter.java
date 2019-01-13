@@ -2,6 +2,10 @@ package com.example.lovro.myapplication.adapters;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.example.lovro.myapplication.domain.Colors;
 import com.example.lovro.myapplication.domain.NotificationStoryAccepted;
 import com.example.lovro.myapplication.domain.NotificationStorySuggest;
 import com.example.lovro.myapplication.fragments.NotificationsFragment;
@@ -43,13 +48,15 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private RelativeLayout noNotificationsPanel;
     private NotificationsFragment.OnStyleClick onStyleClick;
     private ProgressDialog progressDialog;
+    private String username;
 
-    public NotificationAdapter(List<Notification> notificationStyleSuggests, String auth, Context context, RelativeLayout no_notifications_panel, NotificationsFragment.OnStyleClick onStyleClick){
+    public NotificationAdapter(List<Notification> notificationStyleSuggests, String auth, String username, Context context, RelativeLayout no_notifications_panel, NotificationsFragment.OnStyleClick onStyleClick){
         this.notifications = notificationStyleSuggests;
         this.auth=auth;
         this.context=context;
         this.noNotificationsPanel=no_notifications_panel;
         this.onStyleClick=onStyleClick;
+        this.username=username;
     }
 
 
@@ -158,6 +165,14 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     setNotificationToSeen(holder,notif,notification);
                 }
             });
+            Drawable background = holder.notifSeenButton.getBackground();
+            if (background instanceof ShapeDrawable) {
+                ((ShapeDrawable)background).getPaint().setColor(Colors.getColor((int) username.toLowerCase().charAt(0)-97));
+            } else if (background instanceof GradientDrawable) {
+                ((GradientDrawable)background).setColor(Colors.getColor((int) username.toLowerCase().charAt(0)-97));
+            } else if (background instanceof ColorDrawable) {
+                ((ColorDrawable)background).setColor(Colors.getColor((int) username.toLowerCase().charAt(0)-97));
+            }
 
 
         }

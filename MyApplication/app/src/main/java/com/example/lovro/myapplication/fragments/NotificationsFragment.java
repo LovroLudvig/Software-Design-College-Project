@@ -362,7 +362,7 @@ public class NotificationsFragment extends Fragment {
 
 
     private void initNotificationAdapter(List<Notification> notificationStyleSuggestList){
-        notifAdapter = new NotificationAdapter(notificationStyleSuggestList, getUserAuth(), getContext(),no_notifications_panel,new OnStyleClick(){
+        notifAdapter = new NotificationAdapter(notificationStyleSuggestList, getUserAuth(), this.getActivity().getSharedPreferences("UserData", MODE_PRIVATE).getString("username",""),getContext(),no_notifications_panel,new OnStyleClick(){
 
 
             @Override
