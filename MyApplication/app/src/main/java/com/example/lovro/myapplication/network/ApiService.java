@@ -1,5 +1,6 @@
 package com.example.lovro.myapplication.network;
 
+import com.example.lovro.myapplication.domain.Comment;
 import com.example.lovro.myapplication.domain.Offer;
 import com.example.lovro.myapplication.domain.Order;
 import com.example.lovro.myapplication.domain.Story;
@@ -83,5 +84,11 @@ public interface ApiService {
     @POST("/media/story/image/upload/{storyId}")
     @Multipart
     Call<ResponseBody> uploadStoryImage(@Header("Authorization") String auth,@Path("storyId") String storyId, @Part("file\"; filename=\"image.jpg\"") RequestBody request);
+
+    @POST("/comments/post/{storyId}")
+    Call<List<Comment>> postCommentUser(@Path("storyId") String storyId,@Query("username") String username,@Body Comment comment);
+
+    @POST("/comments/post/{storyId}")
+    Call<List<Comment>> postCommentGuest(@Path("storyId") String storyId,@Body Comment comment);
 
 }

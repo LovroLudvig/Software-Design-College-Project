@@ -38,7 +38,6 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         TextView username = viewHolder.itemView.findViewById(R.id.comment_username);
         TextView user_comment = viewHolder.itemView.findViewById(R.id.user_comment);
 
-        //TODO dodati ovo za boju
         ((TextView)viewHolder.itemView.findViewById(R.id.profile_image_text)).setText(String.valueOf(comment.getUser().getUsername().toUpperCase().charAt(0)));
         Drawable background = viewHolder.itemView.findViewById(R.id.profile_image_circle).getBackground();
         if (background instanceof ShapeDrawable) {
@@ -53,6 +52,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         user_comment.setText(comment.getText());
 
 
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+        notifyDataSetChanged();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.lovro.myapplication.activities;
 
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -12,7 +13,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.DragEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.adapters.CommentAdapter;
@@ -23,12 +26,21 @@ import com.example.lovro.myapplication.domain.Story;
 import com.example.lovro.myapplication.domain.User;
 import com.example.lovro.myapplication.fragments.ImageFragment;
 import com.example.lovro.myapplication.fragments.VideoFragment;
+import com.example.lovro.myapplication.network.ApiService;
+import com.example.lovro.myapplication.network.InitApiService;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StoryDetailsActivity extends AppCompatActivity {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.example.lovro.myapplication.network.InitApiService.apiService;
+
+public class StoryDetailsActivity extends BasicActivity {
     private Story currentStory;
     private Button slide_number;
     private ViewPager viewPager;
@@ -36,7 +48,12 @@ public class StoryDetailsActivity extends AppCompatActivity {
     private TextView status;
     private RecyclerView recyclerView;
     private List<Comment> commentList = new ArrayList<>();
+    private ApiService apiService = InitApiService.apiService;
     private CommentAdapter commentAdapter;
+    private Button postBtn;
+    private EditText add_comment;
+    private Call<List<Comment>> commentCall;
+    private String usernameFromUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +68,8 @@ public class StoryDetailsActivity extends AppCompatActivity {
         status = findViewById(R.id.story_status);
         username.setText(currentStory.getUser().getUsername());
         status.setText(currentStory.getText());
+        postBtn = findViewById(R.id.postBtn);
+        add_comment = findViewById(R.id.addComment);
 
         ((TextView)findViewById(R.id.profile_image_text)).setText(String.valueOf(currentStory.getUser().getUsername().toUpperCase().charAt(0)));
         Drawable background = findViewById(R.id.profile_image_circle).getBackground();
@@ -62,22 +81,82 @@ public class StoryDetailsActivity extends AppCompatActivity {
             ((ColorDrawable)background).setColor(Colors.getColor((int) currentStory.getUser().getUsername().charAt(0)-97));
         }
         recyclerView = findViewById(R.id.comment_recycler_view);
-
-        Comment comment = new Comment(Long.getLong("43"),"Predobar status!!!",new User(null,"ilovrencic",null,null,null,null));
-        Comment comment1 = new Comment(Long.getLong("44"),"Daj ne seri! Svaka čast!",new User(null,"lludvig",null,null,null,null));
-        Comment comment2 = new Comment(Long.getLong("45"),"Jedva cekam vidjeti kak to izgledati!",new User(null,"mdadanovic",null,null,null,null));
-        Comment comment3 = new Comment(Long.getLong("46"),"Trump is RACIST!",new User(null,"mcolja",null,null,null,null));
-        Comment comment4 = new Comment(Long.getLong("47"),"OMG! I am triggered. Report!!!",new User(null,"ilovrencic",null,null,null,null));
-        commentList.add(comment);
-        commentList.add(comment1);
-        commentList.add(comment2);
-        commentList.add(comment3);
-        commentList.add(comment4);
+        commentList = currentStory.getComments();
 
 
         initRecyclerView();
         initAdapter(commentList);
         setupViewPager();
+        initListeners();
+    }
+
+    private void initListeners(){
+        postBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isInternetAvailable()){
+                    if(add_comment.getText().toString().length() > 0){
+                        if(checkIfUserIsLoggedIn()){
+                            addComment(add_comment.getText().toString(),true);
+                        }else{
+                            addComment(add_comment.getText().toString(),false);
+                        }
+                    }else{
+                        Toast.makeText(StoryDetailsActivity.this,"Comment can't be empty.",Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    showError("No internet connection!");
+                }
+            }
+        });
+    }
+
+    private void addComment(final String comment, final boolean loggedIn){
+        show_loading("Posting comment...");
+        if(loggedIn){
+            commentCall = apiService.postCommentUser(currentStory.getId().toString(),usernameFromUser,new Comment(null,comment,null));
+        }else{
+            commentCall = apiService.postCommentGuest(currentStory.getId().toString(),new Comment(null,comment,null));
+        }
+        commentCall.enqueue(new Callback<List<Comment>>() {
+            @Override
+            public void onResponse(Call<List<Comment>> call, Response<List<Comment>> response) {
+                stop_loading();
+                if(response.isSuccessful()){
+                    displayComments(response.body());
+                }else{
+                    try {
+                        showError(response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Comment>> call, Throwable t) {
+                stop_loading();
+                showError(t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
+
+    private void displayComments(List<Comment> comments){
+        if(commentAdapter != null){
+            commentAdapter.setComments(comments);
+        }else{
+            initAdapter(comments);
+        }
+    }
+
+    private boolean checkIfUserIsLoggedIn() {
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+        if(prefs.getBoolean("saved",false)){
+            usernameFromUser = prefs.getString("username","");
+            return true;
+        }
+        return false;
     }
 
     private void initRecyclerView(){
@@ -98,7 +177,7 @@ public class StoryDetailsActivity extends AppCompatActivity {
             viewPager = findViewById(R.id.slideshow);
             viewPager.setAdapter(adapter);
             viewPager.setOffscreenPageLimit(2);
-            initListeners();
+            initPager();
         }else{
             viewPager = findViewById(R.id.slideshow);
             viewPager.setAdapter(adapter);
@@ -107,7 +186,7 @@ public class StoryDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void initListeners(){
+    private void initPager(){
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
