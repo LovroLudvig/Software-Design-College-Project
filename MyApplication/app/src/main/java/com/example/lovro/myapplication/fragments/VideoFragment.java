@@ -178,13 +178,16 @@ public class VideoFragment extends Fragment {
                         if(fos != null) {
                             fos.close();
                         }
-                        getActivity().runOnUiThread(new Runnable() {
+                        if(getActivity()!=null){
+                            getActivity().runOnUiThread(new Runnable() {
 
-                            @Override
-                            public void run() {
-                                videoView.setVideoURI(uriVideo);
-                            }
-                        });
+                                @Override
+                                public void run() {
+                                    videoView.setVideoURI(uriVideo);
+                                }
+                            });
+                        }
+
                     }
                 } catch (MalformedURLException mue) {
                     mue.printStackTrace();
