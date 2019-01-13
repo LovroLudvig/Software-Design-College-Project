@@ -26,8 +26,8 @@ public class CommentsController {
     
     @PostMapping("/post/{storyId}")
     @ResponseStatus(HttpStatus.OK)
-    public Comment register(@PathVariable("storyId") Long storyId, @RequestBody Comment comment) {
-        return commentService.postComment(comment, storyId);
+    public Comment register(@PathVariable("storyId") Long storyId, @RequestBody Comment comment, @RequestParam("username") String username) {
+        return commentService.postComment(comment, username, storyId);
     }
 
 }

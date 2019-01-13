@@ -5,10 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hr.fer.handMadeShopBackend.Exceptions.NotFoundException;
 import hr.fer.handMadeShopBackend.dao.CommentsRepository;
 import hr.fer.handMadeShopBackend.dao.StoryRepository;
+import hr.fer.handMadeShopBackend.dao.UserRepository;
 import hr.fer.handMadeShopBackend.domain.Comment;
 import hr.fer.handMadeShopBackend.domain.Story;
+import hr.fer.handMadeShopBackend.domain.User;
+import net.bytebuddy.implementation.bytecode.Throw;
 
 @Service
 public class CommentServiceImpl implements CommentService{
@@ -18,17 +22,39 @@ public class CommentServiceImpl implements CommentService{
 	
 	@Autowired 
 	private StoryRepository storyRepo;
+	
+	 @Autowired
+	 private UserRepository userRepo;
+
 
 
 	@Override
-	public Comment postComment(Comment comment, Long storyId) {
-		Comment comment2 = commentsRepo.save(comment);
-		Story story = storyRepo.getOne(storyId);
-		List<Comment> komentari = story.getComments();
-		komentari.add(comment);
-		story.setComments(komentari);
-		storyRepo.save(story);
-		return comment2;
+	public Comment postComment(Comment comment, String username, Long storyId) {
+		if( username != null) {
+			User user = userRepo.findByUsername(username);
+			if (user == null) {
+					throw new NotFoundException("Cannot find user with provided username");
+			}
+			comment.setUser(user);
+			comment = commentsRepo.save(comment);
+			Story story = storyRepo.getOne(storyId);
+			List<Comment> commentsList = story.getComments();
+			commentsList.add(comment);
+			story.setComments(commentsList);
+			storyRepo.save(story);
+			return comment;
+		} else {
+			User anonymusUser =  new User();
+			anonymusUser.setUsername("JohnDoe");
+			comment.setUser(anonymusUser);
+			comment = commentsRepo.save(comment);
+			Story story = storyRepo.getOne(storyId);
+			List<Comment> commentsList = story.getComments();
+			commentsList.add(comment);
+			story.setComments(commentsList);
+			storyRepo.save(story);
+			return comment;
+		}
 	}
 
 }
