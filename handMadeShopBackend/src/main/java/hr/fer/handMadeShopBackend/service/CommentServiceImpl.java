@@ -30,31 +30,24 @@ public class CommentServiceImpl implements CommentService{
 
 	@Override
 	public Comment postComment(Comment comment, String username, Long storyId) {
+		User user = null;
 		if( username != null) {
-			User user = userRepo.findByUsername(username);
+			user = userRepo.findByUsername(username);
 			if (user == null) {
-					throw new NotFoundException("Cannot find user with provided username");
+				throw new NotFoundException("Cannot find user with provided username");
 			}
-			comment.setUser(user);
-			comment = commentsRepo.save(comment);
-			Story story = storyRepo.getOne(storyId);
-			List<Comment> commentsList = story.getComments();
-			commentsList.add(comment);
-			story.setComments(commentsList);
-			storyRepo.save(story);
-			return comment;
-		} else {
-			User anonymusUser =  new User();
-			anonymusUser.setUsername("JohnDoe");
-			comment.setUser(anonymusUser);
-			comment = commentsRepo.save(comment);
-			Story story = storyRepo.getOne(storyId);
-			List<Comment> commentsList = story.getComments();
-			commentsList.add(comment);
-			story.setComments(commentsList);
-			storyRepo.save(story);
-			return comment;
 		}
+		comment.setUser(user);
+		comment = commentsRepo.save(comment);
+
+		Story story = storyRepo.getOne(storyId);
+
+		List<Comment> commentsList = story.getComments();
+		commentsList.add(comment);
+		story.setComments(commentsList);
+		storyRepo.save(story);
+
+		return comment;
 	}
 
 }
