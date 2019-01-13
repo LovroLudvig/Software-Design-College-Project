@@ -4,6 +4,7 @@ import com.example.lovro.myapplication.domain.Comment;
 import com.example.lovro.myapplication.domain.Offer;
 import com.example.lovro.myapplication.domain.Order;
 import com.example.lovro.myapplication.domain.Story;
+import com.example.lovro.myapplication.domain.Transaction;
 import com.example.lovro.myapplication.domain.User;
 import com.example.lovro.myapplication.domain.UserProfile;
 
@@ -33,6 +34,9 @@ public interface ApiService {
 
     @GET("/advertisement/all")
     Call<List<Offer>> getAllOffers();
+
+    @GET("/transactions/all")
+    Call<List<Transaction>> getAllTransactions(@Header("Authorization") String auth);
 
     @POST("/orders/add/{advertisementId}")
     Call<Order> orderOffer(@Path("advertisementId") String offerId, @Query("styleId") String styleId, @Query("dimensionId") String dimensionId, @Body User user);

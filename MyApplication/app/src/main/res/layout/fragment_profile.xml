@@ -193,6 +193,15 @@
                     android:textSize="16dp"
                     android:clickable="true"
                     android:padding="10dp"/>
+                <TextView
+                    android:id="@+id/transactions_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  See all transactions"
+                    android:textColor="@color/AppColor"
+                    android:textSize="16dp"
+                    android:clickable="true"
+                    android:padding="10dp"/>
 
 
 

@@ -149,7 +149,7 @@ public class StoryDetailsActivity extends BasicActivity {
     }
 
     private void displayComments(List<Comment> comments){
-        add_comment.setText("" );
+        add_comment.setText("");
         if(commentAdapter != null){
             commentAdapter.setComments(comments);
         }else{

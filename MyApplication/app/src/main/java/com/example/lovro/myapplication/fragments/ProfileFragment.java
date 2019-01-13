@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.activities.EditProfileActivity;
 import com.example.lovro.myapplication.activities.SignUpActivity;
+import com.example.lovro.myapplication.activities.TransactionsActivity;
 import com.example.lovro.myapplication.domain.Colors;
 import com.example.lovro.myapplication.domain.Role;
 import com.example.lovro.myapplication.domain.User;
@@ -70,6 +71,7 @@ public class ProfileFragment extends Fragment {
     private TextView userLetter;
     private View imageCircle;
     private ProgressDialog progressDialog;
+    private View transactionsButton;
 
 
     @Override
@@ -92,6 +94,7 @@ public class ProfileFragment extends Fragment {
             blockButton=view.findViewById(R.id.block_button);
             userLetter=view.findViewById(R.id.profile_image_text);
             imageCircle=view.findViewById(R.id.profile_image_circle);
+            transactionsButton=view.findViewById(R.id.transactions_button);
 
             view.findViewById(R.id.registered_user_panel).setVisibility(View.VISIBLE);
             view.findViewById(R.id.unregistered_user_panel).setVisibility(View.GONE);
@@ -201,6 +204,14 @@ public class ProfileFragment extends Fragment {
 
 
                 dialog.show();
+            }
+        });
+        transactionsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(),TransactionsActivity.class);
+                startActivity(i);
+
             }
         });
         editProfileButton.setOnClickListener(new View.OnClickListener() {
