@@ -48,7 +48,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             ((ColorDrawable)background).setColor(Colors.getColor((int) comment.getUser().getUsername().charAt(0)-97));
         }
 
-        username.setText(comment.getUser().getUsername());
+        if(comment.getUser() == null){
+            username.setText("Guest");
+        }else{
+            username.setText(comment.getUser().getUsername());
+        }
         user_comment.setText(comment.getText());
 
 
