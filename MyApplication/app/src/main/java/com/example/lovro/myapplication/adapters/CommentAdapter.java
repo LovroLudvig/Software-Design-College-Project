@@ -1,5 +1,9 @@
 package com.example.lovro.myapplication.adapters;
 
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.lovro.myapplication.R;
+import com.example.lovro.myapplication.domain.Colors;
 import com.example.lovro.myapplication.domain.Comment;
 
 import java.util.List;
@@ -34,6 +39,15 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         TextView user_comment = viewHolder.itemView.findViewById(R.id.user_comment);
 
         //TODO dodati ovo za boju
+        ((TextView)viewHolder.itemView.findViewById(R.id.profile_image_text)).setText(String.valueOf(comment.getUser().getUsername().toUpperCase().charAt(0)));
+        Drawable background = viewHolder.itemView.findViewById(R.id.profile_image_circle).getBackground();
+        if (background instanceof ShapeDrawable) {
+            ((ShapeDrawable)background).getPaint().setColor(Colors.getColor((int) comment.getUser().getUsername().toLowerCase().charAt(0)-97));
+        } else if (background instanceof GradientDrawable) {
+            ((GradientDrawable)background).setColor(Colors.getColor((int) comment.getUser().getUsername().charAt(0)-97));
+        } else if (background instanceof ColorDrawable) {
+            ((ColorDrawable)background).setColor(Colors.getColor((int) comment.getUser().getUsername().charAt(0)-97));
+        }
 
         username.setText(comment.getUser().getUsername());
         user_comment.setText(comment.getText());

@@ -1,5 +1,9 @@
 package com.example.lovro.myapplication.activities;
 
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +17,7 @@ import android.widget.TextView;
 import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.adapters.CommentAdapter;
 import com.example.lovro.myapplication.adapters.SectionsPagerAdapter;
+import com.example.lovro.myapplication.domain.Colors;
 import com.example.lovro.myapplication.domain.Comment;
 import com.example.lovro.myapplication.domain.Story;
 import com.example.lovro.myapplication.domain.User;
@@ -46,6 +51,16 @@ public class StoryDetailsActivity extends AppCompatActivity {
         status = findViewById(R.id.story_status);
         username.setText(currentStory.getUser().getUsername());
         status.setText(currentStory.getText());
+
+        ((TextView)findViewById(R.id.profile_image_text)).setText(String.valueOf(currentStory.getUser().getUsername().toUpperCase().charAt(0)));
+        Drawable background = findViewById(R.id.profile_image_circle).getBackground();
+        if (background instanceof ShapeDrawable) {
+            ((ShapeDrawable)background).getPaint().setColor(Colors.getColor((int) currentStory.getUser().getUsername().toLowerCase().charAt(0)-97));
+        } else if (background instanceof GradientDrawable) {
+            ((GradientDrawable)background).setColor(Colors.getColor((int) currentStory.getUser().getUsername().charAt(0)-97));
+        } else if (background instanceof ColorDrawable) {
+            ((ColorDrawable)background).setColor(Colors.getColor((int) currentStory.getUser().getUsername().charAt(0)-97));
+        }
         recyclerView = findViewById(R.id.comment_recycler_view);
 
         Comment comment = new Comment(Long.getLong("43"),"Predobar status!!!",new User(null,"ilovrencic",null,null,null,null));
