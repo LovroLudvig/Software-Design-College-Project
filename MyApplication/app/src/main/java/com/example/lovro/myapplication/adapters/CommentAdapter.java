@@ -43,9 +43,9 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         if (background instanceof ShapeDrawable) {
             ((ShapeDrawable)background).getPaint().setColor(Colors.getColor((int) comment.getUser().getUsername().toLowerCase().charAt(0)-97));
         } else if (background instanceof GradientDrawable) {
-            ((GradientDrawable)background).setColor(Colors.getColor((int) comment.getUser().getUsername().charAt(0)-97));
+            ((GradientDrawable)background).setColor(Colors.getColor((int) comment.getUser().getUsername().toLowerCase().charAt(0)-97));
         } else if (background instanceof ColorDrawable) {
-            ((ColorDrawable)background).setColor(Colors.getColor((int) comment.getUser().getUsername().charAt(0)-97));
+            ((ColorDrawable)background).setColor(Colors.getColor((int) comment.getUser().getUsername().toLowerCase().charAt(0)-97));
         }
 
         if(comment.getUser() == null){

@@ -287,9 +287,9 @@ public class ProfileFragment extends Fragment {
             if (background instanceof ShapeDrawable) {
                 ((ShapeDrawable)background).getPaint().setColor(Colors.getColor((int) currentUser.getUsername().toLowerCase().charAt(0)-97));
             } else if (background instanceof GradientDrawable) {
-                ((GradientDrawable)background).setColor(Colors.getColor((int) currentUser.getUsername().charAt(0)-97));
+                ((GradientDrawable)background).setColor(Colors.getColor((int) currentUser.getUsername().toLowerCase().charAt(0)-97));
             } else if (background instanceof ColorDrawable) {
-                ((ColorDrawable)background).setColor(Colors.getColor((int) currentUser.getUsername().charAt(0)-97));
+                ((ColorDrawable)background).setColor(Colors.getColor((int) currentUser.getUsername().toLowerCase().charAt(0)-97));
             }
             if (checkIfUserAdmin()){
                 adminTab.setVisibility(View.VISIBLE);

@@ -82,9 +82,9 @@ public class StoryDetailsActivity extends BasicActivity {
         if (background instanceof ShapeDrawable) {
             ((ShapeDrawable)background).getPaint().setColor(Colors.getColor((int) currentStory.getUser().getUsername().toLowerCase().charAt(0)-97));
         } else if (background instanceof GradientDrawable) {
-            ((GradientDrawable)background).setColor(Colors.getColor((int) currentStory.getUser().getUsername().charAt(0)-97));
+            ((GradientDrawable)background).setColor(Colors.getColor((int) currentStory.getUser().getUsername().toLowerCase().charAt(0)-97));
         } else if (background instanceof ColorDrawable) {
-            ((ColorDrawable)background).setColor(Colors.getColor((int) currentStory.getUser().getUsername().charAt(0)-97));
+            ((ColorDrawable)background).setColor(Colors.getColor((int) currentStory.getUser().getUsername().toLowerCase().charAt(0)-97));
         }
         recyclerView = findViewById(R.id.comment_recycler_view);
         commentList = currentStory.getComments();
