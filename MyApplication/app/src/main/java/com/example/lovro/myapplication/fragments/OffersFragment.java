@@ -1,6 +1,7 @@
 package com.example.lovro.myapplication.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
+import com.example.lovro.myapplication.activities.AddOfferActivity;
 import com.example.lovro.myapplication.activities.OfferDetailsActivity;
 import com.example.lovro.myapplication.adapters.OfferAdapter;
 import com.example.lovro.myapplication.domain.Offer;
@@ -76,6 +78,14 @@ public class OffersFragment extends Fragment {
 
         if(!userIsAdmin()){
             floatingActionButton.setVisibility(View.GONE);
+        }else{
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent addOffer = new Intent(getActivity(),AddOfferActivity.class);
+                    startActivityForResult(addOffer,1);
+                }
+            });
         }
 
         progressBar.setVisibility(View.VISIBLE);
@@ -201,6 +211,18 @@ public class OffersFragment extends Fragment {
                 .setPositiveButton("OK",null)
                 .create()
                 .show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                loadOffers(getUserAuth());
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

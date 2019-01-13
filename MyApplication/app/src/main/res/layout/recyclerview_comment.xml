@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/White">
+
+
+    <View
+        android:id="@+id/view_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:layout_below="@+id/user_comment"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="7sp"
+        android:layout_marginTop="7dp"
+        android:layout_marginRight="7sp"
+        android:background="@color/AppGrey" />
+
+
+    <RelativeLayout
+        android:id="@+id/profile_image"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_alignStart="@+id/view_toolbar"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="15sp">
+        <View
+            android:id="@+id/profile_image_circle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/circle"/>
+        <TextView
+            android:id="@+id/profile_image_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="U"
+            android:textColor="@color/White"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/comment_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="13dp"
+        android:layout_toEndOf="@+id/profile_image"
+        android:fontFamily="@font/doppio_one"
+        android:text="Username"
+        android:textColor="@color/AppColor"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/user_comment"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/comment_username"
+        android:layout_alignStart="@+id/comment_username"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="15dp"
+        android:text="User comment"
+        android:textSize="15sp" />
+
+</RelativeLayout>

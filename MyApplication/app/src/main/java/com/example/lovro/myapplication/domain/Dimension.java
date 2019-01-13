@@ -15,6 +15,10 @@ public class Dimension {
         this.id = id;
     }
 
+    public Dimension(String description) {
+        this.description = description;
+    }
+
     public Long getId() {
         return id;
     }

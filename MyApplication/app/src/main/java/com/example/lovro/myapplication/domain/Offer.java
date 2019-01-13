@@ -41,6 +41,9 @@ public class Offer {
         this.specification = specification;
     }
 
+    public Offer() {
+    }
+
     public String getName() {
         return name;
     }
@@ -103,6 +106,21 @@ public class Offer {
 
     public void setStyles(List<Style> styles) {
         this.styles = styles;
+    }
+
+    public boolean nothingNull(){
+        if (this.name!=null && this.description!=null && this.specification!=null && this.price!=null && this.dimensions!=null && this.styles!=null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void addStyle(Style style){
+        this.styles.add(style);
+    }
+    public void addDimension(Dimension dim){
+        this.dimensions.add(dim);
     }
 }
 

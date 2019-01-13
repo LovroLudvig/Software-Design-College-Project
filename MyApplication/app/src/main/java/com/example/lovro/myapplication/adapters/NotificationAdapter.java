@@ -158,6 +158,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     setNotificationToSeen(holder,notif,notification);
                 }
             });
+
+
         }
 
     }
