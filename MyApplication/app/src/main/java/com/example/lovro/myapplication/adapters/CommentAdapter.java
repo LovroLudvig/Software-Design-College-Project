@@ -38,14 +38,14 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
         TextView username = viewHolder.itemView.findViewById(R.id.comment_username);
         TextView user_comment = viewHolder.itemView.findViewById(R.id.user_comment);
 
-        ((TextView)viewHolder.itemView.findViewById(R.id.profile_image_text)).setText(String.valueOf(comment.getUser().getUsername().toUpperCase().charAt(0)));
+        ((TextView)viewHolder.itemView.findViewById(R.id.profile_image_text)).setText(String.valueOf("G"));
         Drawable background = viewHolder.itemView.findViewById(R.id.profile_image_circle).getBackground();
         if (background instanceof ShapeDrawable) {
-            ((ShapeDrawable)background).getPaint().setColor(Colors.getColor((int) comment.getUser().getUsername().toLowerCase().charAt(0)-97));
+            ((ShapeDrawable)background).getPaint().setColor(Colors.getColor(((int) 'g')-97));
         } else if (background instanceof GradientDrawable) {
-            ((GradientDrawable)background).setColor(Colors.getColor((int) comment.getUser().getUsername().toLowerCase().charAt(0)-97));
+            ((GradientDrawable)background).setColor(Colors.getColor(((int) 'g')-97));
         } else if (background instanceof ColorDrawable) {
-            ((ColorDrawable)background).setColor(Colors.getColor((int) comment.getUser().getUsername().toLowerCase().charAt(0)-97));
+            ((ColorDrawable)background).setColor(Colors.getColor(((int) 'g')));
         }
 
         if(comment.getUser() == null){
