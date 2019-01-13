@@ -82,7 +82,6 @@ public class VideoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         videoView = view.findViewById(R.id.videoView);
         play_button = view.findViewById(R.id.play_video_button);
-
         initListeners();
         dowloadVideo(story.getVideoUrl());
     }
@@ -92,7 +91,6 @@ public class VideoFragment extends Fragment {
         try {
             videoFile = createVideoFile();
         } catch (IOException ex) {
-            // Error occurred while creating the File
         }
         if (videoFile != null) {
             uriVideo = FileProvider.getUriForFile(getContext(), "com.example.android.crafteryFileProvider", videoFile);
@@ -159,96 +157,56 @@ public class VideoFragment extends Fragment {
 
             @Override
             public void run() {
-                    URL u;
-                    InputStream is = null;
+                URL u;
+                InputStream is = null;
 
-                    try {
-                        u = new URL(url);
-                        is = u.openStream();
-                        HttpURLConnection huc = (HttpURLConnection)u.openConnection(); //to know the size of video
+                try {
+                    u = new URL(url);
+                    is = u.openStream();
+                    HttpURLConnection huc = (HttpURLConnection)u.openConnection(); //to know the size of video
 
-                        if(huc != null) {
+                    if(huc != null) {
 
-                            FileOutputStream fos = new FileOutputStream(outputFile);
-                            byte[] buffer = new byte[1024];
-                            int len1 = 0;
-                            if(is != null) {
-                                while ((len1 = is.read(buffer)) > 0) {
-                                    fos.write(buffer,0, len1);
-                                }
+                        FileOutputStream fos = new FileOutputStream(outputFile);
+                        byte[] buffer = new byte[1024];
+                        int len1 = 0;
+                        if(is != null) {
+                            while ((len1 = is.read(buffer)) > 0) {
+                                fos.write(buffer,0, len1);
                             }
-                            if(fos != null) {
-                                fos.close();
-                            }
-                            getActivity().runOnUiThread(new Runnable() {
-
-                                @Override
-                                public void run() {
-
-                                    // Stuff that updates the UI
-                                    videoView.setVideoURI(uriVideo);
-
-                                }
-                            });
-
                         }
-                    } catch (MalformedURLException mue) {
-                        mue.printStackTrace();
-                        Log.d("tag", "eror1");
-
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                        Log.d("tag", "eror2");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Log.d("tag", "eror3");
-                    } finally {
-                        try {
-                            if(is != null) {
-                                is.close();
-                            }
-                        } catch (IOException ioe) {
-                            Log.d("tag", "eror3");
-                            // just going to ignore this one
+                        if(fos != null) {
+                            fos.close();
                         }
+                        getActivity().runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                videoView.setVideoURI(uriVideo);
+                            }
+                        });
                     }
-
-
-//                        URL u = new URL(url);
-//                        URLConnection conn = u.openConnection();
-//                        InputStream is = conn.getInputStream();
-//                        BufferedInputStream bis = new BufferedInputStream(is);
-//                        ByteArrayBuffer baf = new ByteArrayBuffer(50);
-//                        int current = 0;
-//                        while ((current = bis.read()) != -1) {
-//                            baf.append((byte) current);
-//                        }
-//                        FileOutputStream fos = new FileOutputStream(outputFile);
-//                        fos.write(baf.toByteArray());
-//                        fos.close();
-
-
-//                        int contentLength = conn.getContentLength();
-//
-//                        DataInputStream stream = new DataInputStream(u.openStream());
-//
-//                        byte[] buffer = new byte[contentLength];
-//                        stream.readFully(buffer);
-//                        stream.close();
-//
-//                        DataOutputStream fos = new DataOutputStream(new FileOutputStream(outputFile));
-//                        fos.write(buffer);
-//                        fos.flush();
-//                        fos.close();
-
-
+                } catch (MalformedURLException mue) {
+                    mue.printStackTrace();
+                    Log.d("tag", "eror1");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    Log.d("tag", "eror2");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.d("tag", "eror3");
+                } finally {
+                    try {
+                        if(is != null) {
+                            is.close();
+                        }
+                    } catch (IOException ioe) {
+                        Log.d("tag", "eror3");
+                    }
+                }
             }
         });
-
-
-
         thread.start();
-
     }
 
 
