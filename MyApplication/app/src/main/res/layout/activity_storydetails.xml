@@ -22,6 +22,7 @@
     </android.support.v7.widget.Toolbar>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nested_scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
@@ -76,20 +77,22 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="6dp"
                     android:layout_marginTop="13dp">
+
                     <View
                         android:id="@+id/profile_image_circle"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/circle"/>
+                        android:background="@drawable/circle" />
+
                     <TextView
                         android:id="@+id/profile_image_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
                         android:text="U"
                         android:textColor="@color/White"
-                        android:textStyle="bold"
                         android:textSize="25sp"
-                        android:layout_centerInParent="true"/>
+                        android:textStyle="bold" />
                 </RelativeLayout>
 
                 <TextView
@@ -140,9 +143,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:orientation="vertical">
+                android:paddingRight="20dp">
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -181,41 +185,50 @@
             </LinearLayout>
 
 
-
-
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="3sp"
+        android:layout_marginBottom="0sp"
         android:layout_marginTop="3sp"
         android:layout_marginLeft="2sp"
         android:layout_marginRight="2sp"
-        android:background="@drawable/round_button6"
+        android:background="@color/AppCOlorLight"
         android:layout_alignParentBottom="true">
 
-        <EditText
-            android:id="@+id/addComment"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:background="@android:color/transparent"
-            android:hint="Add a comment..."
-            android:inputType="textCapSentences"
-            android:textSize="16sp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_button6"
+            android:layout_marginBottom="3sp">
 
-        <Button
-            android:id="@+id/postBtn"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
-            android:layout_width="65dp"
-            android:layout_height="40dp"
-            android:text="Post"
-            android:textColor="@color/AppColor"
-            android:textSize="16sp" />
+            <EditText
+                android:id="@+id/addComment"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:layout_marginLeft="12dp"
+                android:background="@android:color/transparent"
+                android:hint="Add a comment..."
+                android:inputType="textCapSentences"
+                android:textSize="16sp"/>
+
+            <Button
+                android:id="@+id/postBtn"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="65dp"
+                android:layout_height="40dp"
+                android:text="Post"
+                android:textColor="@color/AppColor"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
