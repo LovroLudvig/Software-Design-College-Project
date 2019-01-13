@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -60,6 +61,7 @@ public class StoryDetailsActivity extends BasicActivity {
     private EditText add_comment;
     private Call<List<Comment>> commentCall;
     private String usernameFromUser;
+    private NestedScrollView scrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +78,7 @@ public class StoryDetailsActivity extends BasicActivity {
         status.setText(currentStory.getText());
         postBtn = findViewById(R.id.postBtn);
         add_comment = findViewById(R.id.addComment);
+        scrollView = findViewById(R.id.nested_scroll);
 
         ((TextView)findViewById(R.id.profile_image_text)).setText(String.valueOf(currentStory.getUser().getUsername().toUpperCase().charAt(0)));
         Drawable background = findViewById(R.id.profile_image_circle).getBackground();
@@ -87,6 +90,7 @@ public class StoryDetailsActivity extends BasicActivity {
             ((ColorDrawable)background).setColor(Colors.getColor((int) currentStory.getUser().getUsername().toLowerCase().charAt(0)-97));
         }
         recyclerView = findViewById(R.id.comment_recycler_view);
+        recyclerView.setFocusable(false);
         commentList = currentStory.getComments();
 
 
@@ -155,6 +159,12 @@ public class StoryDetailsActivity extends BasicActivity {
         }else{
             initAdapter(comments);
         }
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(NestedScrollView.FOCUS_DOWN);
+            }
+        });
     }
 
     private boolean checkIfUserIsLoggedIn() {
