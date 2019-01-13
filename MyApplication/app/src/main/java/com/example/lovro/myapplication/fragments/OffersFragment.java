@@ -166,7 +166,7 @@ public class OffersFragment extends Fragment {
 
     private void loadOffers(String auth){
         progressBar.setVisibility(View.VISIBLE);
-        getOffers = apiService.getAllOffers(auth);
+        getOffers = apiService.getAllOffers();
         getOffers.enqueue(new Callback<List<Offer>>() {
             @Override
             public void onResponse(Call<List<Offer>> call, Response<List<Offer>> response) {

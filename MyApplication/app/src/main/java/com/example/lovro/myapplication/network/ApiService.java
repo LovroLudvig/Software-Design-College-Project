@@ -31,8 +31,7 @@ public interface ApiService {
     Call<User> loginUser(@Header("Authorization") String auth,@Body User user);
 
     @GET("/advertisement/all")
-    Call<List<Offer>> getAllOffers(@Header("Authorization") String auth);
-
+    Call<List<Offer>> getAllOffers();
 
     @POST("/orders/add/{advertisementId}")
     Call<Order> orderOffer(@Path("advertisementId") String offerId, @Query("styleId") String styleId, @Query("dimensionId") String dimensionId, @Body User user);

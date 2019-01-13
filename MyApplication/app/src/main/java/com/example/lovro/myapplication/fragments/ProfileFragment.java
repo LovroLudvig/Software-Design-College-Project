@@ -354,6 +354,7 @@ public class ProfileFragment extends Fragment {
         return false;
     }
 
+    //pise da se ne koristi ali koristi se!!!!!!!!!!!!! NEMOJ BRISAT
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEditProfileEvent(EditProfileEvent event) {
         loadUserFromAPI();

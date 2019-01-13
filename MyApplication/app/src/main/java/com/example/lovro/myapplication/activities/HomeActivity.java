@@ -80,6 +80,8 @@ public class HomeActivity extends BasicActivity implements ProfileFragment.OnFra
                                 SharedPreferences.Editor editor = prefs.edit();
                                 editor.putBoolean("saved",false);
                                 editor.putBoolean("admin",false);
+                                editor.putString("username","");
+                                editor.putString("password","");
                                 editor.apply();
                                 Intent i = new Intent(HomeActivity.this, LoginActivity.class);
                                 startActivity(i);

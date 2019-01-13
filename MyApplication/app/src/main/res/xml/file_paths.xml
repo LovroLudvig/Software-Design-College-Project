@@ -3,4 +3,7 @@
     <external-path
         name="my_images"
         path="Android/data/com.example.lovro.myapplication/files/Pictures" />
+    <external-path
+        name="/storage/emulated/0"
+        path="." />
 </paths>

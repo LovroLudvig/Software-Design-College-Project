@@ -21,9 +21,12 @@ import com.example.lovro.myapplication.domain.Colors;
 import com.example.lovro.myapplication.domain.Comment;
 import com.example.lovro.myapplication.domain.Story;
 import com.example.lovro.myapplication.domain.User;
+import com.example.lovro.myapplication.events.PauseVideoEvent;
 import com.example.lovro.myapplication.fragments.ImageFragment;
 import com.example.lovro.myapplication.fragments.VideoFragment;
 import com.google.gson.Gson;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,9 +119,12 @@ public class StoryDetailsActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int i) {
                 if(i == 0){
+                    slide_number.setVisibility(View.VISIBLE);
                     slide_number.setText("1 OF 2");
+                    EventBus.getDefault().post(new PauseVideoEvent());
                 }else{
                     slide_number.setText("2 OF 2");
+                    slide_number.setVisibility(View.GONE);
                 }
             }
 
