@@ -27,7 +27,6 @@ import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.domain.Story;
 import com.example.lovro.myapplication.domain.User;
 import com.squareup.picasso.Picasso;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -225,6 +224,18 @@ public class SuggestStoryActivity extends BasicActivity {
         });
     }
 
+    private boolean checkSize(){
+        File file = new File(storyUriVideo.getPath());
+        Long size = file.length();
+        Long sizeInKB = size/1024;
+        Long sizeInMB = sizeInKB/1024;
+        if(sizeInMB > 150){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     private void compressVideo(){
 
     }
@@ -271,8 +282,13 @@ public class SuggestStoryActivity extends BasicActivity {
             Uri selectedVideoUri = data.getData();
             storyUriVideo = Uri.fromFile(new File(getRealPathFromUri(SuggestStoryActivity.this,selectedVideoUri)));
 
-            Bitmap thumb = ThumbnailUtils.createVideoThumbnail(storyUriVideo.getPath(),MediaStore.Images.Thumbnails.MINI_KIND);
-            storyVideo.setImageBitmap(thumb);
+            if(checkSize()){
+                Bitmap thumb = ThumbnailUtils.createVideoThumbnail(storyUriVideo.getPath(),MediaStore.Images.Thumbnails.MINI_KIND);
+                storyVideo.setImageBitmap(thumb);
+            }else{
+                storyUriVideo = null;
+                Toast.makeText(this,"The video is too large!",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
