@@ -10,6 +10,7 @@ import com.example.lovro.myapplication.domain.UserProfile;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -93,5 +94,9 @@ public interface ApiService {
 
     @POST("/comments/post/{storyId}")
     Call<List<Comment>> postCommentGuest(@Path("storyId") String storyId,@Body Comment comment);
+
+    @POST("/media/story/video/upload/{storyId}")
+    @Multipart
+    Call<ResponseBody> uploadStoryVideo(@Header("Authorization") String auth, @Path("storyId") String storyId, @Part("file\"; filename=\"video.mp4\"") RequestBody video);
 
 }

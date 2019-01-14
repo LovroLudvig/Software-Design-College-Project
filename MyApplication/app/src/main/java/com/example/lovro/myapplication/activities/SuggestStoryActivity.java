@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -28,11 +30,13 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -47,12 +51,16 @@ public class SuggestStoryActivity extends BasicActivity {
     private static final int REQUEST_CODE_PICTURE_FROM_GALLERY = 2;
     private static final int REQUEST_CODE_PERMISSION_CAMERA = 3;
     private static final int REQUEST_IMAGE_CAPTURE = 4;
+    private static final int SELECT_VIDEO = 5;
 
     private ImageView storyPhoto;
     private Uri storyUriPicture=null;
 
     private EditText storyStatusEditText;
     private Button suggestStoryButton;
+
+    private ImageView storyVideo;
+    private Uri storyUriVideo = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +71,10 @@ public class SuggestStoryActivity extends BasicActivity {
         storyStatusEditText=findViewById(R.id.storyStatusEditText);
         suggestStoryButton=findViewById(R.id.suggestStoryButton);
 
+        storyVideo = findViewById(R.id.videoHolder);
+
 
         initListeners();
-
     }
 
     private void initListeners() {
@@ -139,6 +148,21 @@ public class SuggestStoryActivity extends BasicActivity {
                 dialog.show();
             }
         });
+
+        storyVideo.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View v) {
+                if (ActivityCompat.checkSelfPermission(SuggestStoryActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSION_GALLERY); }
+                    else {
+                            loadVideo();
+                }
+
+            }
+        });
+
+
     }
 
     private void suggestStory(User user) {
@@ -167,7 +191,7 @@ public class SuggestStoryActivity extends BasicActivity {
         });
     }
 
-    private void uploadMedia(Story story) {
+    private void uploadMedia(final Story story) {
         show_loading("Uploading image");
         File file = new File(decodeFile(storyUriPicture.getPath(),500,500));
         apiService.uploadStoryImage(getUserAuth(),String.valueOf(story.getId()),RequestBody.create(MediaType.parse("image/jpg"), file)).enqueue(new Callback<ResponseBody>() {
@@ -175,8 +199,12 @@ public class SuggestStoryActivity extends BasicActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 stop_loading();
                 if(response.isSuccessful()){
-                    Toast.makeText(SuggestStoryActivity.this, "Story suggested", Toast.LENGTH_SHORT).show();
-                    finish();
+                    if(storyUriVideo != null){
+                        uploadVideo(story);
+                    }else{
+                        Toast.makeText(SuggestStoryActivity.this, "Story suggested", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
                 }else{
                     try {
                         showError(response.errorBody().string());
@@ -194,7 +222,35 @@ public class SuggestStoryActivity extends BasicActivity {
                 t.printStackTrace();
             }
         });
+    }
 
+    private void uploadVideo(Story story){
+        show_loading("Uploading video...");
+        File video = new File(storyUriVideo.getPath());
+        RequestBody videoBody = RequestBody.create(MediaType.parse("video/*"),video);
+        apiService.uploadStoryVideo(getUserAuth(),String.valueOf(story.getId()),videoBody).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                stop_loading();
+                if(response.isSuccessful()){
+                    Toast.makeText(SuggestStoryActivity.this, "Story suggested", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else{
+                    try {
+                        showError(response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                stop_loading();
+                showError(t.getMessage());
+                t.printStackTrace();
+            }
+        });
     }
 
 
@@ -204,11 +260,22 @@ public class SuggestStoryActivity extends BasicActivity {
             Uri result = data.getData();
             Picasso.get().load(result).into(storyPhoto);
             storyUriPicture = Uri.fromFile(new File(getRealPathFromUri(SuggestStoryActivity.this, result)));
-
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             Picasso.get().load(storyUriPicture).into(storyPhoto);
+        }else if(requestCode == SELECT_VIDEO && resultCode == Activity.RESULT_OK){
+            Uri selectedVideoUri = data.getData();
+            storyUriVideo = Uri.fromFile(new File(getRealPathFromUri(SuggestStoryActivity.this,selectedVideoUri)));
+
+            Bitmap thumb = ThumbnailUtils.createVideoThumbnail(storyUriVideo.getPath(),MediaStore.Images.Thumbnails.MINI_KIND);
+            storyVideo.setImageBitmap(thumb);
         }
     }
+
+    private void loadVideo(){
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(Intent.createChooser(intent,"Select a Video"),SELECT_VIDEO);
+    }
+
 
     private void loadFromGallery() {
         Intent i = new Intent(Intent.ACTION_PICK);
