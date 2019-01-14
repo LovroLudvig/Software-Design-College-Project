@@ -188,6 +188,8 @@ public class OfferDetailsActivity extends BasicActivity {
                                 intent.putExtra("Offer",offerAsString);
                                 intent.putExtra("Style",getStyleId());
                                 intent.putExtra("Dimension",getDimensionId());
+                                intent.putExtra("style_order",false);
+                                intent.putExtra("style_name","");
                                 startActivity(intent);
                                 finish();
                             }
@@ -269,11 +271,7 @@ public class OfferDetailsActivity extends BasicActivity {
                 if(response.isSuccessful()){
                     order_style(response.body(),style_name);
                 }else{
-                    try {
-                        showError(response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                  showError("Unknown error occurred! Please try again!");
                 }
             }
 
@@ -286,7 +284,7 @@ public class OfferDetailsActivity extends BasicActivity {
         });
     }
 
-    private void order_style(User user,String style_name){
+    private void order_style(User user, final String style_name){
         show_loading("Sending an offer...");
         orderCall = apiService.order_style(getUserAuth(),currentOffer.getId().toString(),"0",style_name,user);
         orderCall.enqueue(new Callback<Order>() {
@@ -296,11 +294,16 @@ public class OfferDetailsActivity extends BasicActivity {
                     stop_loading();
                     Toast.makeText(OfferDetailsActivity.this,"The order has been sent!",Toast.LENGTH_LONG).show();
                 }else{
-                    stop_loading();
-                    try {
-                        showError(response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if(response.code() == 400){
+                        Gson gson = new Gson();
+                        String offerAsString = gson.toJson(currentOffer);
+
+                        Intent intent = new Intent(OfferDetailsActivity.this,FillYourInfoActivity.class);
+                        intent.putExtra("Offer",offerAsString);
+                        intent.putExtra("style_order",true);
+                        intent.putExtra("style_name",style_name);
+                        startActivity(intent);
+                        finish();
                     }
                 }
             }

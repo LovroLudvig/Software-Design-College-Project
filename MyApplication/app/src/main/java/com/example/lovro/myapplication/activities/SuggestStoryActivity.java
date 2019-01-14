@@ -199,6 +199,7 @@ public class SuggestStoryActivity extends BasicActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 stop_loading();
                 if(response.isSuccessful()){
+                    compressVideo();
                     if(storyUriVideo != null){
                         uploadVideo(story);
                     }else{
@@ -222,6 +223,10 @@ public class SuggestStoryActivity extends BasicActivity {
                 t.printStackTrace();
             }
         });
+    }
+
+    private void compressVideo(){
+
     }
 
     private void uploadVideo(Story story){

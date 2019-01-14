@@ -115,6 +115,15 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        if(progressBar!= null){
+            loadUserFromAPI();
+        }
+        super.onResume();
+    }
+
+
     private void initListenersUnregistered() {
         joinNowButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,5 +1,7 @@
 package com.example.lovro.myapplication.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -153,6 +155,7 @@ public class StoryDetailsActivity extends BasicActivity {
     }
 
     private void displayComments(List<Comment> comments){
+        currentStory.setComments(comments);
         add_comment.setText("");
         if(commentAdapter != null){
             commentAdapter.setComments(comments);
@@ -227,4 +230,10 @@ public class StoryDetailsActivity extends BasicActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK,returnIntent);
+        finish();
+    }
 }

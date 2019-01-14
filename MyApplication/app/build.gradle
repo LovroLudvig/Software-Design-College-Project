@@ -53,4 +53,5 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'org.jetbrains:annotations-java5:15.0'
     implementation 'org.apache.httpcomponents:httpclient:4.5.5'
+    implementation 'com.iceteck.silicompressorr:silicompressor:2.2.1'
 }

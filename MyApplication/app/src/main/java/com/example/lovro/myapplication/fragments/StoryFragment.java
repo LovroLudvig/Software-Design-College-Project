@@ -1,5 +1,6 @@
 package com.example.lovro.myapplication.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,6 +44,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 
 public class StoryFragment extends Fragment {
+
+    private static final int COMMENT_LIST = 1;
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -119,6 +122,7 @@ public class StoryFragment extends Fragment {
     }
 
     private void displayStories(List<Story> stories){
+        storyList = stories;
         if(storyAdapter != null){
             storyAdapter.setStories(stories);
         }else{
@@ -181,7 +185,7 @@ public class StoryFragment extends Fragment {
                 String storyAsString = gson.toJson(story);
                 Intent intent = new Intent(getActivity(),StoryDetailsActivity.class);
                 intent.putExtra("story",storyAsString);
-                startActivity(intent);
+                startActivityForResult(intent,COMMENT_LIST);
             }
         });
     }
@@ -194,6 +198,14 @@ public class StoryFragment extends Fragment {
         return false;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == COMMENT_LIST && resultCode == Activity.RESULT_OK){
+            if(isInternetAvailable()){
+                load_stories();
+            }
+        }
+    }
 
     @Override
     public void onAttach(Context context) {
