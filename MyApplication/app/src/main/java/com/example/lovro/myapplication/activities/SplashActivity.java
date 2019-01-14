@@ -73,7 +73,9 @@ public class SplashActivity extends AppCompatActivity {
     private void checkIfUserIsLoggedIn() {
         SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
         if(prefs.getBoolean("saved",false)){
-            isUserLoggedIn = true;
+            if (!prefs.getString("username","").equals("")){
+                isUserLoggedIn = true;
+            }
         }
     }
 

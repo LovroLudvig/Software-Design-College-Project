@@ -241,7 +241,7 @@ public class SuggestStoryActivity extends BasicActivity {
         Long sizeInKB = size/1024;
         Long sizeInMB = sizeInKB/1024;
         Toast.makeText(this,sizeInMB.toString(),Toast.LENGTH_SHORT).show();
-        if(sizeInMB > 150){
+        if(sizeInMB > 500){
             return false;
         }else{
             return true;
