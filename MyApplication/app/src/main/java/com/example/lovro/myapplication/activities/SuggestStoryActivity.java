@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -27,6 +28,8 @@ import com.example.lovro.myapplication.R;
 import com.example.lovro.myapplication.domain.Story;
 import com.example.lovro.myapplication.domain.User;
 import com.squareup.picasso.Picasso;
+import com.yovenny.videocompress.MediaController;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -51,6 +54,11 @@ public class SuggestStoryActivity extends BasicActivity {
     private static final int REQUEST_CODE_PERMISSION_CAMERA = 3;
     private static final int REQUEST_IMAGE_CAPTURE = 4;
     private static final int SELECT_VIDEO = 5;
+    public static final String APP_DIR = "VideoCompressor";
+
+    public static final String COMPRESSED_VIDEOS_DIR = "/Compressed Videos/";
+
+    public static final String TEMP_DIR = "/Temp/";
 
     private ImageView storyPhoto;
     private Uri storyUriPicture=null;
@@ -60,6 +68,9 @@ public class SuggestStoryActivity extends BasicActivity {
 
     private ImageView storyVideo;
     private Uri storyUriVideo = null;
+
+    private String storyId;
+    private String compressed_path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,9 +209,9 @@ public class SuggestStoryActivity extends BasicActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 stop_loading();
                 if(response.isSuccessful()){
-                    compressVideo();
                     if(storyUriVideo != null){
-                        uploadVideo(story);
+                        storyId = String.valueOf(story.getId());
+                        compressVideo();
                     }else{
                         Toast.makeText(SuggestStoryActivity.this, "Story suggested", Toast.LENGTH_SHORT).show();
                         finish();
@@ -229,6 +240,7 @@ public class SuggestStoryActivity extends BasicActivity {
         Long size = file.length();
         Long sizeInKB = size/1024;
         Long sizeInMB = sizeInKB/1024;
+        Toast.makeText(this,sizeInMB.toString(),Toast.LENGTH_SHORT).show();
         if(sizeInMB > 150){
             return false;
         }else{
@@ -236,15 +248,29 @@ public class SuggestStoryActivity extends BasicActivity {
         }
     }
 
-    private void compressVideo(){
-
+    private void compressVideo() {
+        String path =Environment.getExternalStorageDirectory()
+                + File.separator
+                + APP_DIR
+                + COMPRESSED_VIDEOS_DIR;
+        File file = new File(path);
+        file.mkdirs();
+        String video_Path = Environment.getExternalStorageDirectory()
+                + File.separator
+                + APP_DIR
+                + COMPRESSED_VIDEOS_DIR
+                +"VIDEO_" + new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date()) + ".mp4";
+        compressed_path = video_Path;
+        show_loading("Compressing video...");
+        new VideoCompressor().execute(storyUriVideo.getPath(),video_Path);
     }
 
-    private void uploadVideo(Story story){
+
+    private void uploadVideo(){
         show_loading("Uploading video...");
         File video = new File(storyUriVideo.getPath());
         RequestBody videoBody = RequestBody.create(MediaType.parse("video/*"),video);
-        apiService.uploadStoryVideo(getUserAuth(),String.valueOf(story.getId()),videoBody).enqueue(new Callback<ResponseBody>() {
+        apiService.uploadStoryVideo(getUserAuth(),storyId,videoBody).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 stop_loading();
@@ -370,6 +396,31 @@ public class SuggestStoryActivity extends BasicActivity {
             }
         } else {
             Toast.makeText(SuggestStoryActivity.this, "Need permission to do that action", Toast.LENGTH_SHORT);
+        }
+    }
+
+    class VideoCompressor extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            return MediaController.getInstance().convertVideo(params[0],params[1]);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean compressed) {
+            super.onPostExecute(compressed);
+            stop_loading();
+            if(compressed){
+                storyUriVideo = Uri.parse(compressed_path);
+                checkSize();
+                uploadVideo();
+            }
         }
     }
 }
