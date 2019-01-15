@@ -18,6 +18,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -70,6 +71,8 @@ public class SuggestStoryActivity extends BasicActivity {
     private String storyId;
     private String compressed_path;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +81,7 @@ public class SuggestStoryActivity extends BasicActivity {
 
         storyStatusEditText=findViewById(R.id.storyStatusEditText);
         suggestStoryButton=findViewById(R.id.suggestStoryButton);
+        toolbar = findViewById(R.id.suggest_story_toolbar);
 
         storyVideo = findViewById(R.id.videoHolder);
 
@@ -170,6 +174,13 @@ public class SuggestStoryActivity extends BasicActivity {
             }
         });
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
     }
 
@@ -182,19 +193,14 @@ public class SuggestStoryActivity extends BasicActivity {
                 if(response.isSuccessful()){
                     uploadMedia(response.body());
                 }else{
-                    try {
-                        showError(response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    showError("Unexpected error occurred. Please try again!");
                 }
             }
 
             @Override
             public void onFailure(Call<Story> call, Throwable t) {
                 stop_loading();
-                showError(t.getMessage());
-                t.printStackTrace();
+                showError("Unexpected error occurred. Please try again!");
             }
         });
     }
@@ -215,11 +221,7 @@ public class SuggestStoryActivity extends BasicActivity {
                         finish();
                     }
                 }else{
-                    try {
-                        showError(response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    showError("Unexpected error occurred. Please try again!");
                 }
 
             }
@@ -227,8 +229,7 @@ public class SuggestStoryActivity extends BasicActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 stop_loading();
-                showError(t.getMessage());
-                t.printStackTrace();
+                showError("Unexpected error occurred. Please try again!");
             }
         });
     }
@@ -275,19 +276,14 @@ public class SuggestStoryActivity extends BasicActivity {
                     Toast.makeText(SuggestStoryActivity.this, "Story suggested", Toast.LENGTH_SHORT).show();
                     finish();
                 }else{
-                    try {
-                        showError(response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    showError("Unexpected error occurred. Please try again!");
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 stop_loading();
-                showError(t.getMessage());
-                t.printStackTrace();
+                showError("Unexpected error occurred. Please try again!");
             }
         });
     }

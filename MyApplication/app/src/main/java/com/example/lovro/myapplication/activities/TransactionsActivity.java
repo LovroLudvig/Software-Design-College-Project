@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,17 +28,27 @@ public class TransactionsActivity extends BasicActivity {
 
     private RecyclerView recyclerView;
     private TransactionAdapter transactionAdapter;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transactions);
         recyclerView = findViewById(R.id.transactions_recycleView);
+        toolbar = findViewById(R.id.transaction_toolbar);
 
+        initListener();
         initRecyclerView();
         getAllTransactions();
+    }
 
-
+    private void initListener(){
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void getAllTransactions() {

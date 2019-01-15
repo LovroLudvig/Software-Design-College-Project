@@ -2,8 +2,8 @@ package com.example.lovro.myapplication.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,12 +12,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
-import com.example.lovro.myapplication.domain.Offer;
-import com.example.lovro.myapplication.domain.Role;
-import com.example.lovro.myapplication.domain.Status;
 import com.example.lovro.myapplication.domain.Town;
 import com.example.lovro.myapplication.domain.User;
-import com.example.lovro.myapplication.domain.UserProfile;
 import com.example.lovro.myapplication.network.ApiService;
 import com.example.lovro.myapplication.network.InitApiService;
 import com.google.gson.Gson;
@@ -43,6 +39,7 @@ public class EditProfileActivity extends BasicActivity {
     private EditText poscalCodeEditText;
     private User currentUser;
     private ApiService apiService = InitApiService.apiService;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +65,7 @@ public class EditProfileActivity extends BasicActivity {
         emailEditText=findViewById(R.id.email_editText);
         cardEditText=findViewById(R.id.card_editText);
         poscalCodeEditText=findViewById(R.id.postalCode_editText);
+        toolbar = findViewById(R.id.edit_profile_toolbar);
         initListeners();
         initEditTexts();
     }
@@ -129,6 +127,13 @@ public class EditProfileActivity extends BasicActivity {
                 }
             }
         });
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void updateUser(User user){
@@ -157,8 +162,7 @@ public class EditProfileActivity extends BasicActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 stop_loading();
-                Toast.makeText(EditProfileActivity.this,"Error loading user", Toast.LENGTH_LONG).show();
-                t.printStackTrace();
+                showError("Unexpected error occurred. Please try again!");
             }
         });
     }

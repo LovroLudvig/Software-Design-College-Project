@@ -45,11 +45,6 @@
             android:theme="@style/RegisterTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activities.OffersActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/RegisterTheme"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-        <activity
             android:name=".activities.SignUpActivity"
             android:parentActivityName=".activities.LoginActivity"
             android:screenOrientation="portrait"

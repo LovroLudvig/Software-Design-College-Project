@@ -19,6 +19,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+/**
+ * Used for encapsulating all frequently used functions
+ */
 public abstract class BasicActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
 
@@ -59,6 +62,9 @@ public abstract class BasicActivity extends AppCompatActivity {
                 .show();
     }
 
+    /**
+     * @return Returns hashed string gotten from username and password
+     */
     public String getUserAuth(){
         SharedPreferences prefs = this.getSharedPreferences("UserData", MODE_PRIVATE);
         String username = prefs.getString("username","");
@@ -71,6 +77,14 @@ public abstract class BasicActivity extends AppCompatActivity {
         return auth;
     }
 
+    /**
+     * @param path
+     * @param DESIREDWIDTH
+     * @param DESIREDHEIGHT
+     * @return Path of decode image path
+     *
+     * Used to decode image file
+     */
     public String decodeFile(String path,int DESIREDWIDTH, int DESIREDHEIGHT) {
         String strMyImagePath = null;
         Bitmap scaledBitmap = null;

@@ -208,7 +208,7 @@ public class SignUpActivity extends BasicActivity {
                 if(call.isCanceled()){
                     //nothing
                 }else{
-                    showError(t.getMessage());
+                    showError("Unexpected error occurred. Please try again!");
                 }
 
             }

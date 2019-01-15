@@ -104,8 +104,7 @@ public class FillYourInfoActivity extends BasicActivity {
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 stop_loading();
-                showError(t.getMessage());
-                t.printStackTrace();
+                showError("Unexpected error occurred. Please try again!");
             }
         });
     }
@@ -157,8 +156,7 @@ public class FillYourInfoActivity extends BasicActivity {
             @Override
             public void onFailure(Call<Order> call, Throwable t) {
                 stop_loading();
-                showError(t.getMessage());
-                t.printStackTrace();
+                showError("Unexpected error occurred. Please try again!");
             }
         });
     }
@@ -188,7 +186,7 @@ public class FillYourInfoActivity extends BasicActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 stop_loading();
-                t.printStackTrace();
+                showError("Unexpected error occurred. Please try again!");
             }
         });
     }
@@ -214,19 +212,14 @@ public class FillYourInfoActivity extends BasicActivity {
                     finish();
                 }else{
                     stop_loading();
-                    try {
-                        showError(response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    showError("Unexpected error occurred. Please try again!");
                 }
             }
 
             @Override
             public void onFailure(Call<Order> call, Throwable t) {
                 stop_loading();
-                showError(t.getMessage());
-                t.printStackTrace();
+                showError("Unexpected error occurred. Please try again!");
             }
         });
     }

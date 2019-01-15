@@ -6,20 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".activities.AddOfferActivity"
     android:orientation="vertical">
+
     <android.support.v7.widget.Toolbar
-        android:id="@+id/Toolbar"
+        android:id="@+id/add_offer_toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/AppColor"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
-                android:padding="5dp"
-                android:src="@drawable/app_logo_text" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="100dp"
+            android:padding="5dp"
+            android:src="@drawable/app_logo_text" />
     </android.support.v7.widget.Toolbar>
 
     <ScrollView
