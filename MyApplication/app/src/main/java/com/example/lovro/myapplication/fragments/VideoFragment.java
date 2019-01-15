@@ -6,38 +6,33 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.URLUtil;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.example.lovro.myapplication.R;
-import com.example.lovro.myapplication.activities.AddOfferActivity;
+import com.example.lovro.myapplication.domain.DoubleClickListener;
 import com.example.lovro.myapplication.domain.Story;
-import com.example.lovro.myapplication.events.EditProfileEvent;
 import com.example.lovro.myapplication.events.PauseVideoEvent;
 
-import org.apache.http.util.ByteArrayBuffer;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -46,10 +41,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 
 @SuppressLint("ValidFragment")
@@ -58,6 +49,7 @@ public class VideoFragment extends Fragment {
     private ImageView play_button;
     private boolean video_start = false;
     private Story story;
+    private FrameLayout relativeLayout;
     private Uri uriVideo=null;
 
     @SuppressLint("ValidFragment")
@@ -82,11 +74,12 @@ public class VideoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         videoView = view.findViewById(R.id.videoView);
         play_button = view.findViewById(R.id.play_video_button);
+        relativeLayout = view.findViewById(R.id.fullscreen);
         initListeners();
-        dowloadVideo(story.getVideoUrl());
+        downloadVideo(story.getVideoUrl());
     }
 
-    private void dowloadVideo(String url) {
+    private void downloadVideo(String url) {
         File videoFile = null;
         try {
             videoFile = createVideoFile();
@@ -136,6 +129,43 @@ public class VideoFragment extends Fragment {
             }
         });
 
+        relativeLayout.setOnClickListener(new DoubleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+            }
+
+            @Override
+            public void onDoubleClick(View v) {
+                videoView.pause();
+                video_start = false;
+                play_button.setVisibility(View.VISIBLE);
+                open_fullscreen();
+            }
+        });
+
+
+    }
+
+    private void open_fullscreen(){
+        LayoutInflater inflater= LayoutInflater.from(getContext());
+        View view=inflater.inflate(R.layout.fullscreen_video, null);
+        VideoView videoViewFullscreen = view.findViewById(R.id.new_video);
+        videoViewFullscreen.setVideoURI(uriVideo);
+
+        DisplayMetrics metrics = new DisplayMetrics(); getActivity().getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        android.widget.LinearLayout.LayoutParams params = (android.widget.LinearLayout.LayoutParams) videoViewFullscreen.getLayoutParams();
+        params.width =  metrics.widthPixels;
+        params.height = metrics.heightPixels;
+        params.leftMargin = 0;
+        videoViewFullscreen.setLayoutParams(params);
+        videoViewFullscreen.setZOrderOnTop(true);
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        alertDialog.setView(view);
+        videoViewFullscreen.start();
+
+        AlertDialog alert = alertDialog.create();
+        alert.show();
     }
 
 
