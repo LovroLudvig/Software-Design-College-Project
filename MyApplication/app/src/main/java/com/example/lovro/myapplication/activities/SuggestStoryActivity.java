@@ -55,9 +55,7 @@ public class SuggestStoryActivity extends BasicActivity {
     private static final int REQUEST_IMAGE_CAPTURE = 4;
     private static final int SELECT_VIDEO = 5;
     public static final String APP_DIR = "VideoCompressor";
-
     public static final String COMPRESSED_VIDEOS_DIR = "/Compressed Videos/";
-
     public static final String TEMP_DIR = "/Temp/";
 
     private ImageView storyPhoto;
@@ -240,8 +238,7 @@ public class SuggestStoryActivity extends BasicActivity {
         Long size = file.length();
         Long sizeInKB = size/1024;
         Long sizeInMB = sizeInKB/1024;
-        Toast.makeText(this,sizeInMB.toString(),Toast.LENGTH_SHORT).show();
-        if(sizeInMB > 500){
+        if(sizeInMB > 1000){
             return false;
         }else{
             return true;
