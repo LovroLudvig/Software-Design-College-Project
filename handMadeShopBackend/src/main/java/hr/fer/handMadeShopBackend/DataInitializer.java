@@ -83,12 +83,10 @@ public class DataInitializer {
         createFakeAds();
         createStories();
 
-
-        //TODO dragi martine sad sam se sjetio da nisi osiguro adove od null ap sredi to kad si gotov
     }
 
     private void createUsers() {
-        String[] usernames = new String[] {"mcolja", "ialmer", "ilovrencic", "lludvig", "hspolador", "mdadanovic"};
+        String[] usernames = new String[] {"mcolja", "ialmer", "ilovrencic", "lludvig", "hspolador", "mdadanovic", "istancin"};
         String password = "secret";
 
         for(String username: usernames) {
@@ -107,49 +105,67 @@ public class DataInitializer {
 
     private void createFakeAds() {
         String[] descriptions = new String[] {
-            "This is one of the types of manhole you can possibly find on todays market. You can find all possible dimension below.",
-            "The best possible deal for various copper wires and copper products.",
-            "Premium egg shells. Gotten from organic farms in Norway.",
-            "Mail order bride from egzotic Russia. For more details add me on snapchat.",
-            "Empty cigarette box. Only for collectors."
+            "Premium chair made from highest quality scandinavian oak. The chair is featured in several dimensions so whether you are skinny or a burger-eating champion, we have a size that is just for you.",
+            "This vase is perfect high class decoration you can have in your home, if you are a vase enthusiast or just have a good taste, you can feel this vase calling out your name.",
+            "Not many picture frames can highlight a story as well as this one. Be it the emotion of a familly christmas or the thrill of diving between the Iceland plates, your expirience is best remebered here.",
+            "In this bowl of fruit even a grapefruit becomes sweet, get yours today!",
+            "The quality of this carpet would even make Alladin jeleous. Although it can't fly it certantly looks like it appeared from a fairy tale.",
+            "This large basket will help you carry whatever you need to wherever you need it",
+            "Ordinary glass carefully decorated with love and transformed into art that feels like it's really yours and made for you."
         };
 
         String[] imageUrls = new String[] {
-            "https://hiddencityphila.org/wp-content/uploads/2018/01/PECO-manhole-cover-3.jpg",
-            "https://5.imimg.com/data5/VQ/NH/MY-2555326/magnet-copper-wire-500x500.jpg",
-            "https://i1.wp.com/thecostaricanews.com/wp-content/uploads/2017/09/eggshells.jpg?fit=1200%2C1550&ssl=1",
-            "https://static.standard.co.uk/s3fs-public/thumbnails/image/2018/08/28/11/upsetbride2808a.jpg?w968",
-            "https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/cigarette_packet_empty.png"
+            "https://images.unsplash.com/photo-1494281232141-90a40b0b06c9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+            "https://images.unsplash.com/photo-1529136490842-e2da7a4c7b74?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+            "https://images.unsplash.com/photo-1519916478825-b1d7aef08f54?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+            "https://images.unsplash.com/photo-1452457005517-a0dd81caca2a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=986&q=80",
+            "https://images.unsplash.com/photo-1444362408440-274ecb6fc730?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+            "https://images.unsplash.com/photo-1481061730414-e888962bd2c0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=633&q=80",
+            "https://images.unsplash.com/photo-1527838016968-2191bb805fc1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
         };
 
         String[] adNames = new String[] {
-            "Manhole",
-            "Copper wire - 10 m",
-            "Premium egg shells - 12 pieces",
-            "Russian bride",
-            "Empty cigarrete box"
+            "Chair",
+            "Vase",
+            "Picture Frame",
+            "Fruit bowl",
+            "Carpet",
+            "Basket",
+            "Ordinary glass??"
         };
 
-        double[] prices = new double[] { 39.99, 14.99, 2.99, 999.99, 1.99 };
+        double[] prices = new double[] { 20.99, 60.99, 12.99, 15.99, 464.99, 739.99, 5.49 };
 
         String[] specifications = new String[] {
-            "Tool used for sewer opennings",
-            "Electricity conductor",
-            "Healthy fertlizer",
-            "Good life, good wife",
-            "Garbage"
+            "The latest in sitting techonology",
+            "Vase for various uses",
+            "Highlight your favourite moments",
+            "Display your fruit",
+            "A carpet to keep your house warm",
+            "Carry your things with ease",
+            "Regular drinking glass??"
         };
 
         String[] dimensionNames = new String[] {
-            "big", "bigger",
-            "child size",
-            "bag size",
-            "medium"
+        	"X-Large",
+        	"Large", 
+        	"Medium",
+            "Small",
+            "X-Small"
         };
 
         String[] styleNames = new String[] {
-            "Jonski",
-            "Antistil"
+            "Ming",
+            "Antique",
+            "Modern",
+            "Futuristic",
+            "Traditional",
+            "1920s",
+            "1950s",
+            "1960s",
+            "1970s",
+            "1980s",
+            "1990s"
         };
 
     	for(int i = 0; i < descriptions.length; i++) {
@@ -185,17 +201,19 @@ public class DataInitializer {
     }
 
     private void createStories() {
-        String[] imageUrls = new String[]{"https://i.ytimg.com/vi/dkNCQeN45So/maxresdefault.jpg",
-                "https://akos.ba/wp-content/uploads/2017/02/jorgovan-naslovna.jpg",
-                "https://cenazlata.org/wp-content/uploads/2017/01/Otkup-folija-od-cigareta-istina-ili-zabluda-%C5%A1ta-treba-znati.jpg",
-                "https://images-na.ssl-images-amazon.com/images/I/71dz1ztYLUL._SX425_.jpg",
-                null};
+        String[] imageUrls = new String[]{"https://images.unsplash.com/photo-1496397604916-a3d9461942b6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+                "https://cdn.pixabay.com/photo/2015/01/05/18/15/woman-589508_960_720.jpg",
+                "https://images.unsplash.com/photo-1496360166961-10a51d5f367a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+                "https://images.unsplash.com/uploads/1413170261747296531bd/f3aeb6f5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+                "https://images.unsplash.com/photo-1497296690583-da0e2a4ce49a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+                };
 
-        String[] storyTexts = new String[] {"My new napkin is crazy cool!",
-                "Please check out my beautiful flowers I just bought yesterday. Please leave a like and subscribe.",
-                "I am extreamely unhappy with this empty box of cigaretts I just bought! Not recommended!",
-                "Quite unhappy with this Egg shells I recently bought. I was under impression I would only get the shells!!!",
-                "Some text for the story"};
+        String[] storyTexts = new String[] {"Just bought this super ordinary glass, nothing special about it!! ;)",
+                "This is a grate basket, it has a LOT of room, now i can bring cake to my grandma.",
+                "This ordinary glass is really cool, i like how it feels in my home!",
+                "My carpet just flew in and it's really warm and fuzzy. Fast delivery and great quality, I'm super satisfied.",
+                "This frame is just perfect for photos of my crazy adventures, thank you Craftery!",
+               	};
 
         String[] usernames = new String[]{"lludvig", "ilovrencic", "mcolja", "ilovrencic", "ialmer"};
 
