@@ -86,7 +86,7 @@ public class DataInitializer {
     }
 
     private void createUsers() {
-        String[] usernames = new String[] {"mcolja", "ialmer", "ilovrencic", "lludvig", "hspolador", "mdadanovic"};
+        String[] usernames = new String[] {"mcolja", "ialmer", "ilovrencic", "lludvig", "hspolador", "mdadanovic", "istancin"};
         String password = "secret";
 
         for(String username: usernames) {
