@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -42,7 +41,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
-                    android:id="@+id/app_logo2"
                     android:layout_width="120sp"
                     android:layout_height="120sp"
                     android:layout_alignParentTop="true"
@@ -53,7 +51,6 @@
                     app:srcCompat="@drawable/app_logo_text" />
 
                 <ImageView
-                    android:id="@+id/app_logo"
                     android:layout_width="175sp"
                     android:layout_height="175sp"
                     android:layout_alignParentTop="true"

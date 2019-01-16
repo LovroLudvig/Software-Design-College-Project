@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fadingEdge="horizontal|vertical"
@@ -13,7 +12,6 @@
 
 
     <ImageView
-        android:id="@+id/app_logo2"
         android:layout_width="120sp"
         android:layout_height="120sp"
         android:layout_alignParentTop="true"
@@ -22,7 +20,6 @@
         app:srcCompat="@drawable/app_logo_text" />
 
     <ImageView
-        android:id="@+id/app_logo"
         android:layout_width="175sp"
         android:layout_height="175sp"
         android:layout_alignParentTop="true"

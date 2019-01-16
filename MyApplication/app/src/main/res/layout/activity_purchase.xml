@@ -157,7 +157,6 @@
                     android:text="10020" />
 
                 <TextView
-                    android:id="@+id/country"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/order_town"
@@ -180,7 +179,6 @@
                     app:srcCompat="@color/AppGrey"></ImageView>
 
                 <TextView
-                    android:id="@+id/textView31"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -222,7 +220,6 @@
                     app:srcCompat="@drawable/avatar" />
 
                 <TextView
-                    android:id="@+id/textView33"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -232,7 +229,6 @@
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/imageView131"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_alignParentTop="true"

@@ -36,7 +36,6 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                android:id="@+id/imageAndVideo"
                 android:layout_width="match_parent"
                 android:layout_height="270dp"
                 android:layout_alignParentStart="true"
@@ -155,7 +154,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView29"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
@@ -165,7 +163,6 @@
                         android:textSize="18sp" />
 
                     <ImageView
-                        android:id="@+id/imageView4"
                         android:layout_width="20dp"
                         android:layout_height="30dp"
                         android:layout_marginLeft="5dp"

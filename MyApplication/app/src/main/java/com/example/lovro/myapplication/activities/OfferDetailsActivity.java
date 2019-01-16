@@ -204,7 +204,7 @@ public class OfferDetailsActivity extends BasicActivity {
                         }
                     }
                 });
-                alertDialog.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
+                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
