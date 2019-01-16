@@ -167,11 +167,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             });
             Drawable background = holder.notifSeenButton.getBackground();
             if (background instanceof ShapeDrawable) {
-                ((ShapeDrawable)background).getPaint().setColor(Colors.getColor(Colors.getColor(((int) 'l')-97)));
+                ((ShapeDrawable)background).getPaint().setColor(Colors.getColor(((int) 'g')-97));
             } else if (background instanceof GradientDrawable) {
-                ((GradientDrawable)background).setColor(Colors.getColor(Colors.getColor(((int) 'l')-97)));
+                ((GradientDrawable)background).setColor(Colors.getColor(((int) 'g')-97));
             } else if (background instanceof ColorDrawable) {
-                ((ColorDrawable)background).setColor(Colors.getColor(Colors.getColor(((int) 'l')-97)));
+                ((ColorDrawable)background).setColor(Colors.getColor(((int) 'g')-97));
             }
 
 

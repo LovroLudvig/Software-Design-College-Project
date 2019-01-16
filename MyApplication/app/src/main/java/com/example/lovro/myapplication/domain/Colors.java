@@ -40,9 +40,9 @@ public class Colors {
 
 
     public static int getColor(int i) {
-        if (i>28){
+        if (Math.abs(i)>28){
             return Color.parseColor(colors.get(28));
         }
-        return Color.parseColor(colors.get(i));
+        return Color.parseColor(colors.get(Math.abs(i)));
     }
 }
