@@ -104,8 +104,9 @@
                 android:layout_height="200dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="0dp"
                 android:layout_marginTop="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/card_background">
 
                 <TextView
@@ -205,7 +206,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="190dp"
                 android:layout_marginTop="40dp"
-                android:background="@drawable/card_background">
+                android:background="@drawable/card_background"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
 
 
                 <ImageView
