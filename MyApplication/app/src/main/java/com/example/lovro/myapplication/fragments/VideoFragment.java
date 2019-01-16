@@ -213,6 +213,7 @@ public class VideoFragment extends Fragment {
 
                                 @Override
                                 public void run() {
+                                    Toast.makeText(getActivity(), "Double click video to make it fullscreen", Toast.LENGTH_SHORT).show();
                                     videoView.setVideoURI(uriVideo);
                                 }
                             });
