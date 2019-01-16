@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.lovro.myapplication">
+    package="com.craftery.lovro.myapplication">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -16,7 +16,7 @@
         android:theme="@style/RegisterTheme">
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.example.android.crafteryFileProvider"
+            android:authorities="com.craftery.android.crafteryHrFileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -25,38 +25,38 @@
         </provider>
 
         <activity
-            android:name=".activities.StoryDetailsActivity"
+            android:name="com.craftery.lovro.myapplication.activities.StoryDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activities.FillYourInfoActivity"
+            android:name="com.craftery.lovro.myapplication.activities.FillYourInfoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activities.PurchaseActivity"
+            android:name="com.craftery.lovro.myapplication.activities.PurchaseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activities.OfferDetailsActivity"
+            android:name="com.craftery.lovro.myapplication.activities.OfferDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activities.SignUpActivity"
-            android:parentActivityName=".activities.LoginActivity"
+            android:name="com.craftery.lovro.myapplication.activities.SignUpActivity"
+            android:parentActivityName="com.craftery.lovro.myapplication.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="com.craftery.lovro.myapplication.activities.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activities.SplashActivity"
+            android:name="com.craftery.lovro.myapplication.activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme">
             <intent-filter>
@@ -71,17 +71,17 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".activities.SignInActivity"
+            android:name="com.craftery.lovro.myapplication.activities.SignInActivity"
             android:screenOrientation="portrait"
             android:theme="@style/RegisterTheme"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity
-            android:name=".activities.HomeActivity"
+            android:name="com.craftery.lovro.myapplication.activities.HomeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.EditProfileActivity" />
-        <activity android:name=".activities.AddOfferActivity" />
-        <activity android:name=".activities.SuggestStoryActivity" />
-        <activity android:name=".activities.TransactionsActivity"></activity>
+        <activity android:name="com.craftery.lovro.myapplication.activities.EditProfileActivity" />
+        <activity android:name="com.craftery.lovro.myapplication.activities.AddOfferActivity" />
+        <activity android:name="com.craftery.lovro.myapplication.activities.SuggestStoryActivity" />
+        <activity android:name="com.craftery.lovro.myapplication.activities.TransactionsActivity"></activity>
     </application>
 
 </manifest>
