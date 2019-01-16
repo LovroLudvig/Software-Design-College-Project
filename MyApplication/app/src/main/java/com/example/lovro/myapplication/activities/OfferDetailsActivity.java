@@ -1,6 +1,8 @@
 package com.example.lovro.myapplication.activities;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -78,6 +80,10 @@ public class OfferDetailsActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offerdetails);
 
+        if(savedInstanceState != null){
+            restartApp();
+        }
+
         String offerAsString = getIntent().getStringExtra("Offer");
         Gson gson = new Gson();
         currentOffer = gson.fromJson(offerAsString,Offer.class);
@@ -102,6 +108,15 @@ public class OfferDetailsActivity extends BasicActivity {
         initLayout();
         initListeners();
         initSpinner();
+    }
+
+    private void restartApp() {
+        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+        int mPendingIntentId = 1;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+        System.exit(0);
     }
 
     private void initSpinner(){

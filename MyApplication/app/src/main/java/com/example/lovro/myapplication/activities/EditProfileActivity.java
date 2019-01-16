@@ -1,6 +1,9 @@
 package com.example.lovro.myapplication.activities;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -46,6 +49,10 @@ public class EditProfileActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
+        if(savedInstanceState != null){
+            restartApp();
+        }
+
         String userAsString = getIntent().getStringExtra("UserCurrent");
         Gson gson = new Gson();
         currentUser = gson.fromJson(userAsString,User.class);
@@ -68,6 +75,15 @@ public class EditProfileActivity extends BasicActivity {
         toolbar = findViewById(R.id.edit_profile_toolbar);
         initListeners();
         initEditTexts();
+    }
+
+    private void restartApp() {
+        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+        int mPendingIntentId = 1;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+        System.exit(0);
     }
 
     private void initEditTexts() {

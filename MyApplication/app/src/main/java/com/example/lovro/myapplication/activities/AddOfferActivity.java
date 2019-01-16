@@ -2,7 +2,9 @@ package com.example.lovro.myapplication.activities;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -91,7 +93,20 @@ public class AddOfferActivity extends BasicActivity {
         uploadOfferButton=findViewById(R.id.uploadOffer);
         toolbar = findViewById(R.id.add_offer_toolbar);
 
+        if(savedInstanceState != null){
+            restartApp();
+        }
+
         initListeners();
+    }
+
+    private void restartApp() {
+        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+        int mPendingIntentId = 1;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+        System.exit(0);
     }
 
     private void initListeners() {

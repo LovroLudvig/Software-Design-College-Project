@@ -64,6 +64,10 @@ public class SignUpActivity extends BasicActivity {
         getWindow().setBackgroundDrawableResource(R.drawable.theme1) ;
         setContentView(R.layout.activity_register);
 
+        if(savedInstanceState != null){
+            InitApiService.initApiService();
+        }
+
         email = findViewById(R.id.email_input);
         username = findViewById(R.id.username_input);
         password = findViewById(R.id.password_input);

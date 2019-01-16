@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lovro.myapplication.R;
+import com.example.lovro.myapplication.network.InitApiService;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,8 +33,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setBackgroundDrawableResource(R.drawable.theme1) ;
-
         setContentView(R.layout.activity_login);
+
+        if(savedInstanceState != null){
+            InitApiService.initApiService();
+        }
 
         //variable initialisation
         guest_login = findViewById(R.id.guest_login);

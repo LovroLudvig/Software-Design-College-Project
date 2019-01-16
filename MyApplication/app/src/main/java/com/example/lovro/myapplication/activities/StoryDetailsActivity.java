@@ -1,6 +1,9 @@
 package com.example.lovro.myapplication.activities;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -58,7 +61,7 @@ public class StoryDetailsActivity extends BasicActivity {
     private TextView status;
     private RecyclerView recyclerView;
     private List<Comment> commentList = new ArrayList<>();
-    private ApiService apiService = InitApiService.apiService;
+    private ApiService apiService;
     private CommentAdapter commentAdapter;
     private Button postBtn;
     private EditText add_comment;
@@ -72,8 +75,15 @@ public class StoryDetailsActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_storydetails);
 
+        if(savedInstanceState != null){
+            restartApp();
+        }
+
+        apiService = InitApiService.apiService;
         Gson gson = new Gson();
         String storyAsString = getIntent().getStringExtra("story");
+
+
         currentStory = gson.fromJson(storyAsString,Story.class);
         slide_number = findViewById(R.id.slide_number);
         username = findViewById(R.id.story_username);
@@ -103,6 +113,15 @@ public class StoryDetailsActivity extends BasicActivity {
         initAdapter(commentList);
         setupViewPager();
         initListeners();
+    }
+
+    private void restartApp() {
+        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+        int mPendingIntentId = 1;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+        Runtime.getRuntime().exit(0);
     }
 
     private void initListeners(){

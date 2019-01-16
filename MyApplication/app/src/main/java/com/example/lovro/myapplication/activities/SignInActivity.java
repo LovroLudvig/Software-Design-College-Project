@@ -39,6 +39,10 @@ public class SignInActivity extends BasicActivity {
         getWindow().setBackgroundDrawableResource(R.drawable.theme1) ;
         setContentView(R.layout.activity_sign_in);
 
+        if(savedInstanceState != null){
+            InitApiService.initApiService();
+        }
+
         sign_in_button=findViewById(R.id.login_button);
         backButon=findViewById(R.id.backButton);
         username = findViewById(R.id.email_input);

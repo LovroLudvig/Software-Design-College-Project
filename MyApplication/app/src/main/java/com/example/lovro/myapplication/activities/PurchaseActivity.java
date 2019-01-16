@@ -1,5 +1,9 @@
 package com.example.lovro.myapplication.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -42,6 +46,10 @@ public class PurchaseActivity extends BasicActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_purchase);
 
+        if(savedInstanceState != null){
+            restartApp();
+        }
+
         String userAsString = getIntent().getStringExtra("user");
         String orderAsString = getIntent().getStringExtra("order");
 
@@ -64,6 +72,15 @@ public class PurchaseActivity extends BasicActivity {
 
         initLayout();
         initListener();
+    }
+
+    private void restartApp() {
+        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+        int mPendingIntentId = 1;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+        System.exit(0);
     }
 
     private void initLayout(){
