@@ -154,14 +154,15 @@
                             android:focusableInTouchMode="true"
                             android:layout_width="0px"
                             android:layout_height="0px"/>
+
                         <EditText
                             android:id="@+id/storyStatusEditText"
-                            android:inputType="textMultiLine|textCapSentences"
-                            android:lines="4"
-                            android:maxLines="5"
-                            android:gravity="start"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:inputType="textMultiLine|textCapSentences"
+                            android:lines="7"
+                            android:maxLines="7" />
                     </LinearLayout>
 
                 </LinearLayout>

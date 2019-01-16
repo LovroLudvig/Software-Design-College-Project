@@ -49,6 +49,7 @@ public class VideoFragment extends Fragment {
     private Story story;
     private FrameLayout relativeLayout;
     private Uri uriVideo=null;
+    private boolean toast = true;
 
     @SuppressLint("ValidFragment")
     public VideoFragment(Story story){
@@ -130,6 +131,10 @@ public class VideoFragment extends Fragment {
         relativeLayout.setOnClickListener(new DoubleClickListener() {
             @Override
             public void onSingleClick(View v) {
+                if(toast){
+                    Toast.makeText(getActivity(), "Double click video to make it fullscreen", Toast.LENGTH_SHORT).show();
+                    toast = false;
+                }
             }
 
             @Override
