@@ -1,6 +1,7 @@
 package com.craftery.lovro.myapplication.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -86,7 +87,18 @@ public class FillYourInfoActivity extends BasicActivity {
 
 
         initListeners();
-        getting_details();
+        if (isUserLoggedIn()){
+            getting_details();
+        }
+
+    }
+
+    private boolean isUserLoggedIn(){
+        SharedPreferences prefs = getSharedPreferences("UserData", MODE_PRIVATE);
+        if(prefs.getBoolean("saved",false)){
+            return true;
+        }
+        return false;
     }
 
 
