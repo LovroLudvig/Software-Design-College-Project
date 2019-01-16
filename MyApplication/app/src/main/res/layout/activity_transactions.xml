@@ -7,18 +7,19 @@
     android:orientation="vertical"
     tools:context=".activities.TransactionsActivity">
     <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/transaction_toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/AppColor"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:navigationIcon="@drawable/ic_arrow_back_black_24dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginRight="75dp"
             android:padding="5dp"
-            android:layout_marginRight="15dp"
             android:src="@drawable/app_logo_text" />
     </android.support.v7.widget.Toolbar>
 

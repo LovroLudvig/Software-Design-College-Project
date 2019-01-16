@@ -17,6 +17,7 @@ import android.view.DragEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,6 +65,7 @@ public class StoryDetailsActivity extends BasicActivity {
     private Call<List<Comment>> commentCall;
     private String usernameFromUser;
     private NestedScrollView scrollView;
+    private ImageView back_arrow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class StoryDetailsActivity extends BasicActivity {
         postBtn = findViewById(R.id.postBtn);
         add_comment = findViewById(R.id.addComment);
         scrollView = findViewById(R.id.nested_scroll);
+        back_arrow = findViewById(R.id.story_details_back);
 
         ((TextView)findViewById(R.id.profile_image_text)).setText(String.valueOf(currentStory.getUser().getUsername().toUpperCase().charAt(0)));
         Drawable background = findViewById(R.id.profile_image_circle).getBackground();
@@ -121,6 +124,13 @@ public class StoryDetailsActivity extends BasicActivity {
                 }
             }
         });
+
+        back_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void addComment(final String comment, final boolean loggedIn){
@@ -137,19 +147,14 @@ public class StoryDetailsActivity extends BasicActivity {
                 if(response.isSuccessful()){
                     displayComments(response.body());
                 }else{
-                    try {
-                        showError(response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    showError("Unexpected error occurred. Please try again!");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Comment>> call, Throwable t) {
                 stop_loading();
-                showError(t.getMessage());
-                t.printStackTrace();
+                showError("Unexpected error occurred. Please try again!");
             }
         });
     }

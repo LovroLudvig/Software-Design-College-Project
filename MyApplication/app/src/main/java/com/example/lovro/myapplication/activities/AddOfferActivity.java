@@ -16,6 +16,7 @@ import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,11 +49,11 @@ import retrofit2.Response;
 import static com.example.lovro.myapplication.network.InitApiService.apiService;
 
 public class AddOfferActivity extends BasicActivity {
-
     private static final int REQUEST_CODE_PERMISSION_GALLERY = 1;
     private static final int REQUEST_CODE_PICTURE_FROM_GALLERY = 2;
     private static final int REQUEST_CODE_PERMISSION_CAMERA = 3;
     private static final int REQUEST_IMAGE_CAPTURE = 4;
+
     private ImageView offerPhoto;
     private Uri offerUriPicture=null;
     private Offer currentOffer=new Offer();
@@ -70,6 +71,7 @@ public class AddOfferActivity extends BasicActivity {
     private Button addDimensionButton;
 
     private Button uploadOfferButton;
+    private Toolbar toolbar;
 
 
     @Override
@@ -87,10 +89,9 @@ public class AddOfferActivity extends BasicActivity {
         addDimensionButton=findViewById(R.id.addDimensionButton);
         styleName=findViewById(R.id.styleName);
         uploadOfferButton=findViewById(R.id.uploadOffer);
+        toolbar = findViewById(R.id.add_offer_toolbar);
 
         initListeners();
-
-
     }
 
     private void initListeners() {
@@ -149,11 +150,7 @@ public class AddOfferActivity extends BasicActivity {
                                     //Toast.makeText(AddOfferActivity.this, "Offer uploaded", Toast.LENGTH_SHORT).show();
                                     uploadPhoto();
                                 }else{
-                                    try {
-                                        showError(response.errorBody().string());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+                                    showError("Unexpected error occurred. Please try again!");
                                 }
 
                             }
@@ -161,8 +158,7 @@ public class AddOfferActivity extends BasicActivity {
                             @Override
                             public void onFailure(Call<Offer> call, Throwable t) {
                                 stop_loading();
-                                showError(t.getMessage());
-                                t.printStackTrace();
+                                showError("Unexpected error occurred. Please try again!");
 
                             }
                         });
@@ -208,6 +204,13 @@ public class AddOfferActivity extends BasicActivity {
                 dialog.show();
             }
         });
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void uploadPhoto() {
@@ -223,19 +226,14 @@ public class AddOfferActivity extends BasicActivity {
                     setResult(Activity.RESULT_OK,returnIntent);
                     finish();
                 }else{
-                    try {
-                        showError(response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    showError("Unexpected error occurred. Please try again!");
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 stop_loading();
-                showError(t.getMessage());
-                t.printStackTrace();
+                showError("Unexpected error occurred. Please try again!");
             }
         });
 
@@ -327,9 +325,4 @@ public class AddOfferActivity extends BasicActivity {
             Toast.makeText(AddOfferActivity.this, "Need permission to do that action", Toast.LENGTH_SHORT);
         }
     }
-
-
-
-
-
 }
