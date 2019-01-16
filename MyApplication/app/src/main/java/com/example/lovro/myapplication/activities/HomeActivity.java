@@ -4,11 +4,17 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.media.Image;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lovro.myapplication.fragments.NotificationsFragment;
@@ -63,10 +69,20 @@ public class HomeActivity extends BasicActivity implements ProfileFragment.OnFra
             logoutButon.setVisibility(View.GONE);
         }
 
-        tabLayout.getTabAt(0).setIcon(R.drawable.story_btn);
-        tabLayout.getTabAt(1).setIcon(R.drawable.shop_btn_deselected);
-        tabLayout.getTabAt(2).setIcon(R.drawable.notif_btn_deselected);
-        tabLayout.getTabAt(3).setIcon(R.drawable.profile_btn_deselected);
+
+        int[] navIcons = {
+                R.drawable.story_btn,
+                R.drawable.shop_btn_deselected,
+                R.drawable.notif_btn_deselected,
+                R.drawable.profile_btn_deselected
+        };
+
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            LinearLayout tab = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.nav_tab, null);
+            ImageView tab_icon = tab.findViewById(R.id.nav_icon);
+            tab_icon.setImageResource(navIcons[i]);
+            tabLayout.getTabAt(i).setCustomView(tab);
+        }
 
         logoutButon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,13 +120,17 @@ public class HomeActivity extends BasicActivity implements ProfileFragment.OnFra
             public void onTabSelected(TabLayout.Tab tab) {
                 hideKeyboard();
                 if (tab.getPosition()==0){
-                    tabLayout.getTabAt(0).setIcon(R.drawable.story_btn);
+                    ImageView image=tabLayout.getTabAt(0).getCustomView().findViewById(R.id.nav_icon);
+                    image.setImageResource(R.drawable.story_btn);
                 }else if (tab.getPosition()==1){
-                    tabLayout.getTabAt(1).setIcon(R.drawable.shop_btn);
+                    ImageView image=tabLayout.getTabAt(1).getCustomView().findViewById(R.id.nav_icon);
+                    image.setImageResource(R.drawable.shop_btn);
                 }else if (tab.getPosition()==2){
-                    tabLayout.getTabAt(2).setIcon(R.drawable.notif_btn);
+                    ImageView image=tabLayout.getTabAt(2).getCustomView().findViewById(R.id.nav_icon);
+                    image.setImageResource(R.drawable.notif_btn);
                 }else if (tab.getPosition()==3){
-                    tabLayout.getTabAt(3).setIcon(R.drawable.profile_btn);
+                    ImageView image=tabLayout.getTabAt(3).getCustomView().findViewById(R.id.nav_icon);
+                    image.setImageResource(R.drawable.profile_btn);
                 }
 
             }
@@ -118,13 +138,17 @@ public class HomeActivity extends BasicActivity implements ProfileFragment.OnFra
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 if (tab.getPosition()==0){
-                    tabLayout.getTabAt(0).setIcon(R.drawable.story_btn_deselected);
+                    ImageView image=tabLayout.getTabAt(0).getCustomView().findViewById(R.id.nav_icon);
+                    image.setImageResource(R.drawable.story_btn_deselected);
                 }else if (tab.getPosition()==1){
-                    tabLayout.getTabAt(1).setIcon(R.drawable.shop_btn_deselected);
+                    ImageView image=tabLayout.getTabAt(1).getCustomView().findViewById(R.id.nav_icon);
+                    image.setImageResource(R.drawable.shop_btn_deselected);
                 }else if (tab.getPosition()==2){
-                    tabLayout.getTabAt(2).setIcon(R.drawable.notif_btn_deselected);
+                    ImageView image=tabLayout.getTabAt(2).getCustomView().findViewById(R.id.nav_icon);
+                    image.setImageResource(R.drawable.notif_btn_deselected);
                 }else if (tab.getPosition()==3){
-                    tabLayout.getTabAt(3).setIcon(R.drawable.profile_btn_deselected);
+                    ImageView image=tabLayout.getTabAt(3).getCustomView().findViewById(R.id.nav_icon);
+                    image.setImageResource(R.drawable.profile_btn_deselected);
                 }
             }
 
