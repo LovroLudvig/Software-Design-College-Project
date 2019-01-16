@@ -1,7 +1,10 @@
 package com.example.lovro.myapplication.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
@@ -137,5 +140,14 @@ public abstract class BasicActivity extends AppCompatActivity {
         }
         return strMyImagePath;
 
+    }
+
+    public void restartApp() {
+        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
+        int mPendingIntentId = 1;
+        PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        AlarmManager mgr = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
+        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+        System.exit(0);
     }
 }

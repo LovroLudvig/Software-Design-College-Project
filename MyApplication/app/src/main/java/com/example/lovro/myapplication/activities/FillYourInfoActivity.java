@@ -92,14 +92,7 @@ public class FillYourInfoActivity extends BasicActivity {
         getting_details();
     }
 
-    private void restartApp() {
-        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
-        int mPendingIntentId = 1;
-        PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager mgr = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-        System.exit(0);
-    }
+
 
     private void fillDetails(User user){
         usernameEditText.setText(user.getUsername());

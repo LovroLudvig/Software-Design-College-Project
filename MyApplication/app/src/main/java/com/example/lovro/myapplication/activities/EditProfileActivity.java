@@ -77,14 +77,7 @@ public class EditProfileActivity extends BasicActivity {
         initEditTexts();
     }
 
-    private void restartApp() {
-        Intent intent = new Intent(getApplicationContext(), SplashActivity.class);
-        int mPendingIntentId = 1;
-        PendingIntent mPendingIntent = PendingIntent.getActivity(getApplicationContext(), mPendingIntentId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        AlarmManager mgr = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
-        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
-        System.exit(0);
-    }
+
 
     private void initEditTexts() {
         nameEditText.setText(currentUser.getName());
