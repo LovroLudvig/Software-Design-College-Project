@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.craftery.lovro.myapplication.network.ScalingUtilities;
+import com.yovenny.videocompress.MediaController;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -91,6 +92,7 @@ public abstract class BasicActivity extends AppCompatActivity {
     public String decodeFile(String path,int DESIREDWIDTH, int DESIREDHEIGHT) {
         String strMyImagePath = null;
         Bitmap scaledBitmap = null;
+
 
         try {
             // Part 1: Decode image
