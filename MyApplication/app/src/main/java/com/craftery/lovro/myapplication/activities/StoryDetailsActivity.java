@@ -103,6 +103,7 @@ public class StoryDetailsActivity extends BasicActivity {
         initAdapter(commentList);
         setupViewPager();
         initListeners();
+        Toast.makeText(this, "Double click video to make it fullscreen", Toast.LENGTH_SHORT).show();
     }
 
 
