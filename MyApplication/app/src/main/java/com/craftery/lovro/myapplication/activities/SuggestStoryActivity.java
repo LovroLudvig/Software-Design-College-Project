@@ -262,7 +262,7 @@ public class SuggestStoryActivity extends BasicActivity {
 
         Long size = compressedImage.length();
         size = size/1024;
-        Toast.makeText(this,size.toString(),Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,size.toString(),Toast.LENGTH_SHORT).show();
         return compressedImage;
     }
 
