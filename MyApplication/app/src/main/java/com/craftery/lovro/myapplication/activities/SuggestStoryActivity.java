@@ -37,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import id.zelory.compressor.Compressor;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -196,7 +197,11 @@ public class SuggestStoryActivity extends BasicActivity {
             public void onResponse(Call<Story> call, Response<Story> response) {
                 stop_loading();
                 if(response.isSuccessful()){
-                    uploadMedia(response.body());
+                    try {
+                        uploadMedia(response.body());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }else{
                     showError("Unexpected error occurred. Please try again!");
                 }
@@ -210,10 +215,10 @@ public class SuggestStoryActivity extends BasicActivity {
         });
     }
 
-    private void uploadMedia(final Story story) {
+    private void uploadMedia(final Story story) throws IOException {
         show_loading("Uploading image");
-        File file = new File(decodeFile(storyUriPicture.getPath(),500,500));
-        apiService.uploadStoryImage(getUserAuth(),String.valueOf(story.getId()),RequestBody.create(MediaType.parse("image/jpg"), file)).enqueue(new Callback<ResponseBody>() {
+        //File file = new File(decodeFile(storyUriPicture.getPath(),500,500));
+        apiService.uploadStoryImage(getUserAuth(),String.valueOf(story.getId()),RequestBody.create(MediaType.parse("image/jpg"), compressPhoto(storyUriPicture))).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 stop_loading();
@@ -222,7 +227,7 @@ public class SuggestStoryActivity extends BasicActivity {
                         storyId = String.valueOf(story.getId());
                         compressVideo();
                     }else{
-                        Toast.makeText(SuggestStoryActivity.this, "Story suggested", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(SuggestStoryActivity.this, "Story suggested", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }else{
@@ -240,7 +245,7 @@ public class SuggestStoryActivity extends BasicActivity {
     }
 
     private boolean checkSize(){
-        File file = new File(storyUriVideo.getPath());
+        File file = new File(storyUriPicture.getPath());
         Long size = file.length();
         Long sizeInKB = size/1024;
         Long sizeInMB = sizeInKB/1024;
@@ -249,6 +254,16 @@ public class SuggestStoryActivity extends BasicActivity {
         }else{
             return true;
         }
+    }
+
+    private File compressPhoto(Uri pictureUri) throws IOException {
+        File file = new File(pictureUri.getPath());
+        File compressedImage = new Compressor(this).compressToFile(file);
+
+        Long size = compressedImage.length();
+        size = size/1024;
+        //Toast.makeText(this,size.toString(),Toast.LENGTH_SHORT).show();
+        return compressedImage;
     }
 
     private void compressVideo() {
