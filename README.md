@@ -2,7 +2,7 @@
 
 In this project I was working on the Android Aplication
 
-* This project was chosen as one of the top 6 projects
+* This project was chosen as one of the top 6 projects by our University, Faculty of electrical engineering and computing.
 
 # What I Learned
 
