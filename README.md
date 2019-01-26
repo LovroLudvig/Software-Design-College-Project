@@ -2,6 +2,8 @@
 
 In this project I was working on the Android Aplication
 
+* This project was chosen as one of the top 6 projects
+
 # What I Learned
 
 * Using various libraries for video and photo compression
