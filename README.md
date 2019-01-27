@@ -11,3 +11,4 @@ https://play.google.com/store/apps/details?id=com.craftery.lovro.myapplication&h
 * Using various libraries for video and photo compression
 * Designing icons in Adobe XD (bottom navigation bar)
 * Making animations using adobe illustrator and adobe after effects, and importing them into Android (stargin animation)
+* Using UML diagrams for documenting software
